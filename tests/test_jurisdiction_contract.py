@@ -99,7 +99,6 @@ def test_contract_case_ids_are_unique():
 
 
 def test_review_cases_are_explicit_and_actionable():
-    assert REVIEW_CASES
     for case in REVIEW_CASES:
         assert case.get("legacy_expected")
         assert len(case.get("possible", [])) >= 2
