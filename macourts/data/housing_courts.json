@@ -216,7 +216,10 @@
     "tyler_lower_court_code": "1827",
     "tyler_prod_lower_court_code": "7056",
     "address_verified": "2026-09-03",
-    "address_source": "https://www.mass.gov/orgs/housing-court/locations"
+    "address_source": "https://www.mass.gov/orgs/housing-court/locations",
+    "address_corrob_sources": [
+      "https://www.courtreference.com/courts/10384/chelsea-district-court"
+    ]
   },
   {
     "fax": "",
@@ -286,7 +289,11 @@
     "address_source": "https://www.mass.gov/orgs/housing-court/locations",
     "accepts_filings": true,
     "tyler_code_status": "needs_reverification",
-    "tyler_code_note": "The legacy 1265 value was changed from 1550 in docassemble-MACourts PR #74 after a production issue. The August 2026 LITEFile staging catalog instead exposes Southeast Housing Court - Brockton as 555:BR. Treat this as environment-specific, dated route-key metadata."
+    "tyler_code_note": "The legacy 1265 value was changed from 1550 in docassemble-MACourts PR #74 after a production issue. The August 2026 LITEFile staging catalog instead exposes Southeast Housing Court - Brockton as 555:BR. Treat this as environment-specific, dated route-key metadata.",
+    "address_corrob_sources": [
+      "https://archives.lib.state.ma.us/bitstreams/1a64f099-118c-42b3-b22c-4e17d9630e27/download"
+    ],
+    "address_note": "The Commonwealth Auditor's formal Metro South Housing Court audit is addressed to 215 Main Street, Suite 160, Brockton, MA 02301, independently corroborating the physical ZIP."
   },
   {
     "fax": "(508) 894-4166",
@@ -469,7 +476,10 @@
     "tyler_lower_court_code": "1828",
     "tyler_prod_lower_court_code": "7057",
     "address_verified": "2026-09-03",
-    "address_source": "https://www.mass.gov/orgs/housing-court/locations"
+    "address_source": "https://www.mass.gov/orgs/housing-court/locations",
+    "address_corrob_sources": [
+      "https://www.courtreference.com/Essex-County-Massachusetts-Courts.htm"
+    ]
   },
   {
     "fax": "",
@@ -501,7 +511,10 @@
     "tyler_lower_court_code": "1828",
     "tyler_prod_lower_court_code": "7057",
     "address_verified": "2026-09-03",
-    "address_source": "https://www.mass.gov/orgs/housing-court/locations"
+    "address_source": "https://www.mass.gov/orgs/housing-court/locations",
+    "address_corrob_sources": [
+      "https://www.courtreference.com/Essex-County-Massachusetts-Courts.htm"
+    ]
   },
   {
     "fax": "",
