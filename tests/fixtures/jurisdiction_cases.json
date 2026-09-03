@@ -524,6 +524,25 @@
       ]
     },
     {
+      "id": "housing-stoughton-session",
+      "department": "Housing Court",
+      "location": {
+        "city": "Stoughton",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Metro South Housing Court - Stoughton Session"
+      ],
+      "status": "contract",
+      "rationale": "Current Mass.gov lists a Stoughton-only Metro South Housing Court session at 1288 Central St.; filings and correspondence are directed to Canton, but the serving/hearing session is Stoughton.",
+      "verified_on": "2026-09-03",
+      "sources": [
+        "https://www.mass.gov/locations/metro-south-housing-court-stoughton-session",
+        "https://www.mass.gov/orgs/housing-court/locations"
+      ]
+    },
+    {
       "id": "superior-boston",
       "department": "Superior Court",
       "location": {
