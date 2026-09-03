@@ -1,0 +1,1005 @@
+{
+  "schema_version": 1,
+  "description": "Behavioral jurisdiction contract cases for the shared MACourts finder. 'contract' cases are intended outcomes; 'review' cases document ambiguous legacy/data behavior that should be resolved deliberately.",
+  "cases": [
+    {
+      "id": "bmc-east-boston-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.37275131728567,
+        "longitude": -71.03480906308609
+      },
+      "expected": [
+        "East Boston Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the East Boston BMC polygon."
+    },
+    {
+      "id": "bmc-central-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.336633930640154,
+        "longitude": -71.06846838831075
+      },
+      "expected": [
+        "Central Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the Central BMC polygon."
+    },
+    {
+      "id": "bmc-south-boston-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.33609148633623,
+        "longitude": -71.05533710874845
+      },
+      "expected": [
+        "South Boston Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the South Boston BMC polygon."
+    },
+    {
+      "id": "bmc-roxbury-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.3500276794098,
+        "longitude": -71.10475550086801
+      },
+      "expected": [
+        "Roxbury Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the Roxbury BMC polygon."
+    },
+    {
+      "id": "bmc-brighton-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.332546567933996,
+        "longitude": -71.15775762927791
+      },
+      "expected": [
+        "Brighton Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the Brighton BMC polygon."
+    },
+    {
+      "id": "bmc-west-roxbury-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.258556551409946,
+        "longitude": -71.15905884432543
+      },
+      "expected": [
+        "West Roxbury Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the West Roxbury BMC polygon."
+    },
+    {
+      "id": "bmc-dorchester-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.26635042771657,
+        "longitude": -71.09789540837042
+      },
+      "expected": [
+        "Dorchester Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the Dorchester BMC polygon."
+    },
+    {
+      "id": "bmc-charlestown-interior",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.37002433901796,
+        "longitude": -71.06544022979006
+      },
+      "expected": [
+        "Charlestown Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry",
+      "status": "contract",
+      "rationale": "Interior point in the Charlestown BMC polygon."
+    },
+    {
+      "id": "bmc-winthrop-special-case",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "East Boston Division, Boston Municipal Court"
+      ],
+      "expected_reason": "special_case",
+      "status": "contract",
+      "rationale": "Winthrop is outside Boston but is served by East Boston BMC."
+    },
+    {
+      "id": "bmc-offshore-nearest-fallback",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.36,
+        "longitude": -70.99
+      },
+      "expected": [
+        "East Boston Division, Boston Municipal Court"
+      ],
+      "expected_reason": "geometry_nearest",
+      "status": "contract",
+      "rationale": "Point is outside every ward polygon; legacy behavior chooses the nearest BMC geometry."
+    },
+    {
+      "id": "bmc-chelsea-is-not-bmc",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Chelsea",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.3918,
+        "longitude": -71.0328
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "Chelsea is served by District Court, not BMC."
+    },
+    {
+      "id": "bmc-boston-without-coordinates",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "BMC division cannot be determined without coordinates."
+    },
+    {
+      "id": "bmc-out-of-state-rejected",
+      "department": "Boston Municipal Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "NY",
+        "latitude": 42.36,
+        "longitude": -71.06
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "State gate prevents accidental Massachusetts matching."
+    },
+    {
+      "id": "district-freetown-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Freetown",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Fall River District Court",
+        "New Bedford District Court"
+      ],
+      "status": "contract",
+      "rationale": "Freetown is intentionally served by both District Courts."
+    },
+    {
+      "id": "district-westport-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Westport",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Fall River District Court",
+        "New Bedford District Court"
+      ],
+      "status": "contract",
+      "rationale": "Westport is intentionally served by both District Courts."
+    },
+    {
+      "id": "district-hancock-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Hancock",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Northern Berkshire District Court",
+        "Pittsfield District Court"
+      ],
+      "status": "contract",
+      "rationale": "Legacy matcher explicitly documents overlapping Berkshire jurisdiction."
+    },
+    {
+      "id": "district-windsor-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Windsor",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Northern Berkshire District Court",
+        "Pittsfield District Court"
+      ],
+      "status": "contract",
+      "rationale": "Legacy matcher explicitly documents overlapping Berkshire jurisdiction."
+    },
+    {
+      "id": "district-becket-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Becket",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Pittsfield District Court",
+        "Southern Berkshire District Court"
+      ],
+      "status": "contract",
+      "rationale": "Becket appears in both District Court service areas."
+    },
+    {
+      "id": "district-lenox-concurrent",
+      "department": "District Court",
+      "location": {
+        "city": "Lenox",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Pittsfield District Court",
+        "Southern Berkshire District Court"
+      ],
+      "status": "contract",
+      "rationale": "Lenox appears in both District Court service areas."
+    },
+    {
+      "id": "district-brookline",
+      "department": "District Court",
+      "location": {
+        "city": "Brookline",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Brookline District Court"
+      ],
+      "status": "contract",
+      "rationale": "Brookline has its own District Court."
+    },
+    {
+      "id": "district-princeton",
+      "department": "District Court",
+      "location": {
+        "city": "Princeton",
+        "county": "Worcester County",
+        "state": "MA"
+      },
+      "expected": [
+        "Leominster District Court"
+      ],
+      "status": "contract",
+      "rationale": "Princeton is served by Leominster District Court."
+    },
+    {
+      "id": "district-hopkinton",
+      "department": "District Court",
+      "location": {
+        "city": "Hopkinton",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Framingham District Court"
+      ],
+      "status": "contract",
+      "rationale": "Hopkinton is in Middlesex County but served by Framingham District Court."
+    },
+    {
+      "id": "district-gosnold-island",
+      "department": "District Court",
+      "location": {
+        "city": "Gosnold",
+        "county": "Dukes County",
+        "state": "MA"
+      },
+      "expected": [
+        "Edgartown District Court"
+      ],
+      "status": "contract",
+      "rationale": "Gosnold/Elizabeth Islands are served by Edgartown District Court."
+    },
+    {
+      "id": "district-nantucket-county",
+      "department": "District Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Nantucket District Court"
+      ],
+      "status": "contract",
+      "rationale": "County-based island jurisdiction."
+    },
+    {
+      "id": "district-winthrop-none",
+      "department": "District Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "Winthrop is served by BMC rather than a District Court."
+    },
+    {
+      "id": "housing-brookline-exception",
+      "department": "Housing Court",
+      "location": {
+        "city": "Brookline",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Eastern Housing Court"
+      ],
+      "status": "contract",
+      "rationale": "Brookline is a Norfolk County exception served by Eastern Housing Court."
+    },
+    {
+      "id": "housing-newton-middlesex-session",
+      "department": "Housing Court",
+      "location": {
+        "city": "Newton",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Eastern Housing Court - Middlesex Session"
+      ],
+      "status": "contract",
+      "rationale": "Newton is routed to the Eastern Middlesex session and excluded from Metro South."
+    },
+    {
+      "id": "housing-winthrop-chelsea-session",
+      "department": "Housing Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Eastern Housing Court - Chelsea Session"
+      ],
+      "status": "contract",
+      "rationale": "Winthrop is served by the Chelsea session."
+    },
+    {
+      "id": "housing-princeton-leominster",
+      "department": "Housing Court",
+      "location": {
+        "city": "Princeton",
+        "county": "Worcester County",
+        "state": "MA"
+      },
+      "expected": [
+        "Central Housing Court - Leominster Session"
+      ],
+      "status": "contract",
+      "rationale": "Princeton is routed to the Leominster session."
+    },
+    {
+      "id": "housing-hopkinton-marlborough",
+      "department": "Housing Court",
+      "location": {
+        "city": "Hopkinton",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Central Housing Court - Marlborough Session"
+      ],
+      "status": "contract",
+      "rationale": "Hopkinton is routed to the Central Housing Court Marlborough session despite being in Middlesex County."
+    },
+    {
+      "id": "housing-nantucket-barnstable",
+      "department": "Housing Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Southeast Housing Court - Barnstable session"
+      ],
+      "status": "contract",
+      "rationale": "Nantucket County is served by the Southeast Housing Court Barnstable session."
+    },
+    {
+      "id": "housing-gosnold-barnstable",
+      "department": "Housing Court",
+      "location": {
+        "city": "Gosnold",
+        "county": "Dukes County",
+        "state": "MA"
+      },
+      "expected": [
+        "Southeast Housing Court - Barnstable session"
+      ],
+      "status": "contract",
+      "rationale": "Dukes County is handled by the Barnstable session before city-based Plymouth rules."
+    },
+    {
+      "id": "housing-freetown-overlap-review",
+      "department": "Housing Court",
+      "location": {
+        "city": "Freetown",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "legacy_expected": [
+        "Southeast Housing Court - Fall River Session"
+      ],
+      "possible": [
+        "Southeast Housing Court - Fall River Session",
+        "Southeast Housing Court - New Bedford Session"
+      ],
+      "status": "review",
+      "rationale": "Both packaged court descriptions say they serve Freetown; legacy elif ordering chooses Fall River. Resolve policy before making this an exact shared-core contract."
+    },
+    {
+      "id": "housing-bellingham-overlap-review",
+      "department": "Housing Court",
+      "location": {
+        "city": "Bellingham",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "legacy_expected": [
+        "Central Housing Court - Worcester Session"
+      ],
+      "possible": [
+        "Central Housing Court - Worcester Session",
+        "Metro South Housing Court - Brockton Session"
+      ],
+      "status": "review",
+      "rationale": "Both packaged court descriptions list Bellingham; legacy ordering chooses Worcester. Resolve policy before freezing behavior."
+    },
+    {
+      "id": "superior-boston",
+      "department": "Superior Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Suffolk County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Suffolk countywide jurisdiction."
+    },
+    {
+      "id": "superior-winthrop",
+      "department": "Superior Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Suffolk County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Winthrop is included in Suffolk Superior jurisdiction."
+    },
+    {
+      "id": "superior-brookline",
+      "department": "Superior Court",
+      "location": {
+        "city": "Brookline",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Norfolk County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Brookline remains Norfolk for Superior Court."
+    },
+    {
+      "id": "superior-hopkinton",
+      "department": "Superior Court",
+      "location": {
+        "city": "Hopkinton",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Middlesex County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Middlesex countywide jurisdiction."
+    },
+    {
+      "id": "superior-swansea",
+      "department": "Superior Court",
+      "location": {
+        "city": "Swansea",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Bristol County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Bristol countywide jurisdiction even though the catalog contains multiple locations with the same semantic court name."
+    },
+    {
+      "id": "superior-gosnold",
+      "department": "Superior Court",
+      "location": {
+        "city": "Gosnold",
+        "county": "Dukes County",
+        "state": "MA"
+      },
+      "expected": [
+        "Dukes County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Dukes County island jurisdiction."
+    },
+    {
+      "id": "superior-nantucket",
+      "department": "Superior Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Nantucket County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Nantucket countywide jurisdiction."
+    },
+    {
+      "id": "probate-swansea-three-sessions",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Swansea",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Bristol Probate and Family Court",
+        "Fall River Probate and Family Court",
+        "New Bedford Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Bristol addresses may be served by three Probate & Family locations."
+    },
+    {
+      "id": "probate-salem-two-sessions",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Salem",
+        "county": "Essex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Essex Probate and Family Court",
+        "Lawrence Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Essex County matcher intentionally returns both Essex and Lawrence Probate & Family Courts."
+    },
+    {
+      "id": "probate-concord-north",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Concord",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Middlesex Probate and Family Court - North"
+      ],
+      "status": "contract",
+      "rationale": "Middlesex is split into North/South service areas."
+    },
+    {
+      "id": "probate-newton-south",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Newton",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Middlesex Probate and Family Court - South"
+      ],
+      "status": "contract",
+      "rationale": "Middlesex is split into North/South service areas."
+    },
+    {
+      "id": "probate-winthrop-suffolk",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Suffolk Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Winthrop is served by Suffolk Probate & Family."
+    },
+    {
+      "id": "probate-gosnold-dukes",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Gosnold",
+        "county": "Dukes County",
+        "state": "MA"
+      },
+      "expected": [
+        "Dukes Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Dukes County island jurisdiction."
+    },
+    {
+      "id": "probate-nantucket",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Nantucket Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Nantucket countywide jurisdiction."
+    },
+    {
+      "id": "probate-bellingham-norfolk",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Bellingham",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Norfolk Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "Norfolk countywide jurisdiction."
+    },
+    {
+      "id": "juvenile-freetown-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Freetown",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Fall River Juvenile Court",
+        "New Bedford Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Freetown is in both Bristol Juvenile service areas."
+    },
+    {
+      "id": "juvenile-westport-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Westport",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Fall River Juvenile Court",
+        "New Bedford Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Westport is in both Bristol Juvenile service areas."
+    },
+    {
+      "id": "juvenile-concord-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Concord",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Framingham Juvenile Court",
+        "Waltham Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Concord appears in both Middlesex Juvenile service areas."
+    },
+    {
+      "id": "juvenile-princeton-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Princeton",
+        "county": "Worcester County",
+        "state": "MA"
+      },
+      "expected": [
+        "Fitchburg Juvenile Court",
+        "Worcester Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Princeton appears in both Worcester Juvenile service areas."
+    },
+    {
+      "id": "juvenile-becket-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Becket",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Great Barrington Juvenile Court",
+        "Pittsfield Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Becket appears in both Berkshire Juvenile service areas."
+    },
+    {
+      "id": "juvenile-hancock-concurrent",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Hancock",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "North Adams Juvenile Court",
+        "Pittsfield Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Hancock appears in both Berkshire Juvenile service areas."
+    },
+    {
+      "id": "juvenile-winthrop-chelsea",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Winthrop",
+        "county": "Suffolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Chelsea Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Winthrop delinquency/harassment/criminal jurisdiction is Chelsea Juvenile."
+    },
+    {
+      "id": "juvenile-nantucket",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Nantucket Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Nantucket County has its own Juvenile Court session."
+    },
+    {
+      "id": "juvenile-gosnold",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Gosnold",
+        "county": "Dukes County",
+        "state": "MA"
+      },
+      "expected": [
+        "Edgartown Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Gosnold is served by Edgartown Juvenile Court."
+    },
+    {
+      "id": "juvenile-bellingham",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Bellingham",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Milford Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Bellingham is served by Milford Juvenile Court despite being in Norfolk County."
+    },
+    {
+      "id": "juvenile-west-roxbury-bmc-special",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.258556551409946,
+        "longitude": -71.15905884432543
+      },
+      "expected": [
+        "West Roxbury Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Legacy Juvenile logic delegates to BMC geometry first for West Roxbury."
+    },
+    {
+      "id": "juvenile-dorchester-bmc-special",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.26635042771657,
+        "longitude": -71.09789540837042
+      },
+      "expected": [
+        "Dorchester Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Legacy Juvenile logic delegates to BMC geometry first for Dorchester."
+    },
+    {
+      "id": "juvenile-brighton-boston",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "latitude": 42.332546567933996,
+        "longitude": -71.15775762927791
+      },
+      "expected": [
+        "Boston Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Brighton BMC geography does not have a special Juvenile override; Boston Juvenile is returned."
+    },
+    {
+      "id": "land-anywhere-ma",
+      "department": "Land Court",
+      "location": {
+        "city": "Pittsfield",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Land Court"
+      ],
+      "status": "contract",
+      "rationale": "Land Court is statewide."
+    },
+    {
+      "id": "land-out-of-state",
+      "department": "Land Court",
+      "location": {
+        "city": "Providence",
+        "county": "Providence County",
+        "state": "RI"
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "Shared finder should not return Massachusetts courts for another state."
+    },
+    {
+      "id": "appeals-default-single-justice",
+      "department": "Appeals Court",
+      "location": {
+        "city": "Worcester",
+        "county": "Worcester County",
+        "state": "MA"
+      },
+      "expected": [
+        "Massachusetts Appeals Court (Single Justice)"
+      ],
+      "status": "contract",
+      "rationale": "Legacy MACourts returns the Single Justice Appeals Court by default."
+    },
+    {
+      "id": "appeals-out-of-state",
+      "department": "Appeals Court",
+      "location": {
+        "city": "Albany",
+        "county": "Albany County",
+        "state": "NY"
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "State gate applies to statewide courts too."
+    },
+    {
+      "id": "sjc-anywhere-ma",
+      "department": "Supreme Judicial Court",
+      "location": {
+        "city": "Nantucket",
+        "county": "Nantucket County",
+        "state": "MA"
+      },
+      "expected": [
+        "Supreme Judicial Court"
+      ],
+      "status": "contract",
+      "rationale": "SJC is statewide."
+    },
+    {
+      "id": "sjc-out-of-state",
+      "department": "Supreme Judicial Court",
+      "location": {
+        "city": "Hartford",
+        "county": "Hartford County",
+        "state": "CT"
+      },
+      "expected": [],
+      "status": "contract",
+      "rationale": "State gate applies to statewide courts too."
+    }
+  ]
+}
