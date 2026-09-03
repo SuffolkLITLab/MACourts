@@ -499,6 +499,25 @@ For that reason, the Stoughton appearance session now carries
 `court_code: "H82"` while its separate Tyler/EFSP route remains null and must
 be resolved through the Canton filing location.
 
+### Full current-code reconciliation
+
+The current MACourts records were compared against the March 2021 Trial Court
+code registry, with newer department-specific sources used where the old
+registry is demonstrably stale.
+
+| Department | Reconciliation |
+| --- | --- |
+| District Court | All 61 current MACourts primary codes are represented in the 2021 registry. Code `70` for Winchendon is preserved only in historical metadata because the physical court has since consolidated into Gardner. |
+| Boston Municipal Court | All 8 BMC codes agree. The numerical listing often drops leading zeroes, so `01` and `1` are treated as equivalent representations of the same code. |
+| Superior Court | All current county-level codes agree with the registry. Multiple physical sessions within Bristol, Essex, Middlesex, and Plymouth correctly share the same county code. |
+| Probate and Family Court | All current `P72` through `P85` county codes agree. Multiple physical locations within one county share the county code. |
+| Juvenile Court | Every current MACourts primary code is represented in the registry. Springfield is the exception in interpretation, not presence: the registry lists both `J23` and `J69` for the same Springfield Juvenile Court. MACourts uses one physical record with J69 primary and J23 as an alias. The old registry also contains many juvenile locations that are no longer separate entries in the current Juvenile Court location roster, so those entries are not evidence of missing current courthouses. |
+| Housing Court | `H77`, `H79`, `H83`, `H84`, and `H85` agree with the 2021 registry. `H82` (Metro South) is missing from that old page but is explicitly documented in the June 2025 Housing Court case-number guide and appears in real Metro South docket citations. All Metro South sessions, including Stoughton, therefore use divisional court code H82. |
+| Land / Appeals / SJC | The legacy JSON fields for these courts are not validated by the Trial Court location-code registry and should not be presented as though they are the same identifier system. Their application/EFSP semantics need separate provenance. |
+
+This comparison reinforces that `court_code`, `tyler_code`, and Tyler's
+Appeals lower-court codes must remain distinct fields.
+
 ### Address corroboration results
 
 #### Fall River District Court — likely recent intra-building move
