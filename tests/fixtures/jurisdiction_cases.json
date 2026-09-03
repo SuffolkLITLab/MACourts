@@ -481,40 +481,47 @@
       "rationale": "Dukes County is handled by the Barnstable session before city-based Plymouth rules."
     },
     {
-      "id": "housing-freetown-overlap-review",
+      "id": "housing-freetown-concurrent",
       "department": "Housing Court",
       "location": {
         "city": "Freetown",
         "county": "Bristol County",
         "state": "MA"
       },
-      "legacy_expected": [
-        "Southeast Housing Court - Fall River Session"
-      ],
-      "possible": [
+      "status": "contract",
+      "rationale": "Current Mass.gov pages for both sessions list Freetown, and an official state audit expressly identifies Freetown as joint Fall River/New Bedford jurisdiction. The newer town-specific finder lists only New Bedford, so the shared matcher preserves both legally supported sessions rather than silently discarding Fall River.",
+      "expected": [
         "Southeast Housing Court - Fall River Session",
         "Southeast Housing Court - New Bedford Session"
       ],
-      "status": "review",
-      "rationale": "Both packaged court descriptions say they serve Freetown; legacy elif ordering chooses Fall River. Resolve policy before making this an exact shared-core contract."
+      "verified_on": "2026-09-03",
+      "sources": [
+        "https://www.mass.gov/locations/southeast-housing-court-fall-river-session",
+        "https://www.mass.gov/locations/southeast-housing-court-new-bedford-session",
+        "https://www.mass.gov/doc/southeast-division-of-the-housing-court-department/download",
+        "https://www.mass.gov/info-details/courts-serving-freetown"
+      ]
     },
     {
-      "id": "housing-bellingham-overlap-review",
+      "id": "housing-bellingham-canton",
       "department": "Housing Court",
       "location": {
         "city": "Bellingham",
         "county": "Norfolk County",
         "state": "MA"
       },
-      "legacy_expected": [
-        "Central Housing Court - Worcester Session"
+      "status": "contract",
+      "rationale": "Current Mass.gov assigns Bellingham to Metro South Housing Court - Canton Session. Current Worcester and Brockton session pages do not list Bellingham.",
+      "expected": [
+        "Metro South Housing Court - Canton Session"
       ],
-      "possible": [
-        "Central Housing Court - Worcester Session",
-        "Metro South Housing Court - Brockton Session"
-      ],
-      "status": "review",
-      "rationale": "Both packaged court descriptions list Bellingham; legacy ordering chooses Worcester. Resolve policy before freezing behavior."
+      "verified_on": "2026-09-03",
+      "sources": [
+        "https://www.mass.gov/info-details/courts-serving-bellingham",
+        "https://www.mass.gov/locations/metro-south-housing-court-canton-session",
+        "https://www.mass.gov/locations/central-housing-court-worcester-session",
+        "https://www.mass.gov/locations/metro-south-housing-court-brockton-session"
+      ]
     },
     {
       "id": "superior-boston",
