@@ -1,0 +1,40 @@
+[
+  {
+    "fax": "(978) 632-3580",
+    "court_code": "70",
+    "tyler_lower_court_code": "1822",
+    "tyler_prod_lower_court_code": "7051",
+    "tyler_code": "437",
+    "name": "Winchendon District Court",
+    "url": "https://www.mass.gov/locations/winchendon-district-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(978) 632-6326",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.589381,
+      "longitude": -71.981943
+    },
+    "address": {
+      "city": "Gardner District Court, Gardner",
+      "zip": "01440",
+      "orig_address": "108 Matthews Street, Gardner District Court, Gardner, MA 01440",
+      "county": "Worcester County",
+      "state": "MA",
+      "address": "108 Matthews Street"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Kimberly A Walsh",
+        "phone": "978-632-2373 x112",
+        "email": "kimberly.walsh@jud.state.ma.us"
+      }
+    ],
+    "description": "The Winchendon District Court sits in Gardner and serves Ashburnham, Phillipston, Royalston, Templeton and Winchendon.",
+    "department": "District Court",
+    "active": false,
+    "successor": "Gardner District Court",
+    "retired_reason": "Gardner District Court and Winchendon District Court were consolidated into Gardner District Court under St. 2025, c. 9.",
+    "retirement_source": "https://www.mass.gov/locations/gardner-district-court",
+    "status_verified": "2026-09-03"
+  }
+]
