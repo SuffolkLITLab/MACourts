@@ -331,7 +331,7 @@
   },
   {
     "fax": "",
-    "court_code": null,
+    "court_code": "H82",
     "tyler_lower_court_code": null,
     "tyler_prod_lower_court_code": null,
     "tyler_code": null,
@@ -363,14 +363,16 @@
     "description": "The Metro South Housing Court - Stoughton Session serves Stoughton only.",
     "address_source": "https://www.mass.gov/locations/metro-south-housing-court-stoughton-session",
     "address_verified": "2026-09-03",
-    "code_status": "Court/EFSP identifiers not yet independently verified for this newly added session.",
+    "code_status": "Metro South divisional docket code H82 verified; no separate Stoughton Tyler/EFSP route key has been verified.",
     "accepts_filings": false,
     "filing_location": "Metro South Housing Court - Canton Session",
     "appearance_locations": [
       "Metro South Housing Court - Stoughton Session"
     ],
     "tyler_code_status": "not_separate_in_2026-08-stage_catalog",
-    "tyler_code_note": "The August 2026 LITEFile Tyler staging catalog has no separate Stoughton or Canton route. Do not guess a Tyler route key; resolve through the canonical filing location and live EFSP taxonomy."
+    "tyler_code_note": "The August 2026 LITEFile Tyler staging catalog has no separate Stoughton or Canton route. Do not guess a Tyler route key; resolve through the canonical filing location and live EFSP taxonomy.",
+    "court_code_source": "https://www.mass.gov/info-details/housing-court-get-to-know-the-case-number-format",
+    "court_code_verified": "2026-09-03"
   },
   {
     "fax": "",
