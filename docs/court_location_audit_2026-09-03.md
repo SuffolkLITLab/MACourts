@@ -168,15 +168,22 @@ https://www.mass.gov/locations/plymouth-district-court
 ### Juvenile Court
 
 The old JSON contained 43 rows while the current Juvenile directory contains
-42 locations. The extra row was a duplicate **Springfield Juvenile Court** with
-court code `J23`. The Trial Court code listing identifies Springfield Juvenile
-Court as `J69`; the J69 row was kept and the J23 duplicate removed.
+42 physical locations. The extra row was a second **Springfield Juvenile Court**
+record. A later second-source/code audit found that the Trial Court's own 2021
+code registry lists Springfield under **both J23 and J69**. MACourts therefore
+keeps one physical Springfield record, uses J69 as the primary code, and
+preserves J23 as an alternate/historical code rather than maintaining a
+duplicate court object.
 
 Other corrections include:
 
-- Barnstable mailing P.O. Box updated to 1209.
+- Barnstable physical and mailing addresses separated. A second-source check
+  later corrected the mailing box back to **P.O. Box 427** because the Mass.gov
+  `P.O. Box 1209 / 02630-0427` combination conflicts with multiple independent
+  sources and an actual Trial Court summons.
 - Brockton unit added: #270.
-- Edgartown removed stale "Unit 4" and stores PO Box 550 as mailing address.
+- Edgartown physical and mailing addresses separated; a second-source check
+  restored **Unit 4** because Dukes County and CourtReference both retain it.
 - Boston and Milford physical/mailing fields separated.
 - Newburyport structured address normalized.
 - Current phone data refreshed for Chelsea, Falmouth, Springfield, Stoughton,
