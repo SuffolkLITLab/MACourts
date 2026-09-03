@@ -43,3 +43,26 @@ links:
 Each current court record includes `address_verified` and `address_source`
 metadata. Retired court metadata used for historical docket interpretation is
 kept separately from current filing locations.
+
+
+## Filing versus appearance locations
+
+Court records distinguish the physical/session location from the place where
+filings must be directed:
+
+- `location_name` — physical/session identity;
+- `accepts_filings` — whether that location itself accepts filings;
+- `filing_location` — canonical filing location when it does not;
+- `appearance_locations` — reverse links from a filing location to hearing/
+  appearance sessions.
+
+For example, Metro South Housing Court - Stoughton Session is an appearance
+location but filings are directed to the Canton Session.
+
+This metadata is deliberately separate from live Tyler/EFSP "fileability".
+LITEFile should use MACourts to choose the legal filing location, then confirm
+the current Tyler route/category hierarchy at runtime.
+
+See [the 2026-09-03 court location audit](docs/court_location_audit_2026-09-03.md)
+for the field semantics and the documented procedure for recovering/updating
+Tyler court and lower-court codes.
