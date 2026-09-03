@@ -1,0 +1,577 @@
+[
+  {
+    "fax": "(508) 362-3662",
+    "court_code": "P72",
+    "tyler_lower_court_code": "1855",
+    "tyler_prod_lower_court_code": "7084",
+    "url": "https://www.mass.gov/locations/barnstable-probate-and-family-court",
+    "name": "Barnstable Probate and Family Court",
+    "phone": "(508) 375-6710",
+    "has_po_box": true,
+    "location": {
+      "latitude": 41.700346,
+      "longitude": -70.304021
+    },
+    "address": {
+      "city": "Barnstable",
+      "zip": "02630",
+      "orig_address": "3195 Main St. , P.O. Box 346, Barnstable, MA 02630",
+      "county": "Barnstable County",
+      "state": "MA",
+      "address": "3195 Main St. P.O. Box 346"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Caitin G. Mark",
+        "phone": "508-375-6846",
+        "email": "caitlin.mark@jud.state.ma.us"
+      },
+      {
+        "name": "Katharine H. Prunty",
+        "phone": "(508) 375- 6725",
+        "email": "katharine.prunty@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Barnstable County."
+  },
+  {
+    "fax": "(413) 443-3430",
+    "court_code": "P76",
+    "tyler_lower_court_code": "1856",
+    "tyler_prod_lower_court_code": "7085",
+    "name": "Berkshire Probate and Family Court",
+    "url": "https://www.mass.gov/locations/berkshire-probate-and-family-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:00 pm",
+    "phone": "(413) 442-6941",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.447603,
+      "longitude": -73.253089
+    },
+    "address": {
+      "city": "Pittsfield",
+      "zip": "01201",
+      "orig_address": "44 Bank Row, Pittsfield, MA 01201",
+      "county": "Berkshire County",
+      "state": "MA",
+      "address": "44 Bank Row"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Alida McDarby",
+        "phone": "(413) 442-6941 ext. 7207",
+        "email": "alida.mcdarby@jud.state.ma.us"
+      },
+      {
+        "name": "Karen Lacey",
+        "phone": "(413) 442-6941 ext. 7245",
+        "email": "karen.lacey@jud.state.ma.us"
+      }
+    ],
+    "description": "This location serves all cities and towns of Berkshire County."
+  },
+  {
+    "fax": "",
+    "court_code": "P73",
+    "tyler_lower_court_code": "1857",
+    "tyler_prod_lower_court_code": "7086",
+    "url": "https://www.mass.gov/locations/bristol-probate-and-family-court",
+    "name": "Bristol Probate and Family Court",
+    "phone": "(508) 977-6040",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.903226,
+      "longitude": -71.094154
+    },
+    "address": {
+      "city": "Taunton",
+      "zip": "02780",
+      "orig_address": "40 Broadway, Suite 240, Taunton, MA 02780",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "40 Broadway",
+      "unit": "Suite 240"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Sharon Lemrise",
+        "phone": "508-977-6076",
+        "email": "sharon.lemrise@jud.state.ma.us"
+      }
+    ],
+    "description": "The Bristol Probate and Family Court in Taunton serves all the cities and towns in Bristol County. "
+  },
+  {
+    "fax": "(508) 584-4142",
+    "court_code": "P83",
+    "tyler_lower_court_code": "1866",
+    "tyler_prod_lower_court_code": "7095",
+    "name": "Brockton Probate and Family Court",
+    "url": "https://www.mass.gov/locations/brockton-probate-and-family-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(508) 897-5400",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.081684,
+      "longitude": -71.020647
+    },
+    "address": {
+      "city": "Brockton",
+      "zip": "02303",
+      "orig_address": "215 Main St., Brockton, MA 02303",
+      "county": "Plymouth County",
+      "state": "MA",
+      "address": "215 Main St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Claudia Magnus",
+        "phone": "(508) 897-5439",
+        "email": "claudia.magnus@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves Abington, Bridgewater, Brockton, Carver, Duxbury, East Bridgewater, Halifax, Hanover, Hanson, Hingham, Hull, Kingston, Lakeville, Marion, Marshfield, Mattapoisett, Middleboro, Norwell, Pembroke , Plymouth, Plympton, Rochester, Rockland, Scituate, Wareham, West Bridgewater, and Whitman."
+  },
+  {
+    "fax": "(508) 627-7664",
+    "court_code": "P74",
+    "tyler_lower_court_code": "1858",
+    "tyler_prod_lower_court_code": "7087",
+    "url": "https://www.mass.gov/locations/dukes-probate-and-family-court",
+    "name": "Dukes Probate and Family Court",
+    "phone": "(508) 627-4703",
+    "has_po_box": true,
+    "location": {
+      "latitude": 41.390365,
+      "longitude": -70.514702
+    },
+    "address": {
+      "city": "Edgartown",
+      "zip": "02539",
+      "orig_address": "81 Main St., P.O. Box 237, Edgartown, MA 02539",
+      "county": "Dukes County",
+      "state": "MA",
+      "address": "81 Main St., P.O. Box 237"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Mallory Calamare",
+        "phone": "(508) 627-4703",
+        "email": "mallory.calamare@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all the towns of Dukes County."
+  },
+  {
+    "fax": "",
+    "court_code": "P77",
+    "tyler_lower_court_code": "1859",
+    "tyler_prod_lower_court_code": "7088",
+    "name": "Essex Probate and Family Court",
+    "url": "https://www.mass.gov/locations/essex-probate-and-family-court",
+    "hours": "Monday - Friday: \n 8:00 am-4:30 pm",
+    "phone": "(978) 744-1020",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.523402,
+      "longitude": -70.897237
+    },
+    "address": {
+      "city": "Salem",
+      "zip": "01970",
+      "orig_address": "36 Federal St., Salem, MA 01970",
+      "county": "Essex County",
+      "state": "MA",
+      "address": "36 Federal St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Maritza Mercedes",
+        "phone": "978 744-1020",
+        "email": "maritza.mercedes@jud.state.ma.us"
+      },
+      {
+        "name": "Zona Sharfman",
+        "phone": "978 744-1020",
+        "email": "zona.sharfman@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Essex County. "
+  },
+  {
+    "fax": "",
+    "court_code": "P77",
+    "tyler_lower_court_code": "1859",
+    "tyler_prod_lower_court_code": "7088",
+    "name": "Lawrence Probate and Family Court",
+    "url": "https://www.mass.gov/locations/lawrence-probate-and-family-court",
+    "hours": "Please note that the Registry is closed from 1:00 - 2:00 daily",
+    "phone": "(978) 686-9692",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.7066798,
+      "longitude": -71.1625435
+    },
+    "address": {
+      "city": "Lawrence",
+      "zip": "01840",
+      "orig_address": "2 Appleton St., Lawrence, MA 01840 ",
+      "county": "Essex County",
+      "state": "MA",
+      "address": "2 Appleton St."
+    },
+    "description": "This court serves all cities and towns in Essex County. "
+  },
+  {
+    "fax": "(413) 774-3829",
+    "court_code": "P78",
+    "tyler_lower_court_code": "1860",
+    "tyler_prod_lower_court_code": "7089",
+    "url": "https://www.mass.gov/locations/franklin-probate-and-family-court",
+    "name": "Franklin Probate and Family Court",
+    "phone": "(413) 774-7011",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.586242,
+      "longitude": -72.59881
+    },
+    "address": {
+      "city": "Greenfield",
+      "zip": "01302",
+      "orig_address": "43 Hope St., PO Box 590, Greenfield, MA 01302",
+      "county": "Franklin County",
+      "state": "MA",
+      "address": "43 Hope St., PO Box 590"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Brennan McGuane",
+        "phone": "413-775-7460",
+        "email": "brennan.mcguane@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Franklin County."
+  },
+  {
+    "fax": "(413) 781-5605",
+    "court_code": "P79",
+    "tyler_lower_court_code": "1861",
+    "tyler_prod_lower_court_code": "7090",
+    "name": "Hampden Probate and Family Court",
+    "phone": "(413) 748-7760",
+    "has_po_box": true,
+    "location": {
+      "latitude": 42.09974,
+      "longitude": -72.589233
+    },
+    "address": {
+      "city": "Springfield",
+      "zip": "01102",
+      "orig_address": "50 State St., P.O. Box 559, Springfield, MA 01102",
+      "county": "Hampden County",
+      "state": "MA",
+      "address": "50 State St., P.O. Box 559"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Theresa Cullinan",
+        "phone": "413-748-7770",
+        "email": "theresa.cullinan@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves the cities and towns of Hampden County."
+  },
+  {
+    "fax": "(413) 584-1132",
+    "court_code": "P80",
+    "tyler_lower_court_code": "1862",
+    "tyler_prod_lower_court_code": "7091",
+    "name": "Hampshire Probate and Family Court",
+    "phone": "(413) 586-8500",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.3038804,
+      "longitude": -72.6240706
+    },
+    "address": {
+      "city": "Northampton",
+      "zip": "01060",
+      "orig_address": "15 Atwood Dr, Northampton, MA 01060",
+      "county": "Hampshire County",
+      "state": "MA",
+      "address": "15 Atwood Dr",
+      "unit": ""
+    },
+    "ada_coordinators": [
+      {
+        "name": "Mark Ames",
+        "phone": "413-587-5229",
+        "email": "mark.ames@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all the cities and towns in Hampshire County."
+  },
+  {
+    "fax": "(781) 528-2318",
+    "court_code": "P81",
+    "tyler_lower_court_code": "1863",
+    "tyler_prod_lower_court_code": "7092",
+    "url": "https://www.mass.gov/locations/middlesex-probate-and-family-court-south-woburn",
+    "name": "Middlesex Probate and Family Court - South",
+    "phone": "(781) 865-4000",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.5071816,
+      "longitude": -71.1373164
+    },
+    "address": {
+      "city": "Woburn",
+      "zip": "01801",
+      "orig_address": "10-U Commerce Way, Woburn, MA 01801",
+      "county": "Middlesex County",
+      "state": "MA",
+      "address": "10-U Commerce Way"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Lauren Fraser",
+        "phone": "(781) 865-4072",
+        "email": "(617) 225-0781"
+      }
+    ],
+    "description": "This court serves cities and towns in Southern Middlesex County."
+  },
+  {
+    "fax": "(978) 619-1014",
+    "court_code": "P81",
+    "tyler_lower_court_code": "1863",
+    "tyler_prod_lower_court_code": "7092",
+    "url": "https://www.mass.gov/locations/middlesex-probate-and-family-court-north-lowell",
+    "name": "Middlesex Probate and Family Court - North",
+    "phone": "(978) 656-7700",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.6402928,
+      "longitude": -71.3173562
+    },
+    "address": {
+      "city": "Lowell",
+      "zip": "01852",
+      "orig_address": "370 Jackson Street, 5th floor, Lowell, MA 01852",
+      "county": "Middlesex County",
+      "state": "MA",
+      "address": "370 Jackson Street, 5th floor"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Jillian Martin",
+        "phone": "(978) 656-7744",
+        "email": "jillian.martin@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Northern Middlesex County."
+  },
+  {
+    "fax": "(508) 228-3662",
+    "court_code": "P75",
+    "tyler_lower_court_code": "1864",
+    "tyler_prod_lower_court_code": "7093",
+    "name": "Nantucket Probate and Family Court",
+    "phone": "(508) 228-2669",
+    "has_po_box": true,
+    "location": {
+      "latitude": 41.28505,
+      "longitude": -70.099062
+    },
+    "address": {
+      "city": "Nantucket",
+      "zip": "02554",
+      "orig_address": "16 Broad St., 2nd floor, P.O. Box 1116, Nantucket, MA 02554",
+      "county": "Nantucket County",
+      "state": "MA",
+      "address": "16 Broad St.",
+      "unit": "2nd floor"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Sarah Maxwell",
+        "phone": "(508) 228-2669",
+        "email": "sarah.maxwell@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves Nantucket county."
+  },
+  {
+    "fax": "(781) 830-4310",
+    "court_code": "P82",
+    "tyler_lower_court_code": "1865",
+    "tyler_prod_lower_court_code": "7094",
+    "name": "Norfolk Probate and Family Court",
+    "url": "https://www.mass.gov/locations/norfolk-probate-and-family-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(781) 830-1200",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.189325,
+      "longitude": -71.152664
+    },
+    "address": {
+      "city": "Canton",
+      "zip": "02021",
+      "orig_address": "35 Shawmut Road, Canton, MA 02021",
+      "county": "Norfolk County",
+      "state": "MA",
+      "address": "35 Shawmut Road"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Jay Fielding",
+        "phone": "(781) 830-1221",
+        "email": "jay.fielding@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Norfolk County."
+  },
+  {
+    "fax": "(508) 746-6846",
+    "court_code": "P83",
+    "tyler_lower_court_code": "1866",
+    "tyler_prod_lower_court_code": "7095",
+    "name": "Plymouth Probate and Family Court",
+    "url": "https://www.mass.gov/locations/plymouth-probate-and-family-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(508) 747-6204",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.939928,
+      "longitude": -70.649762
+    },
+    "address": {
+      "city": "Plymouth",
+      "zip": "02360",
+      "orig_address": "52 Obery St., Plymouth, MA 02360",
+      "county": "Plymouth County",
+      "state": "MA",
+      "address": "52 Obery St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Claudia Magnus",
+        "phone": "508-897-5439",
+        "email": "claudia.magnus@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Plymouth County."
+  },
+  {
+    "fax": "(617) 788-8962",
+    "court_code": "P84",
+    "tyler_lower_court_code": "1867",
+    "tyler_prod_lower_court_code": "7096",
+    "name": "Suffolk Probate and Family Court",
+    "phone": "(617) 788-8301",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.362961,
+      "longitude": -71.061542
+    },
+    "address": {
+      "city": "Boston",
+      "zip": "02114",
+      "orig_address": "24 New Chardon St., Boston , MA 02114",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "24 New Chardon St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Kristen Antolini",
+        "phone": "617-788-8983",
+        "email": "kristen.antolini@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves Boston, Brighton, Charlestown, Chelsea, Dorchester, East Boston, Hyde Park, Jamaica Plain, Revere, Roslindale, South Boston, and Winthrop."
+  },
+  {
+    "fax": "(508) 752-6138",
+    "court_code": "P85",
+    "tyler_lower_court_code": "1868",
+    "tyler_prod_lower_court_code": "7097",
+    "name": "Worcester Probate and Family Court",
+    "phone": "(508) 831-2200",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.26744,
+      "longitude": -71.799856
+    },
+    "address": {
+      "city": "Worcester",
+      "zip": "01608",
+      "orig_address": "225 Main Street, Worcester, MA 01608",
+      "county": "Worcester County",
+      "state": "MA",
+      "address": "225 Main Street"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Alicia Doherty",
+        "phone": "(508) 831-2241",
+        "email": "alicia.doherty@jud.state.ma.us"
+      },
+      {
+        "name": "Megan Brown",
+        "phone": "(508) 831-2237",
+        "email": "megan.brown@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Worcester County."
+  },
+  {
+    "fax": "",
+    "court_code": "P73",
+    "tyler_lower_court_code": "1857",
+    "tyler_prod_lower_court_code": "7086",
+    "url": "https://www.mass.gov/locations/fall-river-probate-and-family-court",
+    "name": "Fall River Probate and Family Court ",
+    "phone": "(508) 672-1751",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.705674,
+      "longitude": -71.151739
+    },
+    "address": {
+      "city": "Fall River",
+      "zip": "02720",
+      "orig_address": "289 Rock Street, Fall River, MA 02720",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "289 Rock St."
+    },
+    "ada_coordinators": [],
+    "description": "The Bristol Probate and Family Court in Fall River serves all the cities and towns in Bristol County."
+  },
+  {
+    "fax": "(508) 999-1211",
+    "court_code": "P73",
+    "tyler_lower_court_code": "1857",
+    "tyler_prod_lower_court_code": "7086",
+    "url": "https://www.mass.gov/locations/new-bedford-probate-and-family-court",
+    "name": "New Bedford Probate and Family Court",
+    "phone": "(508) 999-5249",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.634214,
+      "longitude": -70.927183
+    },
+    "address": {
+      "city": "New Bedford",
+      "zip": "02740",
+      "orig_address": "505 Pleasant Street, New Bedford, MA 02740",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "505 Pleasant St"
+    },
+    "ada_coordinators": [],
+    "description": "The Bristol Probate and Family Court in New Bedford serves all cities and towns in Bristol County."
+  }
+]

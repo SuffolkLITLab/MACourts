@@ -1,0 +1,278 @@
+[
+  {
+    "fax": "(617) 254-2127",
+    "court_code": "08",
+    "tyler_lower_court_code": "1753",
+    "tyler_prod_lower_court_code": "6982",
+    "tyler_code": "418",
+    "name": "Brighton Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/brighton-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 782-6540, Press 5",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.347226,
+      "longitude": -71.153556
+    },
+    "address": {
+      "city": "Brighton",
+      "zip": "02135",
+      "orig_address": "52 Academy Hill Rd., Brighton, MA 02135",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "52 Academy Hill Rd."
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "John Corbett",    
+        "phone": "617-782-6540 x302",  
+        "email": "john.corbett@jud.state.ma.us" 
+      }
+    ],
+    "description": "The Brighton division of the BMC serves Allston and Brighton."
+  },
+  {
+    "fax": "(617) 788-8465",
+    "court_code": "01",
+    "tyler_lower_court_code": "1754",
+    "tyler_prod_lower_court_code": "6983",
+    "tyler_code": "1245",
+    "name": "Central Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/central-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 788-8600",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.362961,
+      "longitude": -71.061542
+    },
+    "address": {
+      "city": "Edward W. Brooke Courthouse, Boston",
+      "zip": "02114",
+      "orig_address": "24 New Chardon Street, Edward W. Brooke Courthouse, Boston, MA 02114",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "24 New Chardon Street"
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Denise Donovan",      
+        "phone": "617-788-8668",   
+        "email": "denise.donovan@jud.state.ma.us" 
+      },
+      {
+        "name": "Marcella Gerardi", 
+        "phone": "617-788-8772", 
+        "email": "marcella.gerardi@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves the Downtown Boston area, Chinatown, North End, South End through Massachusetts Avenue, West End, and Beacon Hill."
+  },
+  {
+    "fax": "(617) 242-1677",
+    "court_code": "04",
+    "tyler_lower_court_code": "1755",
+    "tyler_prod_lower_court_code": "6984",
+    "tyler_code": "419",
+    "name": "Charlestown Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/charlestown-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 242-5400",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.371823,
+      "longitude": -71.062309
+    },
+    "address": {
+      "city": "Charlestown",
+      "zip": "02129",
+      "orig_address": "3 City Square, Charlestown, MA 02129",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "3 City Square"
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Stephen Pearson",     
+        "phone": "617-242-5400 x238",  
+        "email": "stephen.pearson@jud.state.ma.us"
+      },
+      {
+        "name": "Sean Norris", 
+        "phone": "617-242-5400 x247", 
+        "email": "sean.norris@jud.state.ma.us"
+      }
+    ],
+    "description": "The Charlestown Division of the Boston Municipal Court serves Charlestown."
+  },
+  {
+    "fax": "(617) 436-8250 ",
+    "court_code": "07",
+    "tyler_lower_court_code": "1756",
+    "tyler_prod_lower_court_code": "6985",
+    "tyler_code": "420",
+    "name": "Dorchester Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/dorchester-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 288-9500",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.293957,
+      "longitude": -71.071458
+    },
+    "address": {
+      "city": "Dorchester",
+      "zip": "02124",
+      "orig_address": "510 Washington St., Dorchester, MA 02124",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "510 Washington St."
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Kim MacDonald",      
+        "phone": "617-288-9500 x225", 
+        "email": "kimberly.macdonald@jud.state.ma.us"
+      },
+      {
+        "name": "Leslie Martinez", 
+        "phone": "617-288-9500 x200", 
+        "email": "leslie.martinez@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves Dorchester."
+  },
+  {
+    "fax": "(617) 561-4988 ",
+    "court_code": "05",
+    "tyler_lower_court_code": "1757",
+    "tyler_prod_lower_court_code": "6986",
+    "tyler_code": "408",
+    "name": "East Boston Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/east-boston-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 569-7550",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.370985,
+      "longitude": -71.038727
+    },
+    "address": {
+      "city": "East Boston",
+      "zip": "02128",
+      "orig_address": "37 Meridian St., East Boston, MA 02128",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "37 Meridian St."
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Ann-Marie Gioia",      
+        "phone": "617-569-7550 x125", 
+        "email": "ann-marie.gioia@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves East Boston, Winthrop, Logan Airport, and the Sumner and Callahan Tunnels."
+  },
+  {
+    "fax": "(617) 541-0286",
+    "court_code": "02",
+    "tyler_lower_court_code": "1758",
+    "tyler_prod_lower_court_code": "6987",
+    "tyler_code": "417",
+    "name": "Roxbury Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/roxbury-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 427-7000",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.327078,
+      "longitude": -71.083819
+    },
+    "address": {
+      "city": "Roxbury",
+      "zip": "02119",
+      "orig_address": "85 Warren St., Roxbury, MA 02119",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "85 Warren St."
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Vilma Altamirano",      
+        "phone": "617-427-7000 x415",  
+        "email": "vilma.altamirano@jud.state.ma.us" 
+      }
+    ],
+    "description": "This court serves Roxbury."
+  },
+  {
+    "fax": "(617) 983-0243 ",
+    "court_code": "06",
+    "tyler_lower_court_code": "1760",
+    "tyler_prod_lower_court_code": "6989",
+    "tyler_code": "665",
+    "name": "West Roxbury Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/west-roxbury-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 971-1200",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.301266,
+      "longitude": -71.110182
+    },
+    "address": {
+      "city": "Jamaica Plain",
+      "zip": "02130",
+      "orig_address": "445 Arborway, Jamaica Plain, MA 02130",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "445 Arborway"
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Brian K. Doxtader",   
+        "phone": "(617) 971-1231", 
+        "email": "brian.doxtader@jud.state.ma.us" 
+      }
+    ],
+    "description": "This court serves Hyde Park, Jamaica Plain, Roslindale, West Roxbury, parts of Mattapan, and parts of Mission Hill."
+  },
+  {
+    "fax": "(617) 268-7321",
+    "court_code": "03",
+    "tyler_lower_court_code": "1759",
+    "tyler_prod_lower_court_code": "6988",
+    "tyler_code": "409",
+    "name": "South Boston Division, Boston Municipal Court",
+    "url": "https://www.mass.gov/locations/south-boston-division-boston-municipal-court",
+    "hours": "Monday - Friday: \n 8:30 am-4:30 pm",
+    "phone": "(617) 268-9292",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.335506,
+      "longitude": -71.042683
+    },
+    "address": {
+      "city": "South Boston",
+      "zip": "02127",
+      "orig_address": "535 East Broadway, South Boston, MA 02127",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "535 East Broadway"
+    },
+    "ada_coordinators": [ 
+      {
+        "name": "Claire Smallcomb",      
+        "phone": "(617) 268-9292 x244", 
+        "email": "claire.smallcomb@jud.state.ma.us" 
+      },
+      {
+        "name": "Lori Previte", 
+        "phone": "(617) 464-5019", 
+        "email": "lori.previte@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves South Boston."
+  }
+]

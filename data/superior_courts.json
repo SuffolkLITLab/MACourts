@@ -1,0 +1,620 @@
+[
+  {
+    "fax": "",
+    "court_code": "72",
+    "tyler_lower_court_code": "1870",
+    "tyler_prod_lower_court_code": "7099",
+    "name": "Barnstable County Superior Court",
+    "phone": "(508) 375-6684",
+    "has_po_box": true,
+    "location": {
+      "latitude": 41.700346,
+      "longitude": -70.304021
+    },
+    "address": {
+      "city": "Barnstable",
+      "zip": "02630",
+      "orig_address": "3195 Main St., P.O. Box 425,  Barnstable, MA 02630",
+      "county": "Barnstable County",
+      "state": "MA",
+      "address": "3195 Main St., P.O. Box 425"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Christine Higginbotham",
+        "phone": "(508) 375-6683",
+        "email": "christine.higginbotham@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves the cities and towns of Barnstable County."
+  },
+  {
+    "fax": "(413) 442-9190",
+    "court_code": "76",
+    "tyler_lower_court_code": "1871",
+    "tyler_prod_lower_court_code": "7100",
+    "name": "Berkshire County Superior Court",
+    "phone": "(413) 499-7487",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.447538,
+      "longitude": -73.252509
+    },
+    "address": {
+      "city": "Pittsfield",
+      "zip": "01201",
+      "orig_address": "76 East St., Pittsfield, MA 01201",
+      "county": "Berkshire County",
+      "state": "MA",
+      "address": "76 East St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Michele Dillon",
+        "phone": "(413) 499-7487 x7404",
+        "email": "michele.dillon@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Berkshire County.\r\n\r\n"
+  },
+  {
+    "fax": "(508) 821-9563 ",
+    "court_code": "73",
+    "tyler_lower_court_code": "1872",
+    "tyler_prod_lower_court_code": "7101",
+    "name": "Bristol County Superior Court",
+    "phone": "(508) 823-6588",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.902681,
+      "longitude": -71.094186
+    },
+    "address": {
+      "city": "Taunton",
+      "zip": "02780",
+      "orig_address": "9 Court St., Taunton, MA 02780",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "9 Court St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Aaron Strojny",
+        "phone": "508-823-6588",
+        "email": "Aaron.strojny@jud.state.ma.us"
+      }
+    ],
+    "description": "The Bristol County Superior Court in Taunton serves the cities and towns of Bristol County. This location only handles criminal matters."
+  },
+  {
+    "fax": "(508) 821-9563",
+    "court_code": "73",
+    "tyler_lower_court_code": "1872",
+    "tyler_prod_lower_court_code": "7101",
+    "url": "https://www.mass.gov/locations/bristol-county-superior-court-fall-river",
+    "name": "Bristol County Superior Court",
+    "phone": "(508) 491-3300",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.699452,
+      "longitude": -71.156553
+    },
+    "address": {
+      "city": "Fall River",
+      "zip": "02720",
+      "orig_address": "186 S. Main St., Fall River, MA 02720",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "186 S. Main St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Jennifer Sullivan",
+        "phone": "508-491-3300",
+        "email": "jennifer.sullivan@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves the cities and towns of Bristol County. This location handles only criminal matters"
+  },
+  {
+    "fax": "",
+    "court_code": "73",
+    "tyler_lower_court_code": "1872",
+    "tyler_prod_lower_court_code": "7101",
+    "url": "https://www.mass.gov/locations/bristol-county-superior-court-new-bedford",
+    "name": "Bristol County Superior Court",
+    "phone": "(508) 996-2051",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.63406,
+      "longitude": -70.930851
+    },
+    "address": {
+      "city": "New Bedford",
+      "zip": "02740",
+      "orig_address": "441 County St., 1st Floor, New Bedford, MA 02740",
+      "county": "Bristol County",
+      "state": "MA",
+      "address": "441 County St.",
+      "unit": "1st Floor"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Jennifer Sullivan",
+        "phone": "508-491-3300",
+        "email": "jennifer.sullivan@jud.state.ma.us"
+      }
+    ],
+    "description": "The Bristol County Superior Court in New Bedford serves the cities and towns of Bristol County. This location handles  only civil matters."
+  },
+  {
+    "fax": "",
+    "court_code": "74",
+    "tyler_lower_court_code": "1873",
+    "tyler_prod_lower_court_code": "7102",
+    "name": "Dukes County Superior Court",
+    "phone": "(508) 627-4668",
+    "has_po_box": true,
+    "location": {
+      "latitude": 41.390365,
+      "longitude": -70.514702
+    },
+    "address": {
+      "city": "Edgartown",
+      "zip": "02539",
+      "orig_address": "81 Main St., P.O. Box 1267, Edgartown, MA 02539",
+      "county": "Dukes County",
+      "state": "MA",
+      "address": "81 Main St., P.O. Box 1267"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Deanna L. Ruiz",
+        "phone": "508-627-4668",
+        "email": "deanna.ruiz@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all the towns of Dukes County."
+  },
+  {
+    "fax": "(978) 741-0691",
+    "court_code": "77",
+    "tyler_lower_court_code": "1874",
+    "tyler_prod_lower_court_code": "7103",
+    "name": "Essex County Superior Court",
+    "phone": "(978) 744-5500 ",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.523382,
+      "longitude": -70.896639
+    },
+    "address": {
+      "city": "Salem",
+      "zip": "01970",
+      "orig_address": "56 Federal St., Salem, MA 01970",
+      "county": "Essex County",
+      "state": "MA",
+      "address": "56 Federal St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Rebecca Matuza",
+        "phone": "978-825-4813",
+        "email": "rebecca.matuza@jud.state.ma.us"
+      },
+      {
+        "name": "Maria Dres",
+        "phone": "978-825-4823",
+        "email": "maria.dres@jud.state.ma.us"
+      },
+      {
+        "name": "Lisa Gomes",
+        "phone": "978-825-4830",
+        "email": "lisa.gomes@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Essex County."
+  },
+  {
+    "fax": "(978) 687-7869 ",
+    "court_code": "77",
+    "tyler_lower_court_code": "1874",
+    "tyler_prod_lower_court_code": "7103",
+    "url": "https://www.mass.gov/locations/essex-county-superior-court-lawrence",
+    "name": "Essex County Superior Court",
+    "phone": "(978) 242-1900",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.708256,
+      "longitude": -71.159221
+    },
+    "address": {
+      "city": "Lawrence",
+      "zip": "01841",
+      "orig_address": "43 Appleton Way, Lawrence, MA 01841",
+      "county": "Essex County",
+      "state": "MA",
+      "address": "43 Appleton Way"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Stefano J. Cornelio, Esq.",
+        "phone": "978-242-1901",
+        "email": "stefano.cornelio@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Essex County."
+  },
+  {
+    "fax": "(978) 462-0432",
+    "court_code": "77",
+    "tyler_lower_court_code": "1874",
+    "tyler_prod_lower_court_code": "7103",
+    "url": "https://www.mass.gov/locations/essex-county-superior-court-newburyport",
+    "name": "Essex County Superior Court",
+    "phone": "(978) 462-4474",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.808171,
+      "longitude": -70.874044
+    },
+    "address": {
+      "city": "Newburyport",
+      "zip": "01950",
+      "orig_address": "145 High St., Newburyport, MA 01950",
+      "county": "Essex County",
+      "state": "MA",
+      "address": "145 High St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Dawn Mansfield",
+        "phone": "(978) 462-4474",
+        "email": "dawn.mansfield@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Essex County."
+  },
+  {
+    "fax": "(413) 774-4770 ",
+    "court_code": "78",
+    "tyler_lower_court_code": "1875",
+    "tyler_prod_lower_court_code": "7104",
+    "name": "Franklin County Superior Court",
+    "phone": "(413) 775-7400",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.586242,
+      "longitude": -72.59881
+    },
+    "address": {
+      "city": "Greenfield",
+      "zip": "01301",
+      "orig_address": "43 Hope St., Greenfield, MA 01301",
+      "county": "Franklin County",
+      "state": "MA",
+      "address": "43 Hope St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Brittney Smith",
+        "email": "brittney.smith@jud.state.ma.us"
+      },
+      {
+        "name": "Susan Emond",
+        "phone": "413-775-7401",
+        "email": "susan.emond@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all the cities and towns of Franklin County."
+  },
+  {
+    "fax": "(413) 737-1611",
+    "court_code": "79",
+    "tyler_lower_court_code": "1869",
+    "tyler_prod_lower_court_code": "7098",
+    "name": "Hampden County Superior Court",
+    "phone": "(413) 735-6016",
+    "has_po_box": true,
+    "location": {
+      "latitude": 42.09974,
+      "longitude": -72.589233
+    },
+    "address": {
+      "city": "Springfield",
+      "zip": "01102",
+      "orig_address": "50 State St., P.O. Box 559, Springfield, MA 01102",
+      "county": "Hampden County",
+      "state": "MA",
+      "address": "50 State St., P.O. Box 559"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Sheree Cope",
+        "phone": "413-748-7650",
+        "email": "sheree.cope@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Hampden County."
+  },
+  {
+    "fax": "(413) 586-8217",
+    "court_code": "80",
+    "tyler_lower_court_code": "1876",
+    "tyler_prod_lower_court_code": "7105",
+    "name": "Hampshire County Superior Court",
+    "phone": "(413) 584-5810",
+    "has_po_box": true,
+    "location": {
+      "latitude": 42.319802,
+      "longitude": -72.63122
+    },
+    "address": {
+      "city": "Northampton",
+      "zip": "01061",
+      "orig_address": "15 Gothic St., P.O. Box 1119, Northampton, MA 01061",
+      "county": "Hampshire County",
+      "state": "MA",
+      "address": "15 Gothic St., P.O. Box 1119"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Kelley Devine",
+        "phone": "413-584-5810 x287",
+        "email": "kelley.devine@jud.state.ma.us"
+      },
+      {
+        "name": "Patricia Shepard",
+        "phone": "413-584-5810, ext 289",
+        "email": "patricia.shepard@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Hampshire County."
+  },
+  {
+    "fax": "",
+    "court_code": "81",
+    "tyler_lower_court_code": "1877",
+    "tyler_prod_lower_court_code": "7106",
+    "name": "Middlesex County Superior Court",
+    "phone": "(781) 939-2700",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.500623,
+      "longitude": -71.163788
+    },
+    "address": {
+      "city": "Woburn",
+      "zip": "01801",
+      "orig_address": "200 Tradecenter Drive, 2nd Floor, Woburn, MA 01801",
+      "county": "Middlesex County",
+      "state": "MA",
+      "address": "200 Tradecenter Drive",
+      "unit": "2nd Floor"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Matt Day",
+        "phone": "781-939-2700 x2802",
+        "email": "matthew.day@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Middlesex County."
+  },
+  {
+    "fax": "",
+    "court_code": "81",
+    "tyler_lower_court_code": "1877",
+    "tyler_prod_lower_court_code": "7106",
+    "url": "https://www.mass.gov/locations/middlesex-county-superior-court-lowell",
+    "name": "Middlesex County Superior Court",
+    "phone": "(978) 656-7800",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.637493,
+      "longitude": -71.308387
+    },
+    "address": {
+      "city": "Lowell",
+      "zip": "01852",
+      "orig_address": "370 Jackson St., Lowell, MA 01852",
+      "county": "Middlesex County",
+      "state": "MA",
+      "address": "370 Jackson St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Matt Day",
+        "phone": "781-939-2700 x2802",
+        "email": "matthew.day@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns of Middlesex County."
+  },
+  {
+    "fax": "(508) 228-3725",
+    "court_code": "75",
+    "tyler_lower_court_code": "1878",
+    "tyler_prod_lower_court_code": "7107",
+    "name": "Nantucket County Superior Court",
+    "phone": "(508) 228-2559",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.285066,
+      "longitude": -70.099046
+    },
+    "address": {
+      "city": "Nantucket",
+      "zip": "02544",
+      "orig_address": "16 Broad St., Nantucket, MA 02544",
+      "county": null,
+      "state": "MA",
+      "address": "16 Broad St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Susan Beamish",
+        "phone": "508-228-2669",
+        "email": "susan.beamish@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Nantucket County."
+  },
+  {
+    "fax": "",
+    "court_code": "82",
+    "tyler_lower_court_code": "1879",
+    "tyler_prod_lower_court_code": "7108",
+    "name": "Norfolk County Superior Court",
+    "phone": "(781) 326-1600",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.24859,
+      "longitude": -71.176202
+    },
+    "address": {
+      "city": "Dedham",
+      "zip": "02026",
+      "orig_address": "650 High Street, Dedham, MA 02026",
+      "county": "Norfolk County",
+      "state": "MA",
+      "address": "650 High Street"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Mary Hickey",
+        "phone": "(781) 326-1600 x354",
+        "email": "mary.hickey@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Norfolk County."
+  },
+  {
+    "fax": "(508) 830-0676",
+    "court_code": "83",
+    "tyler_lower_court_code": "1881",
+    "tyler_prod_lower_court_code": "7110",
+    "name": "Plymouth County Superior Court",
+    "url": "https://www.mass.gov/locations/plymouth-county-superior-court-brockton",
+    "phone": "(508) 747-8400",
+    "has_po_box": false,
+    "location": {
+      "latitude": 41.939928,
+      "longitude": -70.649762
+    },
+    "address": {
+      "city": "Plymouth",
+      "zip": "02630",
+      "orig_address": "52 Obery St., Plymouth, MA 02630",
+      "county": "Barnstable County",
+      "state": "MA",
+      "address": "52 Obery St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Ulisses Varela",
+        "phone": "(508) 747-8566",
+        "email": "ulisses.varela@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Plymouth County. Criminal sessions are held in Brockton."
+  },
+  {
+    "fax": "(508) 584-5639",
+    "court_code": "83",
+    "tyler_lower_court_code": "1880",
+    "tyler_prod_lower_court_code": "7109",
+    "url": "https://www.mass.gov/locations/plymouth-county-superior-court-brockton",
+    "name": "Plymouth County Superior Court",
+    "phone": "(508) 583-8250",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.079797,
+      "longitude": -71.022222
+    },
+    "address": {
+      "city": "Brockton",
+      "zip": "02301",
+      "orig_address": "72 Belmont St., Brockton, MA 02301",
+      "county": "Plymouth County",
+      "state": "MA",
+      "address": "72 Belmont St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Ulisses Varela",
+        "phone": "(508) 747-8566",
+        "email": "ulisses.varela@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Plymouth County. Criminal sessions are held in Brockton."
+  },
+  {
+    "fax": "",
+    "court_code": "84",
+    "tyler_lower_court_code": "1882",
+    "tyler_prod_lower_court_code": "7111",
+    "name": "Suffolk County Superior Court",
+    "phone": "(617) 788-8175",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.359891,
+      "longitude": -71.061102
+    },
+    "address": {
+      "city": "Boston",
+      "zip": "02108",
+      "orig_address": "3 Pemberton Square, Boston, MA 02108",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "3 Pemberton Square"
+    },
+    "ada_coordinators": [
+      {
+        "name": "Margaret Buckley",
+        "phone": "(617) 788-8110",
+        "email": "margaret.buckley@jud.state.ma.us"
+      },
+      {
+        "name": "Paul Kenneally",
+        "phone": "(617) 788-8172",
+        "email": "paul.kenneally@jud.state.ma.us"
+      },
+      {
+        "name": "Abigail Bryan",
+        "phone": "(617) 788-7769",
+        "email": "abigail.bryan@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves Boston, Winthrop, Chelsea, and Revere."
+  },
+  {
+    "fax": "(508) 798-3216",
+    "court_code": "85",
+    "tyler_lower_court_code": "1883",
+    "tyler_prod_lower_court_code": "7112",
+    "name": "Worcester County Superior Court",
+    "phone": "(508) 831-2000",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.26744,
+      "longitude": -71.799856
+    },
+    "address": {
+      "city": "Worcester",
+      "zip": "01608",
+      "orig_address": "225 Main St., Worcester, MA 01608",
+      "county": "Worcester County",
+      "state": "MA",
+      "address": "225 Main St."
+    },
+    "ada_coordinators": [
+      {
+        "name": "Amanda Karalus",
+        "phone": "508-831-2347",
+        "email": "amanda.calocci@jud.state.ma.us"
+      }
+    ],
+    "description": "This court serves all cities and towns in Worcester County."
+  }
+]
