@@ -30,3 +30,16 @@ The package currently includes:
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
 Integration and compatibility work for the existing docassemble package is tracked in [docassemble-MACourts issue #130](https://github.com/SuffolkLITLab/docassemble-MACourts/issues/130).
+
+## Data freshness
+
+Court locations were reconciled against the current Massachusetts Court System
+directories on September 3, 2026. The audit includes roster counts, address
+corrections, retired/new sessions, physical-vs-mailing addresses, and source
+links:
+
+- [Court location audit — 2026-09-03](docs/court_location_audit_2026-09-03.md)
+
+Each current court record includes `address_verified` and `address_source`
+metadata. Retired court metadata used for historical docket interpretation is
+kept separately from current filing locations.
