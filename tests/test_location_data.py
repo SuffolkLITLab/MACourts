@@ -1,6 +1,6 @@
 import json
 
-from macourts import package_data
+from macourts import CourtCatalog, package_data
 
 
 EXPECTED_CURRENT_COUNTS = {
@@ -99,3 +99,60 @@ def test_known_structured_address_repairs():
 
     land = load("land_court.json")[0]
     assert land["address"]["unit"] == "5th floor"
+
+
+def test_filing_and_appearance_relationships_are_resolvable():
+    catalog = CourtCatalog.from_package_data()
+
+    stoughton = catalog.resolve_location(
+        "Metro South Housing Court - Stoughton Session",
+        "Housing Court",
+    )[0]
+    canton = catalog.resolve_location(
+        "Metro South Housing Court - Canton Session",
+        "Housing Court",
+    )[0]
+    barnstable = catalog.resolve_location(
+        "Southeast Housing Court - Barnstable Session",
+        "Housing Court",
+    )[0]
+    new_bedford = catalog.resolve_location(
+        "Southeast Housing Court - New Bedford Session",
+        "Housing Court",
+    )[0]
+
+    assert stoughton.accepts_filings is False
+    assert stoughton.filing_location_name == canton.location_name
+    assert catalog.filing_location_for(stoughton) == canton
+    assert "Metro South Housing Court - Stoughton Session" in canton.appearance_location_names
+
+    assert barnstable.accepts_filings is False
+    assert barnstable.filing_location_name == new_bedford.location_name
+    assert catalog.filing_location_for(barnstable) == new_bedford
+    assert "Southeast Housing Court - Barnstable Session" in new_bedford.appearance_location_names
+
+
+def test_filing_location_filter_excludes_appearance_only_sessions():
+    catalog = CourtCatalog.from_package_data()
+    housing_filing_locations = {
+        record.location_name
+        for record in catalog.filing_locations("Housing Court")
+    }
+
+    assert "Metro South Housing Court - Stoughton Session" not in housing_filing_locations
+    assert "Southeast Housing Court - Barnstable Session" not in housing_filing_locations
+    assert "Metro South Housing Court - Canton Session" in housing_filing_locations
+    assert "Southeast Housing Court - New Bedford Session" in housing_filing_locations
+
+
+def test_tyler_route_keys_are_not_used_as_filing_identity():
+    housing = {
+        (court.get("location_name") or court["name"]): court
+        for court in load("housing_courts.json")
+    }
+    stoughton = housing["Metro South Housing Court - Stoughton Session"]
+    canton = housing["Metro South Housing Court - Canton Session"]
+
+    assert stoughton["tyler_code"] is None
+    assert stoughton["filing_location"] == "Metro South Housing Court - Canton Session"
+    assert canton["tyler_code_status"] == "needs_reverification"
