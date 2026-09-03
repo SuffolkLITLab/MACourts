@@ -29,6 +29,14 @@ The package currently includes:
 - statewide court matching;
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
+## Usage
+
+See [Using MACourts with addresses](docs/address_usage.md) for installation,
+finder setup, field semantics, and examples covering Boston addresses,
+neighborhood aliases, Winthrop, statewide courts, out-of-state addresses,
+custom city/county rules, ZIP-only input, and docassemble-style `Address`
+objects.
+
 Integration and compatibility work for the existing docassemble package is tracked in [docassemble-MACourts issue #130](https://github.com/SuffolkLITLab/docassemble-MACourts/issues/130).
 
 ## Data freshness
