@@ -128,7 +128,10 @@
     "location_name": "Bristol County Superior Court-Fall River",
     "case_scope": "criminal matters",
     "address_source": "https://www.mass.gov/locations/bristol-county-superior-court-fall-river",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://bristolcounty.massachusettscourt.us/index.html"
+    ]
   },
   {
     "fax": "",
@@ -379,7 +382,10 @@
     "url": "https://www.mass.gov/locations/hampden-county-superior-court",
     "location_name": "Hampden County Superior Court",
     "address_source": "https://www.mass.gov/locations/hampden-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://www.sec.state.ma.us/divisions/commissions/download/commissioners-to-qualify.pdf"
+    ]
   },
   {
     "fax": "(413) 586-8217",
@@ -516,7 +522,10 @@
     "url": "https://www.mass.gov/locations/nantucket-county-superior-court",
     "location_name": "Nantucket County Superior Court",
     "address_source": "https://www.mass.gov/locations/nantucket-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://www.courtreference.com/Nantucket-County-Massachusetts-Courts.htm"
+    ]
   },
   {
     "fax": "",
@@ -580,12 +589,9 @@
     ],
     "description": "This court serves all cities and towns in Plymouth County. Criminal sessions are held in Brockton.",
     "location_name": "Plymouth County Superior Court",
-    "address_note": "The current Superior Court page displays ZIP 02630, which conflicts with current Plymouth District, Juvenile, Probate, and Law Library pages for the same 52 Obery St. building; 02360 is used here.",
+    "address_note": "Mass.gov's Superior Court location page currently says 02630, but the same 52 Obery Street courthouse is 02360 for District, Juvenile, Probate, and Housing, and independent court directories also use 02360. MACourts treats 02630 as a Mass.gov typo.",
     "address_corrob_sources": [
-      "https://www.mass.gov/locations/plymouth-county-superior-court",
-      "https://www.mass.gov/locations/plymouth-probate-and-family-court",
-      "https://www.mass.gov/locations/plymouth-juvenile-court",
-      "https://www.mass.gov/locations/plymouth-district-court"
+      "https://www.courtreference.com/Plymouth-County-Massachusetts-Courts.htm"
     ],
     "address_source": "https://www.mass.gov/locations/plymouth-county-superior-court",
     "address_verified": "2026-09-03"
