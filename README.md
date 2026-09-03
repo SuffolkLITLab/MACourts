@@ -8,19 +8,25 @@ A dependency-light, plain-Python Massachusetts court lookup and jurisdiction-mat
 - Avoid GeoPandas in the runtime lookup path: standard-library JSON + Shapely is enough.
 - Do not import docassemble, Django, or an EFSP client in the shared layer.
 - Keep geocoding in the caller. The shared layer accepts city/county/ZIP and optional coordinates.
-- Read the existing docassemble-MACourts JSON format unchanged during migration.
+- Own the Massachusetts court records, BMC geometry, ZIP lookup data, jurisdiction rules, and matching code.
 - Return semantic court names plus reasons, with local court/session records as optional enrichment.
+
+## Package data
+
+The maintained court catalogs and geographic lookup data are bundled inside `macourts/data/` and included in installed distributions. Code accesses them through `importlib.resources`, so callers do not need to know a filesystem path.
+
+Current data includes District, Housing, BMC, Superior, Juvenile, Probate and Family, Land, Appeals, and Supreme Judicial Court records; Boston ward/BMC geometry; and the legacy Massachusetts ZIP lookup table used for compatibility work.
 
 ## Current prototype
 
-`macourts_core.py` includes:
+The package currently includes:
 
 - plain `Location`, `CourtRecord`, and `CourtMatch` models;
-- legacy JSON catalog loading;
-- a data-driven city/county rule matcher;
+- loading the existing MACourts JSON schema directly from package resources;
+- a composable `CourtFinder`;
+- data-driven city/county rules;
 - BMC Shapely point-in-polygon matching, including Winthrop and nearest-polygon fallback;
 - statewide court matching;
-- a composable `CourtFinder`;
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
-This repository is the shared core. Integration and compatibility work for the existing docassemble package is tracked in [docassemble-MACourts issue #130](https://github.com/SuffolkLITLab/docassemble-MACourts/issues/130).
+Integration and compatibility work for the existing docassemble package is tracked in [docassemble-MACourts issue #130](https://github.com/SuffolkLITLab/docassemble-MACourts/issues/130).

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from collections import defaultdict
 from dataclasses import dataclass, field
+from importlib.resources import files
 from pathlib import Path
 from typing import Any, Collection, Iterable, Mapping
 
@@ -88,6 +89,11 @@ LEGACY_FILES = {
 }
 
 
+def package_data():
+    """Return the installed package data directory as an importlib Traversable."""
+    return files("macourts").joinpath("data")
+
+
 class CourtCatalog:
     def __init__(self, records: Iterable[CourtRecord] = ()) -> None:
         self.records = tuple(records)
@@ -108,6 +114,19 @@ class CourtCatalog:
             if not path.exists():
                 continue
             with path.open(encoding="utf-8-sig") as handle:
+                for item in json.load(handle):
+                    records.append(CourtRecord.from_legacy(item, department))
+        return cls(records)
+
+    @classmethod
+    def from_package_data(cls) -> "CourtCatalog":
+        records: list[CourtRecord] = []
+        root = package_data()
+        for stem, department in LEGACY_FILES.items():
+            resource = root.joinpath(f"{stem}.json")
+            if not resource.is_file():
+                continue
+            with resource.open("r", encoding="utf-8-sig") as handle:
                 for item in json.load(handle):
                     records.append(CourtRecord.from_legacy(item, department))
         return cls(records)
@@ -193,17 +212,30 @@ class BostonMunicipalCourtMatcher:
             raise ValueError("at least one BMC geometry is required")
 
     @classmethod
-    def from_geojson(cls, path: str | Path) -> "BostonMunicipalCourtMatcher":
-        path = Path(path)
-        with path.open(encoding="utf-8") as handle:
-            data = json.load(handle)
+    def _from_geojson_data(
+        cls,
+        data: Mapping[str, Any],
+        source: str,
+    ) -> "BostonMunicipalCourtMatcher":
         areas = []
         for feature in data["features"]:
             courthouse = feature.get("properties", {}).get("courthouse")
             geometry = feature.get("geometry")
             if courthouse and geometry:
                 areas.append((str(courthouse), shape(geometry)))
-        return cls(areas, source=path.name)
+        return cls(areas, source=source)
+
+    @classmethod
+    def from_geojson(cls, path: str | Path) -> "BostonMunicipalCourtMatcher":
+        path = Path(path)
+        with path.open(encoding="utf-8") as handle:
+            return cls._from_geojson_data(json.load(handle), path.name)
+
+    @classmethod
+    def from_package_data(cls) -> "BostonMunicipalCourtMatcher":
+        resource = package_data().joinpath("boston_wards.geojson")
+        with resource.open("r", encoding="utf-8") as handle:
+            return cls._from_geojson_data(json.load(handle), resource.name)
 
     @staticmethod
     def full_name(courthouse: str) -> str:
@@ -253,8 +285,6 @@ class BostonMunicipalCourtMatcher:
                     )
                 ]
 
-        # Preserve the old nearest-ward fallback, but only after confirming
-        # this is a Boston address.
         nearest = min(self.areas, key=lambda area: point.distance(area.geometry))
         return [
             Candidate(

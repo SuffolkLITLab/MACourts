@@ -11,3 +11,13 @@ dependencies = ["shapely>=2.0.6"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["macourts*"]
+
+[tool.setuptools.package-data]
+macourts = ["data/*.json", "data/*.geojson"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 from shapely.geometry import Polygon
 
-from macourts_core import (
+from macourts import (
     BostonMunicipalCourtMatcher,
     Coordinates,
     CourtCatalog,
@@ -12,6 +12,7 @@ from macourts_core import (
     LocationRule,
     RuleMatcher,
     location_from_object,
+    package_data,
 )
 
 
@@ -64,3 +65,20 @@ def test_docassemble_adapter_is_duck_typed():
     )
     location = location_from_object(address)
     assert location.coordinates == Coordinates(42.36, -71.06)
+
+
+def test_packaged_catalog_is_available():
+    catalog = CourtCatalog.from_package_data()
+    assert catalog.resolve(
+        "Brighton Division, Boston Municipal Court",
+        "Boston Municipal Court",
+    )
+
+
+def test_packaged_bmc_geometry_is_available():
+    matcher = BostonMunicipalCourtMatcher.from_package_data()
+    assert matcher.areas
+
+
+def test_zip_data_is_packaged():
+    assert package_data().joinpath("ma_zip_codes.json").is_file()
