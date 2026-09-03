@@ -302,7 +302,7 @@ class BostonMunicipalCourtMatcher:
 class StatewideMatcher:
     courts = (
         ("Land Court", "Land Court"),
-        ("Appeals Court", "Appeals Court"),
+        ("Appeals Court", "Massachusetts Appeals Court (Single Justice)"),
         ("Supreme Judicial Court", "Supreme Judicial Court"),
     )
 
