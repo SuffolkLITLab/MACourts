@@ -23,6 +23,9 @@
     "description": "The Land Court Department serves the entire Commonwealth of Massachusetts. Based in Boston, the Land Court may schedule sessions in other locations within the Commonwealth.",
     "url": "https://www.mass.gov/orgs/land-court",
     "address_source": "https://www.mass.gov/orgs/land-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://www.boston.gov/departments/law/what-tax-title-process"
+    ]
   }
 ]
