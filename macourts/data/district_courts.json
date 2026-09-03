@@ -554,7 +554,14 @@
     ],
     "description": "This court serves Fall River, Freetown, Somerset, Swansea, and Westport.",
     "address_source": "https://www.mass.gov/orgs/district-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_note": "Older 2025 legal-aid and advocacy directories still show 5th Floor / 02720, but current independent court directories and a current local criminal-defense directory corroborate the newer 2nd Floor location; this appears to be a recent intra-building move. The exact ZIP has also lagged in some third-party directories.",
+    "address_corrob_sources": [
+      "https://bristolcounty.massachusettscourt.us/court-records.html",
+      "https://www.kevinrcollinslaw.com/fall-river-district-court/",
+      "https://www.masslegalhelp.org/sites/default/files/2025-08/Directory%20Legal%20Tactics%202025%20-%20Update%208-26-2025.pdf",
+      "https://www.womenslaw.org/find-help/ma/courthouse-locations/all"
+    ]
   },
   {
     "fax": "",
@@ -1749,7 +1756,11 @@
       "address": "50 State Street"
     },
     "address_source": "https://www.mass.gov/orgs/district-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_note": "Physical 01103 and mailing 01102 are intentionally separate. Other offices in the same Roderick L. Ireland Courthouse and current public-officer records use 50 State Street / 01103 as a physical location.",
+    "address_corrob_sources": [
+      "https://www.sec.state.ma.us/divisions/commissions/download/commissioners-to-qualify.pdf"
+    ]
   },
   {
     "fax": "(781) 341-8744",
