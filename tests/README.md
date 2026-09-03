@@ -12,3 +12,10 @@ The current suite contains representative and edge cases for every court departm
 BMC coordinates are stable interior points derived from the packaged `boston_wards.geojson`, plus Winthrop, negative cases, and a nearest-polygon fallback point. The purpose is to catch geometry/data changes that silently move an address into a different BMC division.
 
 Concurrent-jurisdiction cases deliberately compare the whole result set rather than just checking that one court is present.
+
+
+## External evidence
+
+When a jurisdiction rule is disputed or stale, record the supporting official sources in
+`fixtures/jurisdiction_evidence.md` and add source URLs / a verification date to the
+specific contract case. Bellingham and Freetown are the first examples of this audit trail.
