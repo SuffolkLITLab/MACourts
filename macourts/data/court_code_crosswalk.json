@@ -1,0 +1,98 @@
+{
+  "verified_on": "2026-09-03",
+  "notes": "Court-code fields are not uniform across Massachusetts Trial Court departments. This crosswalk documents the current MassCourts case-number code system separately from Tyler/EFSP route keys and from legacy Trial Court location codes.",
+  "sources": {
+    "district": "https://www.mass.gov/info-details/district-court-get-to-know-the-case-number-format",
+    "bmc": "https://www.mass.gov/info-details/boston-municipal-court-get-to-know-the-case-number-format",
+    "housing": "https://www.mass.gov/info-details/housing-court-get-to-know-the-case-number-format",
+    "superior": "https://www.mass.gov/info-details/superior-court-get-to-know-the-case-number-format",
+    "probate": "https://www.mass.gov/info-details/probate-and-family-court-get-to-know-the-case-number-format",
+    "land": "https://www.mass.gov/info-details/land-court-get-to-know-the-case-number-format",
+    "legacy_location_codes": "https://www.mass.gov/info-details/trial-court-codes-court-location-listing"
+  },
+  "departments": {
+    "District Court": {
+      "record_field": "court_code",
+      "meaning": "Two-digit MassCourts site code used in District Court docket numbers.",
+      "status": "current format page agrees with MACourts values; retired sites may retain historical codes. Winchendon 70 is historical after consolidation into Gardner 63."
+    },
+    "Boston Municipal Court": {
+      "record_field": "court_code",
+      "meaning": "Two-digit MassCourts site code used in BMC docket numbers.",
+      "codes": {
+        "Central": "01",
+        "Roxbury": "02",
+        "South Boston": "03",
+        "Charlestown": "04",
+        "East Boston": "05",
+        "West Roxbury": "06",
+        "Dorchester": "07",
+        "Brighton": "08"
+      }
+    },
+    "Housing Court": {
+      "record_field": "court_code",
+      "meaning": "Division-level MassCourts code. Multiple physical sessions share one division code.",
+      "codes": {
+        "Eastern Housing Court": "H84",
+        "Central Housing Court": "H85",
+        "Metro South Housing Court": "H82",
+        "Northeast Housing Court": "H77",
+        "Southeast Housing Court": "H83",
+        "Western Housing Court": "H79"
+      },
+      "important": "Stoughton, Canton, and Brockton are physical Metro South sessions and use H82 for MassCourts docket identity even though Tyler/EFSP may expose different or legacy route labels."
+    },
+    "Superior Court": {
+      "record_field": "court_code",
+      "meaning": "County-level MassCourts code. Multiple physical sessions within a county share the county code.",
+      "codes": {
+        "Barnstable": "72",
+        "Bristol": "73",
+        "Dukes": "74",
+        "Nantucket": "75",
+        "Berkshire": "76",
+        "Essex": "77",
+        "Franklin": "78",
+        "Hampden": "79",
+        "Hampshire": "80",
+        "Middlesex": "81",
+        "Norfolk": "82",
+        "Plymouth": "83",
+        "Suffolk": "84",
+        "Worcester": "85"
+      }
+    },
+    "Probate and Family Court": {
+      "record_field": "court_code",
+      "record_field_meaning": "Legacy Trial Court location code (P72-P85) retained for compatibility; this is not the site prefix used in current Probate docket numbers.",
+      "current_masscourts_field": "masscourts_site_code",
+      "current_masscourts_meaning": "Two-letter site prefix at the start of a Probate and Family Court docket number.",
+      "legacy_to_current": {
+        "P72": "BA",
+        "P73": "BR",
+        "P74": "DU",
+        "P75": "NA",
+        "P76": "BE",
+        "P77": "ES",
+        "P78": "FR",
+        "P79": "HD",
+        "P80": "HS",
+        "P81": "MI",
+        "P82": "NO",
+        "P83": "PL",
+        "P84": "SU",
+        "P85": "WO"
+      }
+    },
+    "Land Court": {
+      "record_field": null,
+      "meaning": "Land Court docket numbers do not contain a court-location code; they use year + case type + sequence. A synthetic court_code should not be inferred."
+    },
+    "Juvenile Court": {
+      "record_field": "court_code",
+      "meaning": "Trial Court Juvenile location code. The consolidated 2021 registry contains historical/alternate codes as well as current physical-site identities.",
+      "important": "Springfield appears under both J23 and J69 in the published registry. MACourts keeps one physical Springfield record, uses J69 as primary, and preserves J23 as an alias rather than creating two court locations."
+    }
+  }
+}
