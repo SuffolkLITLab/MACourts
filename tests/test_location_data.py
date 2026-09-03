@@ -62,10 +62,11 @@ def test_stoughton_housing_session_is_present_with_separate_filing_address():
         "state": "MA",
         "address": "35 Shawmut Road",
     }
+    assert stoughton["court_code"] == "H82"
     assert stoughton["tyler_code"] is None
 
 
-def test_juvenile_locations_have_unique_names_and_current_springfield_code():
+def test_juvenile_locations_have_unique_names_and_preserve_springfield_alias():
     juvenile = load("juvenile_courts.json")
     names = [court["name"] for court in juvenile]
     assert len(names) == len(set(names))
@@ -73,6 +74,11 @@ def test_juvenile_locations_have_unique_names_and_current_springfield_code():
         court for court in juvenile if court["name"] == "Springfield Juvenile Court"
     )
     assert springfield["court_code"] == "J69"
+    assert springfield["court_code_aliases"] == ["J23"]
+
+    catalog = CourtCatalog.from_package_data()
+    assert catalog.resolve_court_code("J69")[0].name == "Springfield Juvenile Court"
+    assert catalog.resolve_court_code("J23")[0].name == "Springfield Juvenile Court"
 
 
 def test_superior_physical_location_names_are_unique():
@@ -156,3 +162,16 @@ def test_tyler_route_keys_are_not_used_as_filing_identity():
     assert stoughton["tyler_code"] is None
     assert stoughton["filing_location"] == "Metro South Housing Court - Canton Session"
     assert canton["tyler_code_status"] == "needs_reverification"
+
+
+def test_second_source_address_corrections_override_known_massgov_errors():
+    juvenile = {court["name"]: court for court in load("juvenile_courts.json")}
+
+    barnstable = juvenile["Barnstable Juvenile Court"]
+    assert barnstable["mailing_address"]["address"] == "P.O. Box 427"
+    assert barnstable["mailing_address"]["zip"] == "02630-0427"
+    assert len(barnstable["address_corrob_sources"]) >= 2
+
+    edgartown = juvenile["Edgartown Juvenile Court"]
+    assert edgartown["address"]["unit"] == "Unit 4"
+    assert len(edgartown["address_corrob_sources"]) >= 2
