@@ -81,6 +81,20 @@ class CourtRecord:
             return (self.location_name,)
         return tuple(str(value) for value in values)
 
+    @property
+    def court_code_aliases(self) -> tuple[str, ...]:
+        """Historical or alternate Trial Court docket/location codes."""
+        values = self.raw.get("court_code_aliases") or ()
+        return tuple(str(value) for value in values)
+
+    def matches_court_code(self, value: str) -> bool:
+        """Match a primary or historical/alternate Trial Court code."""
+        target = norm(value)
+        return (
+            (self.court_code is not None and norm(self.court_code) == target)
+            or target in {norm(alias) for alias in self.court_code_aliases}
+        )
+
 
 @dataclass(frozen=True)
 class MatchReason:
@@ -170,6 +184,14 @@ class CourtCatalog:
                 department_key is None
                 or norm(record.department) == department_key
             )
+        )
+
+    def resolve_court_code(self, court_code: str) -> tuple[CourtRecord, ...]:
+        """Resolve a current or historical/alternate Trial Court docket code."""
+        return tuple(
+            record
+            for record in self.records
+            if record.matches_court_code(court_code)
         )
 
     @classmethod
