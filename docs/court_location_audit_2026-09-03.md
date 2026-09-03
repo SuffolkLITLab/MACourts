@@ -451,6 +451,222 @@ For MACourts/LITEFile:
 - do not guess codes for newly discovered sessions;
 - record provenance whenever a Tyler value is changed.
 
+## Second-source verification and Mass.gov discrepancies
+
+Mass.gov is the best source for the Trial Court's own current presentation of
+its locations, but it is not treated as infallible. For material address
+changes in this audit, the preferred standard is:
+
+1. compare the current Mass.gov court page with the previous MACourts value;
+2. look for an independent government, court-generated, legal-aid, municipal,
+   or reputable court-directory source;
+3. preserve a discrepancy note rather than silently overwriting when sources
+   conflict;
+4. prefer actual court-generated notices or other government records over
+   general web directories.
+
+### Court-code registry caveat
+
+The Mass.gov page titled **Trial Court codes - Court location listing** is not a
+live-location roster. It says it was last updated **March 19, 2021**:
+
+https://www.mass.gov/info-details/trial-court-codes-court-location-listing
+
+That page remains useful for docket/history semantics, but it contains stale or
+ambiguous entries. Two examples matter to MACourts:
+
+- it still lists Winchendon District Court code `70`, even though Winchendon
+  has since been consolidated into Gardner. Code 70 is therefore kept as
+  historical metadata, not a current filing location;
+- it lists **Springfield Juvenile Court twice**, as both `J23` and `J69`.
+  MACourts keeps one current Springfield physical location, uses `J69` as its
+  primary code, and preserves `J23` as `court_code_aliases` for historical
+  docket lookup. We no longer claim that J23 is simply "wrong."
+
+The older code page also omits `H82` for Metro South Housing Court. A newer
+June 2025 Housing Court case-number guide explicitly identifies Metro South as
+`H82`:
+
+https://www.mass.gov/info-details/housing-court-get-to-know-the-case-number-format
+
+Independent legal-aid materials cite actual Metro South cases such as
+`23-H82-SP-1763`, `23-H82-SP-951`, and `22-H82-SP-2338`:
+
+https://www.masslegalhelp.org/es/node/182
+https://www.masslegalhelp.org/es/node/183
+
+For that reason, the Stoughton appearance session now carries
+`court_code: "H82"` while its separate Tyler/EFSP route remains null and must
+be resolved through the Canton filing location.
+
+### Address corroboration results
+
+#### Fall River District Court — likely recent intra-building move
+
+Previous MACourts data and several sources that were current through 2025 list:
+
+- 186 S. Main St., **5th Floor**
+- Fall River, MA **02720**
+
+Examples:
+
+- Massachusetts Legal Help, *2025 Legal Tactics Directory*:
+  https://www.masslegalhelp.org/sites/default/files/2025-08/Directory%20Legal%20Tactics%202025%20-%20Update%208-26-2025.pdf
+- WomensLaw courthouse directory:
+  https://www.womenslaw.org/find-help/ma/courthouse-locations/all
+
+Current Mass.gov instead says **2nd Floor / 02721**. That newer floor is also
+corroborated outside Mass.gov by current Bristol County court-directory pages
+and a current Massachusetts criminal-defense directory:
+
+- https://bristolcounty.massachusettscourt.us/court-records.html
+- https://www.kevinrcollinslaw.com/fall-river-district-court/
+
+This looks more like a recent move within the same 186 S. Main Street building
+than a historical scrape error. MACourts keeps **2nd Floor / 02721**, but the
+record carries the source conflict instead of describing the older 5th-floor
+data as merely erroneous.
+
+#### Springfield District / Hampden Superior — physical versus mailing ZIP
+
+The audited records separate the physical courthouse at **50 State Street,
+Springfield, MA 01103** from mailing addresses using **01102**.
+
+The Massachusetts Secretary of the Commonwealth's *Commissioners to Qualify*
+directory independently includes Hampden County Superior Court personnel at
+50 State Street, Springfield, MA 01103:
+
+https://www.sec.state.ma.us/divisions/commissions/download/commissioners-to-qualify.pdf
+
+The change is therefore modeled as physical-versus-mailing metadata, not as a
+claim that the older 01102 data was wholly wrong.
+
+#### Metro South Housing Court - Brockton — ZIP 02301
+
+The Auditor of the Commonwealth's formal Metro South Housing Court audit is
+addressed to:
+
+> 215 Main Street, Suite 160, Brockton, MA 02301
+
+Archive copy:
+https://archives.lib.state.ma.us/bitstreams/1a64f099-118c-42b3-b22c-4e17d9630e27/download
+
+That independently supports the audited physical ZIP of **02301**.
+
+#### Northeast Housing Lynn/Salem — 56 Federal Street, Salem
+
+The old JSON contained parser-corrupted values such as `"St. Salem"` and
+`"56 Federal"`. CourtReference independently lists the relevant Essex court
+locations at 56 Federal Street, Salem, supporting the structured normalization:
+
+https://www.courtreference.com/Essex-County-Massachusetts-Courts.htm
+
+#### Plymouth County Superior Court — Mass.gov ZIP appears wrong
+
+Mass.gov's Superior Court page currently says:
+
+> 52 Obery St., Plymouth, MA **02630**
+
+But Mass.gov's District, Probate, Housing, and Juvenile records for the same
+building use **02360**. More importantly for this second-source pass,
+CourtReference independently lists Plymouth County Superior Court - Plymouth at:
+
+> 52 Obery Street, Plymouth, MA **02360**
+
+https://www.courtreference.com/Plymouth-County-Massachusetts-Courts.htm
+
+MACourts therefore keeps **02360** and explicitly treats the Superior page's
+02630 as a likely Mass.gov typo.
+
+#### Nantucket County Superior Court — 02554
+
+CourtReference independently lists:
+
+> Nantucket County Superior Court, 16 Broad Street, Nantucket, MA 02554
+
+https://www.courtreference.com/Nantucket-County-Massachusetts-Courts.htm
+
+This supports the correction from the old `02544` value to **02554**.
+
+#### Barnstable Juvenile Court — corrected back to P.O. Box 427
+
+This second-source pass found that the earlier audit accepted a likely Mass.gov
+error. Mass.gov currently displays:
+
+> P.O. Box **1209**, Barnstable, MA **02630-0427**
+
+The box number and ZIP+4 suffix are internally suspicious. Independent sources
+consistently identify the Juvenile Court as **P.O. Box 427**:
+
+- CourtReference:
+  https://www.courtreference.com/courts/10362/barnstable-juvenile-court
+- RecordsFinder, database updated November 2025:
+  https://recordsfinder.com/court/courthouses/ma/barnstable/barnstable/barnstable-juvenile-court/
+- an actual Trial Court summons by publication for Barnstable County Juvenile
+  Court used `Route 6A, PO Box 427, Barnstable, MA 02630`:
+  https://zeta.creativecirclecdn.com/chief/files/20230510-141627-phpoUwxcU.pdf
+
+MACourts now uses **P.O. Box 427** while retaining ZIP+4 `02630-0427`.
+
+#### Edgartown Juvenile Court — restore Unit 4
+
+Mass.gov currently gives 12 Mariner's Way without a unit. Two independent
+sources preserve the more specific physical location:
+
+- Dukes County's own court directory:
+  https://www.dukescounty.gov/DCCourts
+- CourtReference:
+  https://www.courtreference.com/courts/21533/edgartown-juvenile-court
+
+Both identify **12 Mariner's Way, Unit 4**, with P.O. Box 550. MACourts now
+restores `Unit 4` while keeping the P.O. Box as separate mailing metadata.
+
+#### Brockton Juvenile Court — Suite 270
+
+A June 2026 summons by publication generated for the Trial Court identifies:
+
+> Plymouth County Juvenile Court  
+> 215 Main Street, Suite 270  
+> Brockton, MA 02301
+
+https://wareham.theweektoday.com/node/157950
+
+That is strong court-generated corroboration for the audited Suite 270 value.
+
+#### Newburyport Juvenile Court — Route 1 / Traffic Circle
+
+CourtReference independently gives:
+
+> 188 State Street, Route 1, Traffic Circle, Newburyport, MA 01950
+
+https://www.courtreference.com/courts/10699/newburyport-juvenile-court
+
+This supports retaining the route/traffic-circle qualifier in structured
+address metadata.
+
+#### Land Court — 5th Floor
+
+Boston.gov independently directs taxpayers to:
+
+> Land Court, 3 Pemberton Square, 5th Floor, Boston, MA 02108
+
+https://www.boston.gov/departments/law/what-tax-title-process
+
+This supports the 5th-floor addition.
+
+#### Supreme Judicial Court — Suite 2500
+
+Recent Massachusetts SJC slip opinions reproduced by Justia carry the Reporter
+of Decisions contact address at:
+
+> John Adams Courthouse, 1 Pemberton Square, Suite 2500, Boston, MA 02108-1750
+
+Examples:
+https://law.justia.com/cases/massachusetts/supreme-court/2026/sjc-13866.html
+https://law.justia.com/cases/massachusetts/supreme-court/2026/sjc-13867.html
+
+This independently corroborates the SJC suite/address.
+
 ## Remaining follow-up
 
 1. Re-verify the Metro South Housing Tyler route in both staging and production.
