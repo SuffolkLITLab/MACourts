@@ -180,7 +180,11 @@
     "description": "The Plymouth County Juvenile Court in Brockton serves Abington, Bridgewater, Brockton, E. Bridgewater, W. Bridgewater, and Whitman.",
     "url": "https://www.mass.gov/locations/brockton-juvenile-court",
     "address_source": "https://www.mass.gov/locations/brockton-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://wareham.theweektoday.com/node/157950"
+    ],
+    "address_note": "A June 2026 Trial Court summons by publication gives 215 Main Street, Suite 270, Brockton, MA 02301."
   },
   {
     "fax": "",
@@ -940,7 +944,10 @@
     ],
     "description": "The Essex County Juvenile Court in Newburyport serves Amesbury, Essex, Hamilton, Ipswich, Merrimac, Newbury, Newburyport, Rowley, Salisbury, Topsfield, Wenham, and West Newbury.",
     "address_source": "https://www.mass.gov/locations/newburyport-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "address_corrob_sources": [
+      "https://www.courtreference.com/courts/10699/newburyport-juvenile-court"
+    ]
   },
   {
     "fax": "413-664-7788",
