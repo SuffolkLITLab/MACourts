@@ -53,6 +53,34 @@ class CourtRecord:
             raw=dict(item),
         )
 
+    @property
+    def location_name(self) -> str:
+        """Human-facing identity of this physical/session location."""
+        return str(self.raw.get("location_name") or self.name)
+
+    @property
+    def accepts_filings(self) -> bool:
+        """Whether this location itself accepts filings/correspondence.
+
+        This is court-administration metadata, not a promise that the live EFSP
+        accepts every filing type at this location. LITEFile should still query
+        the live Tyler taxonomy for e-filing availability.
+        """
+        return bool(self.raw.get("accepts_filings", True))
+
+    @property
+    def filing_location_name(self) -> str:
+        """Canonical location to use for filing when this is appearance-only."""
+        return str(self.raw.get("filing_location") or self.location_name)
+
+    @property
+    def appearance_location_names(self) -> tuple[str, ...]:
+        """Locations where matters filed through this record may be heard."""
+        values = self.raw.get("appearance_locations")
+        if not values:
+            return (self.location_name,)
+        return tuple(str(value) for value in values)
+
 
 @dataclass(frozen=True)
 class MatchReason:
@@ -98,12 +126,51 @@ class CourtCatalog:
     def __init__(self, records: Iterable[CourtRecord] = ()) -> None:
         self.records = tuple(records)
         index: dict[tuple[str, str], list[CourtRecord]] = defaultdict(list)
+        location_index: dict[tuple[str, str], list[CourtRecord]] = defaultdict(list)
         for record in self.records:
             index[(norm(record.department), norm(record.name))].append(record)
+            location_index[
+                (norm(record.department), norm(record.location_name))
+            ].append(record)
         self._index = {key: tuple(value) for key, value in index.items()}
+        self._location_index = {
+            key: tuple(value) for key, value in location_index.items()
+        }
 
     def resolve(self, name: str, department: str) -> tuple[CourtRecord, ...]:
         return self._index.get((norm(department), norm(name)), ())
+
+    def resolve_location(
+        self,
+        location_name: str,
+        department: str,
+    ) -> tuple[CourtRecord, ...]:
+        """Resolve a physical/session location rather than a semantic court name."""
+        return self._location_index.get(
+            (norm(department), norm(location_name)),
+            (),
+        )
+
+    def filing_location_for(self, record: CourtRecord) -> CourtRecord | None:
+        """Return the record that accepts filings for an appearance/session record."""
+        matches = self.resolve_location(record.filing_location_name, record.department)
+        return matches[0] if matches else None
+
+    def filing_locations(
+        self,
+        department: str | None = None,
+    ) -> tuple[CourtRecord, ...]:
+        """Return locations that accept filings according to court metadata."""
+        department_key = norm(department) if department else None
+        return tuple(
+            record
+            for record in self.records
+            if record.accepts_filings
+            and (
+                department_key is None
+                or norm(record.department) == department_key
+            )
+        )
 
     @classmethod
     def from_legacy_directory(cls, directory: str | Path) -> "CourtCatalog":
