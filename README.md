@@ -58,6 +58,7 @@ the court.
 | `macourts.catalog` | loading and indexing the packaged court records |
 | `macourts.rules` | `LocationRule` and the data-driven `RuleMatcher` |
 | `macourts.boston` | BMC geometry and the BMC-derived Juvenile sessions |
+| `macourts.municipalities` | the 351 municipalities, their counties, and the community alias index |
 | `macourts.zips` | ZIP-code expansion |
 | `macourts.finder` | `CourtFinder`, statewide courts, and `build_default_finder()` |
 
