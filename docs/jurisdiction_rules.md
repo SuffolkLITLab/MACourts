@@ -109,6 +109,14 @@ Verified 2026-09-03; see also
 
 - **Bellingham** → Metro South Housing Court - Canton Session. Removed from the
   Central Worcester and Metro South Brockton lists, which no longer name it.
+- **The Metro South roster** — Mass.gov now gives the Brockton session six
+  towns (Abington, Bridgewater, Brockton, East Bridgewater, West Bridgewater,
+  Whitman) and the Canton session the whole of Norfolk County except Brookline.
+  The legacy Brockton list carried 34 towns, so 25 Norfolk County towns —
+  Quincy, Milton, Braintree, Dedham, Needham and the rest — were answered with
+  Brockton instead of Canton, and a stray "Eastham" sent a Cape Cod town there
+  too. The Brockton rule sat ahead of the Canton county rule in the `first`
+  chain, so it shadowed it.
 - **Stoughton** → Metro South Housing Court - Stoughton Session, a session
   Mass.gov now lists separately. Filings and correspondence still go to Canton;
   that is recorded as `accepts_filings` / `filing_location` on the record, not

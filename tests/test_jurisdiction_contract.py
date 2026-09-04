@@ -205,3 +205,41 @@ def test_barnstable_housing_session_names_its_whole_territory(finder, county):
     assert not [t for t in towns if t.casefold() not in listed]
 
 
+METRO_SOUTH_BROCKTON_TOWNS = {
+    "Abington",
+    "Bridgewater",
+    "Brockton",
+    "East Bridgewater",
+    "West Bridgewater",
+    "Whitman",
+}
+
+
+def test_metro_south_sessions_match_the_published_roster(finder):
+    """Brockton keeps six towns; Canton takes Norfolk County except Brookline.
+
+    The Brockton rule sits ahead of the Canton county rule in the ``first``
+    chain, so an over-broad Brockton list silently shadows Canton rather than
+    conflicting with it.
+    """
+    def housing(town):
+        return [m.name for m in finder.find(Location(city=town), ["Housing Court"])]
+
+    for town in sorted(METRO_SOUTH_BROCKTON_TOWNS):
+        assert housing(town) == ["Metro South Housing Court - Brockton Session"], town
+
+    norfolk = finder.municipality_index.canonical_municipalities_by_county()[
+        "Norfolk County"
+    ]
+    for town in norfolk:
+        if town == "Brookline":
+            assert housing(town) == ["Eastern Housing Court"]
+        elif town == "Stoughton":
+            assert housing(town) == ["Metro South Housing Court - Stoughton Session"]
+        else:
+            assert housing(town) == [
+                "Metro South Housing Court - Canton Session"
+            ], town
+
+    # Metro South's territory does not reach the Cape.
+    assert housing("Eastham") == ["Southeast Housing Court - Barnstable session"]

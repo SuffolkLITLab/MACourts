@@ -55,9 +55,37 @@ CITY_REMOVALS = {
         "bellingham",
     },
     ("Housing Court", "Metro South Housing Court - Brockton Session"): {
-        # Bellingham and Stoughton have moved off the Brockton session roster.
+        # Mass.gov now gives the Brockton session six towns. The rest of the
+        # legacy list is Norfolk County, which the Canton session took over when
+        # Metro South was reorganized, plus a stray Cape Cod town.
         "bellingham",
         "stoughton",
+        "avon",
+        "braintree",
+        "canton",
+        "cohasset",
+        "dedham",
+        "dover",
+        "eastham",
+        "foxborough",
+        "franklin",
+        "holbrook",
+        "medfield",
+        "medway",
+        "millis",
+        "milton",
+        "needham",
+        "norfolk",
+        "norwood",
+        "plainville",
+        "quincy",
+        "randolph",
+        "sharon",
+        "walpole",
+        "wellesley",
+        "westwood",
+        "weymouth",
+        "wrentham",
     },
     ("Housing Court", "Southeast Housing Court - Fall River Session"): {
         # Handled by the concurrent Fall River / New Bedford rule below.

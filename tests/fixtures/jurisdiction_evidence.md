@@ -87,3 +87,45 @@ whose legacy list repeats every Cape and Islands town — an artifact of the
 to the Barnstable list makes the rule self-sufficient rather than dependent on
 county inference.
 
+## Metro South Housing Court — the Brockton and Canton rosters
+
+The Metro South division was reorganized after the 2018 statewide Housing Court
+expansion, and the legacy chains predate the current split. Mass.gov's overview
+states the division "serves the municipalities of Abington, Bridgewater,
+Brockton, East Bridgewater, West Bridgewater, and Whitman, and the municipalities
+in Norfolk County other than Brookline", divided as:
+
+- Brockton session — those six towns only:
+  https://www.mass.gov/locations/metro-south-housing-court-brockton-session
+- Canton session — Norfolk County other than Brookline:
+  https://www.mass.gov/locations/metro-south-housing-court-canton-session
+- Stoughton session — Stoughton only:
+  https://www.mass.gov/locations/metro-south-housing-court-stoughton-session
+- Division overview:
+  https://www.mass.gov/info-details/overview-of-the-metro-south-housing-court
+
+The legacy Brockton list held 34 towns. Twenty-five were Norfolk County towns now
+served by the Canton session, and because the Brockton rule sits ahead of the
+Canton county rule in a ``first`` chain, it shadowed it — Quincy, Milton,
+Braintree, Dedham, Needham and the rest all answered Brockton. "Courts serving
+Quincy" names the Canton session:
+https://www.mass.gov/info-details/courts-serving-quincy
+
+Brookline is unaffected: an earlier rule gives it the Eastern Housing Court,
+which is consistent with the division overview's carve-out.
+
+### The stray "Eastham"
+
+The legacy Brockton list also carried "eastham", a Barnstable County town well
+outside Metro South's territory. Mass.gov's Canton session page repeats it, but
+that entry is contradicted by the same division's own scope statement (Norfolk
+County plus six named towns), and Eastham's town page gives the Southeast
+Housing Court's Barnstable session:
+
+- https://www.mass.gov/info-details/courts-serving-eastham
+- https://www.mass.gov/locations/southeast-housing-court-barnstable-session
+  (lists Eastham)
+
+Eastham is treated as Southeast / Barnstable. Note that the Canton session page
+lists 28 towns, which is exactly the 27 Norfolk-other-than-Brookline towns plus
+this stray entry.
