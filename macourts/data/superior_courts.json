@@ -29,7 +29,8 @@
     "description": "This court serves the cities and towns of Barnstable County.",
     "location_name": "Barnstable County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1165"
   },
   {
     "fax": "(413) 442-9190",
@@ -61,7 +62,8 @@
     "description": "This court serves all cities and towns of Berkshire County.\r\n\r\n",
     "location_name": "Berkshire County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1179"
   },
   {
     "fax": "(508) 821-9563 ",
@@ -94,7 +96,8 @@
     "location_name": "Bristol County Superior Court",
     "url": "https://www.mass.gov/locations/bristol-county-superior-court",
     "address_source": "https://www.mass.gov/locations/bristol-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1126"
   },
   {
     "fax": "(508) 821-9563",
@@ -131,7 +134,8 @@
     "address_verified": "2026-09-03",
     "address_corrob_sources": [
       "https://bristolcounty.massachusettscourt.us/index.html"
-    ]
+    ],
+    "tyler_code": "1126"
   },
   {
     "fax": "",
@@ -166,7 +170,8 @@
     "location_name": "Bristol County Superior Court-New Bedford",
     "case_scope": "civil matters",
     "address_source": "https://www.mass.gov/locations/bristol-county-superior-court-new-bedford",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1126"
   },
   {
     "fax": "",
@@ -198,7 +203,8 @@
     "description": "This court serves all the towns of Dukes County.",
     "location_name": "Dukes County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1175"
   },
   {
     "fax": "(978) 741-0691",
@@ -241,7 +247,8 @@
     "location_name": "Essex County Superior Court",
     "url": "https://www.mass.gov/locations/essex-county-superior-court",
     "address_source": "https://www.mass.gov/locations/essex-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1177"
   },
   {
     "fax": "(978) 687-7869 ",
@@ -274,7 +281,8 @@
     "description": "This court serves all cities and towns of Essex County.",
     "location_name": "Essex County Superior Court - Lawrence",
     "address_source": "https://www.mass.gov/locations/essex-county-superior-court-lawrence",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1177"
   },
   {
     "fax": "(978) 462-0432",
@@ -307,7 +315,8 @@
     "description": "This court serves all cities and towns of Essex County.",
     "location_name": "Essex County Superior Court - Newburyport",
     "address_source": "https://www.mass.gov/locations/essex-county-superior-court-newburyport",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1177"
   },
   {
     "fax": "(413) 774-4770 ",
@@ -343,7 +352,8 @@
     "description": "This court serves all the cities and towns of Franklin County.",
     "location_name": "Franklin County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1178"
   },
   {
     "fax": "(413) 737-1611",
@@ -385,7 +395,8 @@
     "address_verified": "2026-09-03",
     "address_corrob_sources": [
       "https://www.sec.state.ma.us/divisions/commissions/download/commissioners-to-qualify.pdf"
-    ]
+    ],
+    "tyler_code": "1181"
   },
   {
     "fax": "(413) 586-8217",
@@ -422,7 +433,8 @@
     "description": "This court serves all cities and towns of Hampshire County.",
     "location_name": "Hampshire County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1180"
   },
   {
     "fax": "",
@@ -456,7 +468,8 @@
     "location_name": "Middlesex County Superior Court",
     "url": "https://www.mass.gov/locations/middlesex-county-superior-court",
     "address_source": "https://www.mass.gov/locations/middlesex-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1176"
   },
   {
     "fax": "",
@@ -489,7 +502,8 @@
     "description": "This court serves all cities and towns of Middlesex County.",
     "location_name": "Middlesex County Superior Court - Lowell",
     "address_source": "https://www.mass.gov/locations/middlesex-county-superior-court-lowell",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1176"
   },
   {
     "fax": "(508) 228-3725",
@@ -525,7 +539,8 @@
     "address_verified": "2026-09-03",
     "address_corrob_sources": [
       "https://www.courtreference.com/Nantucket-County-Massachusetts-Courts.htm"
-    ]
+    ],
+    "tyler_code": "1185"
   },
   {
     "fax": "",
@@ -557,7 +572,8 @@
     "description": "This court serves all cities and towns in Norfolk County.",
     "location_name": "Norfolk County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1196"
   },
   {
     "fax": "(508) 830-0676",
@@ -594,7 +610,8 @@
       "https://www.courtreference.com/Plymouth-County-Massachusetts-Courts.htm"
     ],
     "address_source": "https://www.mass.gov/locations/plymouth-county-superior-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1186"
   },
   {
     "fax": "(508) 584-5639",
@@ -627,7 +644,8 @@
     "description": "This court serves all cities and towns in Plymouth County. Criminal sessions are held in Brockton.",
     "location_name": "Plymouth County Superior Court - Brockton",
     "address_source": "https://www.mass.gov/locations/plymouth-county-superior-court-brockton",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1186"
   },
   {
     "fax": "",
@@ -669,7 +687,8 @@
     "description": "This court serves Boston, Winthrop, Chelsea, and Revere.",
     "location_name": "Suffolk County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1235"
   },
   {
     "fax": "(508) 798-3216",
@@ -701,6 +720,7 @@
     "description": "This court serves all cities and towns in Worcester County.",
     "location_name": "Worcester County Superior Court",
     "address_source": "https://www.mass.gov/orgs/superior-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1195"
   }
 ]

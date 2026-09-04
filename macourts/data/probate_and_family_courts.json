@@ -35,7 +35,8 @@
     "description": "This court serves all cities and towns in Barnstable County.",
     "location_name": "Barnstable Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/barnstable-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "335"
   },
   {
     "fax": "(413) 443-3430",
@@ -74,7 +75,8 @@
     "description": "This location serves all cities and towns of Berkshire County.",
     "location_name": "Berkshire Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/berkshire-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "341"
   },
   {
     "fax": "",
@@ -108,7 +110,8 @@
     "description": "The Bristol Probate and Family Court in Taunton serves all the cities and towns in Bristol County. ",
     "location_name": "Bristol Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/bristol-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "350"
   },
   {
     "fax": "(508) 584-4142",
@@ -142,7 +145,8 @@
     "description": "This court serves Abington, Bridgewater, Brockton, Carver, Duxbury, East Bridgewater, Halifax, Hanover, Hanson, Hingham, Hull, Kingston, Lakeville, Marion, Marshfield, Mattapoisett, Middleboro, Norwell, Pembroke , Plymouth, Plympton, Rochester, Rockland, Scituate, Wareham, West Bridgewater, and Whitman.",
     "location_name": "Brockton Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/brockton-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "347"
   },
   {
     "fax": "(508) 627-7664",
@@ -175,7 +179,8 @@
     "description": "This court serves all the towns of Dukes County.",
     "location_name": "Dukes Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/dukes-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "337"
   },
   {
     "fax": "",
@@ -214,7 +219,8 @@
     "description": "This court serves all cities and towns in Essex County. ",
     "location_name": "Essex Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/essex-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "352"
   },
   {
     "fax": "",
@@ -241,7 +247,8 @@
     "description": "This court serves all cities and towns in Essex County. ",
     "location_name": "Lawrence Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/lawrence-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "352"
   },
   {
     "fax": "(413) 774-3829",
@@ -274,7 +281,8 @@
     "description": "This court serves all cities and towns in Franklin County.",
     "location_name": "Franklin Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/franklin-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "303"
   },
   {
     "fax": "(413) 781-5605",
@@ -320,7 +328,8 @@
       }
     ],
     "address_source": "https://www.mass.gov/orgs/probate-and-family-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "342"
   },
   {
     "fax": "(413) 584-1132",
@@ -368,7 +377,8 @@
       }
     ],
     "address_source": "https://www.mass.gov/orgs/probate-and-family-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "343"
   },
   {
     "fax": "(781) 528-2318",
@@ -401,7 +411,8 @@
     "description": "This court serves cities and towns in Southern Middlesex County.",
     "location_name": "Middlesex Probate and Family Court South - Woburn",
     "address_source": "https://www.mass.gov/locations/middlesex-probate-and-family-court-south-woburn",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "344"
   },
   {
     "fax": "(978) 619-1014",
@@ -434,7 +445,8 @@
     "description": "This court serves all cities and towns in Northern Middlesex County.",
     "location_name": "Middlesex Probate and Family Court North - Lowell",
     "address_source": "https://www.mass.gov/locations/middlesex-probate-and-family-court-north-lowell",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "344"
   },
   {
     "fax": "(508) 228-3662",
@@ -467,7 +479,8 @@
     "description": "This court serves Nantucket county.",
     "location_name": "Nantucket Probate and Family Court",
     "address_source": "https://www.mass.gov/orgs/probate-and-family-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "345"
   },
   {
     "fax": "(781) 830-4310",
@@ -501,7 +514,8 @@
     "description": "This court serves all cities and towns in Norfolk County.",
     "location_name": "Norfolk Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/norfolk-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "346"
   },
   {
     "fax": "(508) 746-6846",
@@ -535,7 +549,8 @@
     "description": "This court serves all cities and towns in Plymouth County.",
     "location_name": "Plymouth Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/plymouth-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "347"
   },
   {
     "fax": "(617) 788-8962",
@@ -581,7 +596,8 @@
       }
     ],
     "address_source": "https://www.mass.gov/orgs/probate-and-family-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "339"
   },
   {
     "fax": "(508) 752-6138",
@@ -618,7 +634,8 @@
     "description": "This court serves all cities and towns in Worcester County.",
     "location_name": "Worcester Probate and Family Court",
     "address_source": "https://www.mass.gov/orgs/probate-and-family-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "348"
   },
   {
     "fax": "",
@@ -645,7 +662,8 @@
     "description": "The Bristol Probate and Family Court in Fall River serves all the cities and towns in Bristol County.",
     "location_name": "Fall River Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/fall-river-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "350"
   },
   {
     "fax": "(508) 999-1211",
@@ -672,6 +690,7 @@
     "description": "The Bristol Probate and Family Court in New Bedford serves all cities and towns in Bristol County.",
     "location_name": "New Bedford Probate and Family Court",
     "address_source": "https://www.mass.gov/locations/new-bedford-probate-and-family-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "350"
   }
 ]

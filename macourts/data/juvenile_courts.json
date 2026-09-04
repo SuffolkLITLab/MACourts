@@ -33,7 +33,8 @@
     ],
     "description": "The Bristol County Juvenile Court in Attleboro serves Attleboro, Mansfield, North Attleboro, and Norton.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1015:AT"
   },
   {
     "fax": "",
@@ -77,7 +78,8 @@
       "https://www.courtreference.com/courts/10362/barnstable-juvenile-court",
       "https://recordsfinder.com/court/courthouses/ma/barnstable/barnstable/barnstable-juvenile-court/",
       "https://zeta.creativecirclecdn.com/chief/files/20230510-141627-phpoUwxcU.pdf"
-    ]
+    ],
+    "tyler_code": "1036:BA"
   },
   {
     "fax": "",
@@ -108,7 +110,8 @@
     ],
     "description": "The Franklin-Hampshire Counties Juvenile Court in Belchertown serves Belchertown, Granby and Ware.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "965:BE"
   },
   {
     "fax": "(617) 788-8991",
@@ -147,7 +150,8 @@
       "address": "P.O. Box 9663"
     },
     "address_source": "https://www.mass.gov/locations/boston-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1086:BO"
   },
   {
     "fax": "",
@@ -184,7 +188,8 @@
     "address_corrob_sources": [
       "https://wareham.theweektoday.com/node/157950"
     ],
-    "address_note": "A June 2026 Trial Court summons by publication gives 215 Main Street, Suite 270, Brockton, MA 02301."
+    "address_note": "A June 2026 Trial Court summons by publication gives 215 Main Street, Suite 270, Brockton, MA 02301.",
+    "tyler_code": "1037:BK"
   },
   {
     "fax": "",
@@ -225,7 +230,8 @@
     ],
     "description": "The Middlesex County Juvenile Court in Cambridge serves Arlington, Belmont, Cambridge, Everett, Malden, Medford, Melrose, Somerville, and Wakefield.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1095:CA"
   },
   {
     "fax": "(617) 660-9222",
@@ -256,7 +262,8 @@
     ],
     "description": "The Suffolk County Juvenile Court in Chelsea serves Chelsea, Revere, East Boston, and Winthrop for delinquency, harassment and criminal cases. Care and protection, child requiring assistance and jury trials for all sessions are heard in the Boston session.  Substance abuse and mental Illness cases are heard in all sites within the Suffolk County Juvenile Court.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1086:BO"
   },
   {
     "fax": "",
@@ -297,7 +304,8 @@
     "appearance_locations": [
       "Dedham Juvenile Court",
       "Stoughton Juvenile Court"
-    ]
+    ],
+    "tyler_code": "885:DE"
   },
   {
     "fax": "(617) 436-3595",
@@ -333,7 +341,8 @@
     ],
     "description": "This court is formally called the Suffolk County Juvenile Court - Dorchester. Delinquency, harassment and criminal cases for the area covered by the Boston Police's Dorchester Division. All care and protections, child requiring assistance and jury trials are heard in the Boston session.  Substance abuse and mental Illness cases are heard in all sites within the Suffolk County Juvenile Court.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1086:BO"
   },
   {
     "fax": "",
@@ -364,7 +373,8 @@
     ],
     "description": "The Worcester County Juvenile Court in Dudley serves Charlton, Dudley, Oxford, Southbridge, Sturbridge, and Webster.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "915:DU"
   },
   {
     "fax": "",
@@ -402,7 +412,8 @@
     "address_corrob_sources": [
       "https://www.dukescounty.gov/DCCourts",
       "https://www.courtreference.com/courts/21533/edgartown-juvenile-court"
-    ]
+    ],
+    "tyler_code": "1036:MV"
   },
   {
     "fax": "",
@@ -440,7 +451,8 @@
     ],
     "description": "The Bristol County Juvenile Court in Fall River serves Fall River, Freetown, Somerset, Swansea, and Westport.",
     "address_source": "https://www.mass.gov/locations/fall-river-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1015:FV"
   },
   {
     "fax": "",
@@ -471,7 +483,8 @@
     ],
     "description": "The Barnstable County-Town of Plymouth Division of the Juvenile Court in Falmouth serves Bourne, Falmouth, and Mashpee.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1036:FA"
   },
   {
     "fax": "",
@@ -507,7 +520,8 @@
     ],
     "description": "The Worcester County Juvenile Court in Fitchburg serves Ashburnham, Fitchburg, Gardner, Hubbardston, Lunenburg, Petersham, Phillipston, Royalston, Templeton, Westminster and Winchendon.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "915:FI"
   },
   {
     "fax": "",
@@ -548,7 +562,8 @@
     ],
     "description": "The Middlesex County Juvenile Court in Framingham serves Acton, Ashland, Bedford, Carlisle, Concord, Framingham, Holliston, Hopkinton, Hudson, Lexington, Lincoln, Marlborough, Maynard, Natick, Sherborn, Stow, Sudbury, and Wayland.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1095:FH"
   },
   {
     "fax": "",
@@ -579,7 +594,8 @@
     ],
     "description": "The Berkshire County Juvenile Court in Great Barrington serves Alford, Becket, Egremont, Great Barrington, Lee, Lenox, Monterey, Mt. Washington, New Marlborough, Otis, Sandisfield, Sheffield, Stockbridge, Tyringham, and West Stockbridge (Pittsfield Juvenile Court exercises concurrent jurisdiction in Becket and Lenox).",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "985:GB"
   },
   {
     "fax": "(413) 775-9201",
@@ -610,7 +626,8 @@
     ],
     "description": "The Franklin-Hampshire Counties Juvenile Court in Greenfield serves Ashfield, Bernardston, Buckland, Charlemont, Colrain, Conway, Deerfield, Gill, Greenfield, Hawley, Heath, Leyden, Monroe, Montague, Northfield, Rowe, Shelburne, Sunderland and Whately.\r\n\r\nHampshire County Juvenile Court jury cases are held at the Northampton District Court.  Jury cases in Franklin County (including Athol which is in Worcester County) are held at the Greenfield Juvenile Court.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "965:GF"
   },
   {
     "fax": "(413) 587-0191",
@@ -644,7 +661,8 @@
     ],
     "description": "This court serves Amherst, Chesterfield, Cummington, Easthampton, Goshen, Hadley, Hatfield, Huntington, Middlefield, Northampton, Pelham, Plainfield, Southampton, South Hadley, Westhampton, Williamsburg and Worthington.",
     "address_source": "https://www.mass.gov/locations/hadley-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "965:HA"
   },
   {
     "fax": "",
@@ -675,7 +693,8 @@
     ],
     "description": "The Plymouth County Juvenile Court in Hingham serves Hanover, Hingham, Hull, Norwell, Rockland, and Scituate.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1037:HI"
   },
   {
     "fax": "",
@@ -706,7 +725,8 @@
     ],
     "description": "The Hampden County Juvenile Court in Holyoke serves Blandford, Chester, Granville, Holyoke, Montgomery, Russell, Southwick, Tolland, and Westfield.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "986:HO"
   },
   {
     "fax": "",
@@ -738,7 +758,8 @@
     ],
     "description": "The Essex County Juvenile Court in Lawrence serves Andover, Boxford, Bradford, Georgetown, Groveland, Haverhill, Lawrence, Methuen, and North Andover.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "705:LA"
   },
   {
     "fax": "",
@@ -781,7 +802,8 @@
     ],
     "description": "The Middlesex County Juvenile Court in Lowell serves Ashby, Ayer, Billerica, Boxborough, Burlington, Chelmsford, Dracut, Dunstable, Groton, Littleton, Lowell, North Reading, Pepperell, Reading, Shirley, Stoneham, Tewksbury, Townsend, Tyngsborough, Westford, Wilmington, Winchester and Woburn. Care and Protection cases are heard in Cambridge. Delinquency, Youthful Offender, Adult Criminal, Harassment, and Child Requiring Assistance cases are heard in Lowell.",
     "address_source": "https://www.mass.gov/locations/lowell-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1095:LO"
   },
   {
     "fax": "",
@@ -812,7 +834,8 @@
     ],
     "description": "The Essex County Juvenile Court in Lynn serves Lynn, Marblehead, Nahant, Saugus, and Swampscott.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "705:LY"
   },
   {
     "fax": "",
@@ -850,7 +873,8 @@
       "address": "P.O. Box 370"
     },
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "915:MI"
   },
   {
     "fax": "",
@@ -874,7 +898,8 @@
     },
     "description": "The Barnstable County-Town of Plymouth Division of the Juvenile Court in Nantucket serves all towns in Nantucket County.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1036:NK"
   },
   {
     "fax": "",
@@ -910,7 +935,8 @@
     ],
     "description": "The Bristol County Juvenile Court in New Bedford serves Acushnet, Dartmouth, Fairhaven, Freetown, New Bedford, and Westport.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1015:NE"
   },
   {
     "fax": "",
@@ -952,7 +978,8 @@
     "address_verified": "2026-09-03",
     "address_corrob_sources": [
       "https://www.courtreference.com/courts/10699/newburyport-juvenile-court"
-    ]
+    ],
+    "tyler_code": "705:NP"
   },
   {
     "fax": "413-664-7788",
@@ -985,7 +1012,8 @@
     ],
     "description": "The Berkshire County Juvenile Court in North Adams serves Adams, Cheshire, Clarksburg, Florida, Hancock, New Ashford, North Adams, Savoy, Williamstown, and Windsor (Pittsfield Division exercises concurrent jurisdiction in Windsor and Hancock).",
     "address_source": "https://www.mass.gov/locations/north-adams-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "985:NA"
   },
   {
     "fax": "",
@@ -1016,7 +1044,8 @@
     ],
     "description": "The Franklin-Hampshire Counties Juvenile Court in Orange serves Athol, Erving, Leverett, New Salem, Orange, Shutesbury, Warwick and Wendell. Hampshire County Juvenile Court jury cases are held at the Northampton District Court.  Jury cases in Franklin County (including Athol which is in Worcester County) are held at the Greenfield Juvenile Court.)",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "965:OG"
   },
   {
     "fax": "",
@@ -1040,7 +1069,8 @@
     },
     "description": "The Barnstable County-Town of Plymouth Division of the Juvenile Court in Orleans serves Brewster, Chatham, Dennis, Eastham, Harwich, Orleans, Provincetown, Truro, and Wellfleet.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1036:OL"
   },
   {
     "fax": "",
@@ -1079,7 +1109,8 @@
     ],
     "description": "The Hampden County Juvenile Court in Palmer serves Brimfield, East Longmeadow, Hampden, Holland, Ludlow, Monson, Palmer, Wales, and Wilbraham.",
     "address_source": "https://www.mass.gov/locations/palmer-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "986:SP"
   },
   {
     "fax": "413-443-8672",
@@ -1110,7 +1141,8 @@
     ],
     "description": "The Berkshire County Juvenile Court in Pittsfield serves Becket, Dalton, Hancock, Hinsdale, Lanesborough, Lenox, Peru, Pittsfield, Richmond, Washington, Windsor. (This court exercises concurrent jurisdiction in Windsor and Hancock)",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "985:PT"
   },
   {
     "fax": "",
@@ -1144,7 +1176,8 @@
     ],
     "description": "The Barnstable County-Town of Plymouth Division of the Juvenile Court in Plymouth serves Duxbury, Halifax, Hanson, Kingston, Marshfield, Pembroke, Plymouth, and Plympton.",
     "address_source": "https://www.mass.gov/locations/plymouth-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1036:PY"
   },
   {
     "fax": "",
@@ -1180,7 +1213,8 @@
     ],
     "description": "The Norfolk County Juvenile Court in Quincy serves Braintree, Cohasset, Holbrook, Milton, Quincy, Randolph, and Weymouth. Care and Protection are filed in Dedham. Delinquency, Youthful Offender, and Adult Criminal are heard in Quincy, with the exception of Jury Trials which are heard in Dedham.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "885:DE"
   },
   {
     "fax": "",
@@ -1216,7 +1250,8 @@
     ],
     "description": "The Essex County Juvenile Court in Salem serves Beverly, Danvers, Lynnfield, Manchester-by-the-Sea, Peabody and Salem.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "705:SA"
   },
   {
     "fax": "",
@@ -1260,7 +1295,8 @@
     "court_code_status": "official_registry_lists_two_codes",
     "court_code_note": "The Mass.gov Trial Court code registry, last updated 2021, lists Springfield Juvenile Court under both J23 and J69. Keep J69 as the primary current record code but preserve J23 as an alias for docket/history lookup rather than treating it as a second physical court.",
     "court_code_source": "https://www.mass.gov/info-details/trial-court-codes-court-location-listing",
-    "court_code_verified": "2026-09-03"
+    "court_code_verified": "2026-09-03",
+    "tyler_code": "986:SP"
   },
   {
     "fax": "",
@@ -1300,7 +1336,8 @@
     "address_verified": "2026-09-03",
     "location_name": "Stoughton Juvenile Court",
     "accepts_filings": false,
-    "filing_location": "Dedham Juvenile Court"
+    "filing_location": "Dedham Juvenile Court",
+    "tyler_code": null
   },
   {
     "fax": "",
@@ -1339,7 +1376,8 @@
     ],
     "description": "The Bristol County Juvenile Court in Taunton serves Berkley, Dighton, Easton, Raynham, Rehoboth, Seekonk and Taunton.",
     "address_source": "https://www.mass.gov/locations/taunton-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1015:TN"
   },
   {
     "fax": "",
@@ -1375,7 +1413,8 @@
     ],
     "description": "The Middlesex County Juvenile Court in Waltham serves Concord, Newton, Watertown, Waltham and Weston.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1095:CA"
   },
   {
     "fax": "",
@@ -1406,7 +1445,8 @@
     ],
     "description": "The Plymouth County Juvenile Court in Wareham serves Carver, Lakeville, Marion, Mattapoisett, Middleborough, Rochester, and Wareham.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1037:WH"
   },
   {
     "fax": "(617) 524-7335",
@@ -1437,7 +1477,8 @@
     ],
     "description": "This court is formally called Suffolk County Juvenile Court-West Roxbury. Delinquency, harassment and criminal cases for the area covered by the Boston Police's West Roxbury Division. All care and protections, child requiring assistance and jury trials are heard in the Boston session.  Substance abuse and mental Illness cases are heard in all sites within the Suffolk County Juvenile Court.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "1086:BO"
   },
   {
     "fax": "",
@@ -1468,6 +1509,7 @@
     ],
     "description": "The Worcester County Juvenile Court in Worcester serves Auburn, Barre, Berlin, Bolton, Boylston, Brookfield, Clinton, East Brookfield, Grafton, Hardwick, Harvard, Holden, Lancaster, Leicester, Millbury, New Braintree, Northborough, North Brookfield, Oakham, Paxton, Rutland, Shrewsbury, Southborough, Spencer, Sterling, Warren, Westborough, West Boylston, West Brookfield and Worcester.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "tyler_code": "915:WC"
   }
 ]

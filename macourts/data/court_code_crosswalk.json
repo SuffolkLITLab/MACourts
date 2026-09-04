@@ -8,13 +8,16 @@
     "superior": "https://www.mass.gov/info-details/superior-court-get-to-know-the-case-number-format",
     "probate": "https://www.mass.gov/info-details/probate-and-family-court-get-to-know-the-case-number-format",
     "land": "https://www.mass.gov/info-details/land-court-get-to-know-the-case-number-format",
-    "legacy_location_codes": "https://www.mass.gov/info-details/trial-court-codes-court-location-listing"
+    "legacy_location_codes": "https://www.mass.gov/info-details/trial-court-codes-court-location-listing",
+    "tyler_prod_endpoint": "https://efile.suffolklitlab.org/jurisdictions/massachusetts/codes/courts",
+    "tyler_test_endpoint": "https://efile-test.suffolklitlab.org/jurisdictions/massachusetts/codes/courts"
   },
   "departments": {
     "District Court": {
       "record_field": "court_code",
       "meaning": "Two-digit MassCourts site code used in District Court docket numbers.",
-      "status": "current format page agrees with MACourts values; retired sites may retain historical codes. Winchendon 70 is historical after consolidation into Gardner 63."
+      "status": "current format page agrees with MACourts values; retired sites may retain historical codes. Winchendon 70 is historical after consolidation into Gardner 63.",
+      "tyler_code_meaning": "Tyler Odyssey/EFM court location numeric route key (e.g. 438 for Attleboro, 672 for Worcester)."
     },
     "Boston Municipal Court": {
       "record_field": "court_code",
@@ -28,6 +31,16 @@
         "West Roxbury": "06",
         "Dorchester": "07",
         "Brighton": "08"
+      },
+      "tyler_codes": {
+        "Brighton": "418",
+        "Central": "1245",
+        "Charlestown": "419",
+        "Dorchester": "420",
+        "East Boston": "408",
+        "Roxbury": "417",
+        "South Boston": "409",
+        "West Roxbury": "665"
       }
     },
     "Housing Court": {
@@ -41,7 +54,20 @@
         "Southeast Housing Court": "H83",
         "Western Housing Court": "H79"
       },
-      "important": "Stoughton, Canton, and Brockton are physical Metro South sessions and use H82 for MassCourts docket identity even though Tyler/EFSP may expose different or legacy route labels."
+      "tyler_codes": {
+        "Central Housing Court": "535",
+        "Eastern Housing Court": "537",
+        "Metro South Housing Court": "1265",
+        "Northeast Housing Court": "516",
+        "Western Housing Court": "527",
+        "Southeast Housing Court - Barnstable": "555:CI",
+        "Southeast Housing Court - Brockton": "555:BR",
+        "Southeast Housing Court - Fall River": "555:FR",
+        "Southeast Housing Court - New Bedford": "555:NB",
+        "Southeast Housing Court - Plymouth": "555:PL",
+        "Southeast Housing Court - Taunton": "555:TA"
+      },
+      "important": "Stoughton, Canton, and Brockton are physical Metro South sessions and use H82 for MassCourts docket identity. Filings for Stoughton route to Canton (1265)."
     },
     "Superior Court": {
       "record_field": "court_code",
@@ -61,6 +87,22 @@
         "Plymouth": "83",
         "Suffolk": "84",
         "Worcester": "85"
+      },
+      "tyler_codes": {
+        "Barnstable": "1165",
+        "Berkshire": "1179",
+        "Bristol": "1126",
+        "Dukes": "1175",
+        "Essex": "1177",
+        "Franklin": "1178",
+        "Hampden": "1181",
+        "Hampshire": "1180",
+        "Middlesex": "1176",
+        "Nantucket": "1185",
+        "Norfolk": "1196",
+        "Plymouth": "1186",
+        "Suffolk": "1235",
+        "Worcester": "1195"
       }
     },
     "Probate and Family Court": {
@@ -83,16 +125,34 @@
         "P83": "PL",
         "P84": "SU",
         "P85": "WO"
+      },
+      "tyler_codes": {
+        "Barnstable": "335",
+        "Berkshire": "341",
+        "Bristol": "350",
+        "Dukes": "337",
+        "Essex": "352",
+        "Franklin": "303",
+        "Hampden": "342",
+        "Hampshire": "343",
+        "Middlesex": "344",
+        "Nantucket": "345",
+        "Norfolk": "346",
+        "Plymouth": "347",
+        "Suffolk": "339",
+        "Worcester": "348"
       }
     },
     "Land Court": {
       "record_field": null,
-      "meaning": "Land Court docket numbers do not contain a court-location code; they use year + case type + sequence. A synthetic court_code should not be inferred."
+      "meaning": "Land Court docket numbers do not contain a court-location code; they use year + case type + sequence.",
+      "tyler_code": "210"
     },
     "Juvenile Court": {
       "record_field": "court_code",
       "meaning": "Trial Court Juvenile location code. The consolidated 2021 registry contains historical/alternate codes as well as current physical-site identities.",
-      "important": "Springfield appears under both J23 and J69 in the published registry. MACourts keeps one physical Springfield record, uses J69 as primary, and preserves J23 as an alias rather than creating two court locations."
+      "important": "Springfield appears under both J23 and J69 in the published registry. MACourts keeps one physical Springfield record, uses J69 as primary, and preserves J23 as an alias rather than creating two court locations.",
+      "tyler_code_notes": "Tyler uses county-session codes (e.g. 1086:BO for Boston, 885:DE for Dedham). In Prod, 3-digit county prefixes lack leading zeroes (e.g. 705:LA), whereas in Dev/Test they are zero-padded to 4 digits (e.g. 0705:LA). Dudley 915:DU lacks leading zeroes in both environments."
     }
   }
 }
