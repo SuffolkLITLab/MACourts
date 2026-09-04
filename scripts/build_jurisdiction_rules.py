@@ -88,6 +88,15 @@ CITY_ADDITIONS = {
         # Mass.gov Barnstable Second District Juvenile Court session for Truro.
         "truro",
     },
+    ("Housing Court", "Southeast Housing Court - Barnstable session"): {
+        # The session serves all of Barnstable, Dukes, and Nantucket counties,
+        # but the legacy list named only 19 of their 23 towns; the other four
+        # fell through to the Plymouth session's over-broad list below.
+        "gosnold",
+        "tisbury",
+        "truro",
+        "wellfleet",
+    },
 }
 
 # Rules with no legacy equivalent, inserted before the named court's own rule.

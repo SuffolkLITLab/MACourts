@@ -116,6 +116,12 @@ Verified 2026-09-03; see also
 - **Freetown and Westport** → both the Fall River and New Bedford sessions. Both
   session pages list these towns and the Southeast Division's published
   jurisdiction appendix says either may be used.
+- **Gosnold, Tisbury, Truro, and Wellfleet** → Southeast Housing Court -
+  Barnstable session. The session serves all of Barnstable, Dukes, and Nantucket
+  counties, but the legacy city list named only 19 of their 23 towns, so these
+  four fell through to the Plymouth session's over-broad list. The county rule
+  ahead of both already covered them; naming them keeps the answer right when a
+  caller supplies a contradictory county.
 - **`Southeast Housing Court - Barnstable session`** — the packaged catalog
   spells this with a lowercase "session". One canonical spelling is used so
   matches always resolve to a record.

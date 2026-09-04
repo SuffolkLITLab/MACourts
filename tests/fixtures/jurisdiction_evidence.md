@@ -68,3 +68,22 @@ The legacy chains spelled the town "middleborough" in the Plymouth rule and
 each spelling returned only one of the two courts. Corrected via
 `CITY_SPELLING_FIXES`, which is where the other legacy misspellings are handled.
 
+## Gosnold, Tisbury, Truro, Wellfleet — Southeast Housing Court, Barnstable session
+
+The Barnstable session's page states it serves "Barnstable, Dukes and Nantucket
+County" and lists Tisbury, Vineyard Haven (Tisbury's village), Truro, and
+Wellfleet by name:
+https://www.mass.gov/locations/southeast-housing-court-barnstable-session
+
+Gosnold is not in that village list, but it is in Dukes County, and Edgartown
+District Court serves "Edgartown, Oak Bluffs, Tisbury, West Tisbury, Chilmark,
+Aquinnah, Gosnold, and the Elizabeth Islands":
+https://www.mass.gov/locations/edgartown-district-court
+
+The legacy Barnstable-session list named 19 of the 23 towns in those three
+counties. The four it missed fell through to the Southeast Plymouth session,
+whose legacy list repeats every Cape and Islands town — an artifact of the
+``elif`` chain, since the earlier rules always claim them first. Adding the four
+to the Barnstable list makes the rule self-sufficient rather than dependent on
+county inference.
+

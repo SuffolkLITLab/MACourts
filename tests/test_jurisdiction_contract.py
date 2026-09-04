@@ -178,3 +178,30 @@ def test_spelling_variants_in_rules_agree_with_their_municipality(finder):
     assert not divergent, f"spelling variants answering differently: {divergent}"
 
 
+@pytest.mark.parametrize(
+    "county", ["Barnstable County", "Dukes County", "Nantucket County"]
+)
+def test_barnstable_housing_session_names_its_whole_territory(finder, county):
+    """The session serves three whole counties, so its city list must name them all.
+
+    The rule sits in a ``first`` chain behind a county rule that already covers
+    these towns, which is what let four of them go unnamed for so long. Asserting
+    on the rule data rather than through `find()` keeps the check independent of
+    that ordering.
+    """
+    rules = json.loads(
+        (Path(__file__).parents[1] / "macourts" / "data" / "jurisdiction_rules.json")
+        .read_text(encoding="utf-8")
+    )
+    listed = {
+        city.casefold()
+        for block in rules["departments"]
+        if block["department"] == "Housing Court"
+        for rule in block["rules"]
+        if rule["courts"] == ["Southeast Housing Court - Barnstable session"]
+        for city in rule.get("cities", ())
+    }
+    towns = finder.municipality_index.canonical_municipalities_by_county()[county]
+    assert not [t for t in towns if t.casefold() not in listed]
+
+
