@@ -154,6 +154,14 @@ Roslindale, Roxbury, South Boston, and West Roxbury. They tell the BMC matcher
 that the location is inside the Boston geography, and they let every other
 department fill in Suffolk County when the address carries no county at all.
 
+Beyond those, the finder recognizes several thousand village and neighborhood
+names and routes them through their canonical municipality. A place name the
+rule data *names* outright is matched on its own terms first, per department: an
+address in East Boston reaches the Chelsea Housing and Juvenile sessions under
+its own name, and only falls back to Boston for the departments — Superior,
+Probate and Family — that have no East Boston rule. Every match records which
+step produced it, as an `alias` reason where one was used.
+
 ```python
 from macourts import Coordinates, Location
 
@@ -441,7 +449,7 @@ A practical rule of thumb:
 | Winthrop address | `city="Winthrop"` and `state="MA"` are sufficient for BMC matching. |
 | Massachusetts address for Land/Appeals/SJC | City/state are sufficient; county/ZIP are still useful metadata. |
 | Massachusetts address for any other department | City is usually enough; pass county too, since a few rules need both. |
-| East Boston address written as "Boston" | Pass `neighborhood` as well, or the Chelsea sessions will be missed. |
+| East Boston address written as "Boston" | Pass `neighborhood` as well, or the Chelsea sessions will be missed. `city="East Boston"` finds them on its own. |
 | ZIP-only address | Pass it as `postal_code` and let the finder expand it, or use `find_by_postal_code()`. |
 | docassemble `Address` | Use `location_from_object(address)`. |
 

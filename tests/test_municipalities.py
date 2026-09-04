@@ -203,3 +203,56 @@ def test_missing_canonical_juvenile_court_additions(finder):
 
     truro = finder.find(Location(city="Truro", county="Barnstable County"), court_types=["Juvenile Court"])
     assert [m.name for m in truro] == ["Orleans Juvenile Court"]
+
+
+def test_named_place_rules_win_over_the_canonical_municipality(finder):
+    """A rule that names the neighborhood beats normalizing it to "Boston"."""
+    east_boston = {m.name for m in finder.find(Location(city="East Boston"))}
+    assert "Eastern Housing Court - Chelsea Session" in east_boston
+    assert "Chelsea Juvenile Court" in east_boston
+    assert "Eastern Housing Court" not in east_boston
+
+    charlestown = {m.name for m in finder.find(Location(city="Charlestown"))}
+    assert "Eastern Housing Court - Chelsea Session" in charlestown
+    # Charlestown has no Juvenile rule of its own, so that department still
+    # falls back to the canonical municipality.
+    assert "Boston Juvenile Court" in charlestown
+
+    # ZIP 02129's place name is literally "Charlestown".
+    assert "Eastern Housing Court - Chelsea Session" in {
+        m.name for m in finder.find_by_postal_code("02129")
+    }
+
+
+def test_departments_with_no_named_rule_still_use_the_municipality(finder):
+    """East Boston reaches Suffolk's county-level courts through Boston."""
+    names = {m.name for m in finder.find(Location(city="East Boston"))}
+    assert "Suffolk County Superior Court" in names
+    assert "Suffolk Probate and Family Court" in names
+
+
+def test_inferred_county_disambiguates_a_multi_county_alias(finder):
+    """"Mattapan" names both a Boston neighborhood and a corner of Milton."""
+    names = {m.name for m in finder.find(Location(city="Mattapan"))}
+    assert "Suffolk County Superior Court" in names
+    assert "Norfolk County Superior Court" not in names
+    assert "Quincy District Court" not in names
+
+    # An explicit county still picks the other target.
+    milton = {m.name for m in finder.find(Location(city="Mattapan", county="Norfolk County"))}
+    assert "Norfolk County Superior Court" in milton
+
+
+def test_a_county_rule_never_pre_empts_a_named_municipal_rule(finder):
+    """Stoughton's own session must win over the Norfolk-wide Canton session.
+
+    "East Stoughton" carries no county, so the finder infers Norfolk from the
+    alias — which is enough for the Canton county rule to match the un-expanded
+    location and, in a ``first`` chain, to hide the earlier Stoughton rule that
+    the canonical municipality reaches.
+    """
+    names = {m.name for m in finder.find(Location(city="East Stoughton"))}
+    assert "Metro South Housing Court - Stoughton Session" in names
+    assert "Metro South Housing Court - Canton Session" not in names
+
+

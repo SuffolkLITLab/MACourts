@@ -141,6 +141,14 @@ class BostonMunicipalCourtMatcher:
         candidate = self.division(location)
         return [candidate] if candidate else []
 
+    def match_named_place(
+        self,
+        location: Location,
+        court_types: Collection[str] | None = None,
+    ) -> list[Candidate]:
+        """BMC divisions are resolved from the city name itself, never a county."""
+        return self.match(location, court_types)
+
 
 class JuvenileCourtMatcher:
     """Juvenile Court matching, with the two BMC-derived sessions taking priority.
@@ -169,6 +177,26 @@ class JuvenileCourtMatcher:
             return []
         if not location.is_massachusetts():
             return []
+        return self._match(location, court_types, self.rules.match)
+
+    def match_named_place(
+        self,
+        location: Location,
+        court_types: Collection[str] | None = None,
+    ) -> list[Candidate]:
+        """`match`, kept only where a BMC division or a rule names this place."""
+        if court_types and norm(JUVENILE) not in {norm(value) for value in court_types}:
+            return []
+        if not location.is_massachusetts():
+            return []
+        return self._match(location, court_types, self.rules.match_named_place)
+
+    def _match(
+        self,
+        location: Location,
+        court_types: Collection[str] | None,
+        rule_match: Any,
+    ) -> list[Candidate]:
         division = self.bmc_matcher.division(location)
         if division is not None and division.name in self.divisions:
             return [
@@ -182,4 +210,4 @@ class JuvenileCourtMatcher:
                     ),
                 )
             ]
-        return self.rules.match(location, court_types)
+        return rule_match(location, court_types)

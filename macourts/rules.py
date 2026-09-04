@@ -58,6 +58,18 @@ class LocationRule:
     require_all: bool = False
     note: str | None = None
 
+    def names_place(self, location: Location) -> bool:
+        """True when this rule matched because it *names* the location's place.
+
+        A rule that reaches a location only through its county says nothing
+        about the place name the caller actually gave, which is what lets
+        `CourtFinder` tell "the rules know this village" apart from "the rules
+        know the county this village happens to sit in".
+        """
+        if self.cities and norm(location.city) in self.cities:
+            return True
+        return any(rule.matches(location) for rule in self.neighborhoods)
+
     def matches(self, location: Location) -> bool:
         if norm(location.city) in self.excluded_cities:
             return False
@@ -128,15 +140,16 @@ class RuleMatcher:
         self.selection = selection
         self.source = source
 
-    def match(
+    def _winning_rules(
         self,
         location: Location,
         court_types: Collection[str] | None = None,
-    ) -> list[Candidate]:
+    ) -> list[LocationRule]:
+        """The rules that decide this location, honouring the selection mode."""
         if not location.is_massachusetts():
             return []
         allowed = {norm(value) for value in court_types} if court_types else None
-        candidates: list[Candidate] = []
+        winners: list[LocationRule] = []
         satisfied: set[str] = set()
         for rule in self.rules:
             department = norm(rule.department)
@@ -147,11 +160,42 @@ class RuleMatcher:
             if not rule.matches(location):
                 continue
             satisfied.add(department)
+            winners.append(rule)
+        return winners
+
+    def _candidates(self, rules: Iterable[LocationRule]) -> list[Candidate]:
+        candidates: list[Candidate] = []
+        for rule in rules:
             reason = MatchReason("location_rule", rule.reason_detail, self.source)
             candidates.extend(
                 Candidate(name, rule.department, reason) for name in rule.court_names
             )
         return candidates
+
+    def match(
+        self,
+        location: Location,
+        court_types: Collection[str] | None = None,
+    ) -> list[Candidate]:
+        return self._candidates(self._winning_rules(location, court_types))
+
+    def match_named_place(
+        self,
+        location: Location,
+        court_types: Collection[str] | None = None,
+    ) -> list[Candidate]:
+        """`match`, kept only where the winning rule names this city or neighborhood.
+
+        This is the first pass `CourtFinder` runs for a village or neighborhood
+        name: the rule data spells out the places whose venue differs from their
+        municipality's (East Boston's Chelsea sessions, "Devens", "Middleboro"),
+        and those spellings must win before the name is normalized away.
+        """
+        return self._candidates(
+            rule
+            for rule in self._winning_rules(location, court_types)
+            if rule.names_place(location)
+        )
 
 
 def load_jurisdiction_rules(filename: str = RULES_FILE) -> dict[str, RuleMatcher]:

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Any, Collection, Iterable
 
 from .boston import BostonMunicipalCourtMatcher, JuvenileCourtMatcher
@@ -46,6 +47,44 @@ class StatewideMatcher:
             if allowed is None or norm(department) in allowed
         ]
 
+    def match_named_place(
+        self,
+        location: Location,
+        court_types: Collection[str] | None = None,
+    ) -> list[Candidate]:
+        """Statewide courts say nothing about a place name, so they never match one."""
+        return []
+
+
+@dataclass(frozen=True)
+class _Attempt:
+    """One location to run the matchers against, and why it differs from the input."""
+
+    location: Location
+    zip_origin: Location | None = None
+    alias_origin: Location | None = None
+
+    @property
+    def reasons(self) -> tuple[MatchReason, ...]:
+        reasons = []
+        if self.zip_origin is not None:
+            reasons.append(
+                MatchReason(
+                    "postal_code",
+                    f"ZIP {self.zip_origin.postal_code} covers {self.location.city}",
+                    "ma_zip_codes.json",
+                )
+            )
+        if self.alias_origin is not None:
+            reasons.append(
+                MatchReason(
+                    "alias",
+                    f"'{self.alias_origin.city}' is an alias/locality in {self.location.city}",
+                    "municipality_aliases.json",
+                )
+            )
+        return tuple(reasons)
+
 
 class CourtFinder:
     """Run every matcher over one or more locations and merge the results."""
@@ -62,10 +101,17 @@ class CourtFinder:
         self.zip_index = zip_index
         self.municipality_index = municipality_index
 
-    def _locations(
+    def _attempts(
         self,
         location: Location | Iterable[Location],
-    ) -> list[tuple[Location, Location | None, Location | None]]:
+    ) -> list[tuple[_Attempt, tuple[_Attempt, ...]]]:
+        """Pair each location to match on with the alias expansions to fall back to.
+
+        The county is inferred *before* the alias index is consulted, so that a
+        village name shared by several counties ("Mattapan" is both a Boston
+        neighborhood and a corner of Milton) resolves to the one the address is
+        actually in rather than fanning out across all of them.
+        """
         locations = (
             [location] if isinstance(location, Location) else list(location)
         )
@@ -74,29 +120,49 @@ class CourtFinder:
         else:
             zip_pairs = [(item, None) for item in locations]
 
-        expanded_pairs: list[tuple[Location, Location | None, Location | None]] = []
+        index = self.municipality_index
+        attempts: list[tuple[_Attempt, tuple[_Attempt, ...]]] = []
         for loc, zip_origin in zip_pairs:
-            if self.municipality_index is not None:
-                muni_pairs = self.municipality_index.expand([loc])
-                for resolved, alias_origin in muni_pairs:
-                    expanded_pairs.append(
-                        (
-                            resolved.with_inferred_county(
-                                self.municipality_index.get_county
-                            ),
-                            zip_origin,
-                            alias_origin,
-                        )
-                    )
-            else:
-                expanded_pairs.append(
-                    (
-                        loc.with_inferred_county(),
-                        zip_origin,
-                        None,
-                    )
+            given = loc.with_inferred_county(index.get_county if index else None)
+            expansions: tuple[_Attempt, ...] = ()
+            if index is not None:
+                expansions = tuple(
+                    _Attempt(resolved, zip_origin, alias_origin)
+                    for resolved, alias_origin in index.expand([given])
+                    if alias_origin is not None
                 )
-        return expanded_pairs
+            attempts.append((_Attempt(given, zip_origin), expansions))
+        return attempts
+
+    def _run(
+        self,
+        matcher: Any,
+        given: _Attempt,
+        expansions: tuple[_Attempt, ...],
+        court_types: Collection[str] | None,
+    ) -> list[tuple[_Attempt, list[Candidate]]]:
+        """Match one matcher, preferring the caller's own place name over its expansion.
+
+        A village or neighborhood is only routed through its canonical
+        municipality when no rule names the place itself. Normalizing first
+        would throw away exactly the rules that exist because a place's venue
+        differs from its municipality's — East Boston's Chelsea sessions, say —
+        and, in an ordered ``first`` chain, would let a county-wide rule stand in
+        for the more specific municipal one.
+
+        A matcher without `match_named_place` is treated as never place-specific,
+        so custom matchers keep seeing the canonical municipality.
+        """
+        if not expansions:
+            return [(given, matcher.match(given.location, court_types))]
+        named_place = getattr(matcher, "match_named_place", None)
+        candidates = named_place(given.location, court_types) if named_place else []
+        if candidates:
+            return [(given, candidates)]
+        return [
+            (attempt, matcher.match(attempt.location, court_types))
+            for attempt in expansions
+        ]
 
     def find(
         self,
@@ -104,38 +170,24 @@ class CourtFinder:
         court_types: Collection[str] | None = None,
     ) -> list[CourtMatch]:
         grouped: dict[tuple[str, str], dict[str, Any]] = {}
-        for resolved, zip_origin, alias_origin in self._locations(location):
-            reasons = []
-            if zip_origin is not None:
-                reasons.append(
-                    MatchReason(
-                        "postal_code",
-                        f"ZIP {zip_origin.postal_code} covers {resolved.city}",
-                        "ma_zip_codes.json",
-                    )
-                )
-            if alias_origin is not None:
-                reasons.append(
-                    MatchReason(
-                        "alias",
-                        f"'{alias_origin.city}' is an alias/locality in {resolved.city}",
-                        "municipality_aliases.json",
-                    )
-                )
+        for given, expansions in self._attempts(location):
             for matcher in self.matchers:
-                for candidate in matcher.match(resolved, court_types):
-                    key = (norm(candidate.department), norm(candidate.name))
-                    state = grouped.setdefault(
-                        key,
-                        {
-                            "name": candidate.name,
-                            "department": candidate.department,
-                            "reasons": [],
-                        },
-                    )
-                    for reason in (*reasons, candidate.reason):
-                        if reason not in state["reasons"]:
-                            state["reasons"].append(reason)
+                for attempt, candidates in self._run(
+                    matcher, given, expansions, court_types
+                ):
+                    for candidate in candidates:
+                        key = (norm(candidate.department), norm(candidate.name))
+                        state = grouped.setdefault(
+                            key,
+                            {
+                                "name": candidate.name,
+                                "department": candidate.department,
+                                "reasons": [],
+                            },
+                        )
+                        for reason in (*attempt.reasons, candidate.reason):
+                            if reason not in state["reasons"]:
+                                state["reasons"].append(reason)
         return sorted(
             [
                 CourtMatch(
