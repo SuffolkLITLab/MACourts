@@ -16,10 +16,12 @@ from shapely.geometry import Point, shape
 from shapely.geometry.base import BaseGeometry
 from shapely.prepared import prep
 
+from .boston_address import BostonAddressIndex
 from .catalog import package_data
 from .models import (
     BOSTON_CITY_ALIASES,
     Candidate,
+    Coordinates,
     Location,
     MatchReason,
     norm,
@@ -51,10 +53,12 @@ class BostonMunicipalCourtMatcher:
         self,
         areas: Iterable[tuple[str, BaseGeometry]],
         source: str = "boston_wards.geojson",
+        address_index: BostonAddressIndex | None = None,
     ):
         self.areas = tuple(_Area(name, geometry) for name, geometry in areas)
         self.prepared = tuple(prep(area.geometry) for area in self.areas)
         self.source = source
+        self.address_index = address_index
         if not self.areas:
             raise ValueError("at least one BMC geometry is required")
 
@@ -63,6 +67,7 @@ class BostonMunicipalCourtMatcher:
         cls,
         data: Mapping[str, Any],
         source: str,
+        address_index: BostonAddressIndex | None = None,
     ) -> "BostonMunicipalCourtMatcher":
         areas = []
         for feature in data["features"]:
@@ -70,25 +75,77 @@ class BostonMunicipalCourtMatcher:
             geometry = feature.get("geometry")
             if courthouse and geometry:
                 areas.append((str(courthouse), shape(geometry)))
-        return cls(areas, source=source)
+        return cls(areas, source=source, address_index=address_index)
 
     @classmethod
-    def from_geojson(cls, path: str | Path) -> "BostonMunicipalCourtMatcher":
+    def from_geojson(
+        cls,
+        path: str | Path,
+        address_index: BostonAddressIndex | None = None,
+    ) -> "BostonMunicipalCourtMatcher":
         path = Path(path)
         with path.open(encoding="utf-8") as handle:
-            return cls._from_geojson_data(json.load(handle), path.name)
+            return cls._from_geojson_data(
+                json.load(handle), path.name, address_index=address_index
+            )
 
     @classmethod
     def from_package_data(cls) -> "BostonMunicipalCourtMatcher":
         resource = package_data().joinpath("boston_wards.geojson")
         with resource.open("r", encoding="utf-8") as handle:
-            return cls._from_geojson_data(json.load(handle), resource.name)
+            data = json.load(handle)
+        return cls._from_geojson_data(
+            data,
+            resource.name,
+            address_index=BostonAddressIndex.from_package_data(),
+        )
 
     @staticmethod
     def full_name(courthouse: str) -> str:
         if "boston municipal court" in courthouse.casefold():
             return courthouse
         return f"{courthouse.strip()} Division, Boston Municipal Court"
+
+    def court_for_coordinates(
+        self,
+        coordinates: Coordinates,
+        *,
+        allow_nearest: bool = True,
+    ) -> Candidate | None:
+        """Resolve the BMC division whose polygon covers a point.
+
+        This is the one piece of geometry logic shared by runtime matching and
+        the address-index compiler, so both agree on exactly the same polygons
+        and division naming. The compiler calls this with ``allow_nearest=False``
+        so that an address the polygons don't actually cover is reported as a
+        build-time QA gap rather than silently assigned to whatever is nearest.
+        """
+        point = Point(coordinates.longitude, coordinates.latitude)
+        for area, prepared in zip(self.areas, self.prepared):
+            if prepared.covers(point):
+                return Candidate(
+                    self.full_name(area.courthouse),
+                    BMC,
+                    MatchReason(
+                        "geometry",
+                        f"point covered by {area.courthouse} area",
+                        self.source,
+                    ),
+                )
+
+        if not allow_nearest:
+            return None
+
+        nearest = min(self.areas, key=lambda area: point.distance(area.geometry))
+        return Candidate(
+            self.full_name(nearest.courthouse),
+            BMC,
+            MatchReason(
+                "geometry_nearest",
+                f"nearest area is {nearest.courthouse}",
+                self.source,
+            ),
+        )
 
     def division(self, location: Location) -> Candidate | None:
         """Resolve the BMC division serving a location, or None."""
@@ -104,32 +161,28 @@ class BostonMunicipalCourtMatcher:
                     "legacy rule",
                 ),
             )
-        if norm(location.city) not in BOSTON_CITY_ALIASES or location.coordinates is None:
+        if norm(location.city) not in BOSTON_CITY_ALIASES:
             return None
-
-        point = Point(location.coordinates.longitude, location.coordinates.latitude)
-        for area, prepared in zip(self.areas, self.prepared):
-            if prepared.covers(point):
+        if location.coordinates is not None:
+            return self.court_for_coordinates(location.coordinates)
+        if location.street_address and self.address_index is not None:
+            resolution = self.address_index.resolve(
+                location.street_address, zip_code=location.postal_code
+            )
+            if resolution.match_kind == "success" and resolution.court_name:
+                source = "bmc_addresses.sqlite"
+                if resolution.data_version:
+                    source = f"{source}:{resolution.data_version}"
                 return Candidate(
-                    self.full_name(area.courthouse),
+                    resolution.court_name,
                     BMC,
                     MatchReason(
-                        "geometry",
-                        f"point covered by {area.courthouse} area",
-                        self.source,
+                        "address_index",
+                        f"exact Boston SAM address matched {resolution.court_name}",
+                        source,
                     ),
                 )
-
-        nearest = min(self.areas, key=lambda area: point.distance(area.geometry))
-        return Candidate(
-            self.full_name(nearest.courthouse),
-            BMC,
-            MatchReason(
-                "geometry_nearest",
-                f"nearest area is {nearest.courthouse}",
-                self.source,
-            ),
-        )
+        return None
 
     def match(
         self,

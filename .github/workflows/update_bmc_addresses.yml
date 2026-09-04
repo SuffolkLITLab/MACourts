@@ -1,0 +1,94 @@
+name: Refresh BMC addresses
+
+on:
+  workflow_dispatch:
+  schedule:
+    # ~January 15 and ~July 15
+    - cron: "17 13 15 1,7 *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package and test dependencies
+        run: python -m pip install -e ".[dev]" build
+
+      - name: Fetch SAM snapshot
+        run: python scripts/fetch_boston_sam.py --out build/sam
+
+      - name: Preserve the currently committed database
+        run: |
+          mkdir -p build/previous
+          if [ -f macourts/data/bmc_addresses.sqlite ]; then
+            cp macourts/data/bmc_addresses.sqlite build/previous/bmc_addresses.sqlite
+          fi
+
+      - name: Build candidate address index
+        run: python scripts/build_bmc_address_index.py
+
+      - name: Compare against the committed database
+        id: compare
+        run: |
+          python scripts/compare_bmc_address_index.py \
+            --old-db build/previous/bmc_addresses.sqlite \
+            --new-db macourts/data/bmc_addresses.sqlite \
+            --report build/bmc_address_comparison.md
+
+      - name: Run tests against the candidate data
+        if: steps.compare.outputs.changed == 'true'
+        run: pytest -q
+
+      - name: Build wheel and verify the database is packaged
+        if: steps.compare.outputs.changed == 'true'
+        run: |
+          python -m build --wheel --outdir dist
+          python - <<'PY'
+          import glob, zipfile
+          wheel = glob.glob("dist/*.whl")[0]
+          with zipfile.ZipFile(wheel) as z:
+              names = z.namelist()
+          assert "macourts/data/bmc_addresses.sqlite" in names, names
+          print(f"OK: bmc_addresses.sqlite is packaged in {wheel}")
+          PY
+
+      - name: Upload snapshot and QA report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bmc-address-refresh-${{ github.run_id }}
+          path: |
+            build/sam/source.json
+            build/bmc_address_report.md
+            build/bmc_address_comparison.md
+            macourts/data/bmc_addresses.meta.json
+          retention-days: 90
+
+      - name: Open a PR with the refreshed database
+        if: steps.compare.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          VERSION=$(python -c "import json; print(json.load(open('macourts/data/bmc_addresses.meta.json'))['data_version'])")
+          BRANCH="bmc-addresses-refresh-$VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add macourts/data/bmc_addresses.sqlite macourts/data/bmc_addresses.meta.json
+          git commit -m "Refresh BMC address index ($VERSION)"
+          git push -f origin "$BRANCH"
+          gh pr create \
+            --title "Refresh BMC address index ($VERSION)" \
+            --body-file build/bmc_address_comparison.md \
+            --base main \
+            --head "$BRANCH" \
+            || gh pr edit "$BRANCH" --body-file build/bmc_address_comparison.md

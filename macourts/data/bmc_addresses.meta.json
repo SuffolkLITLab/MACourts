@@ -1,0 +1,13 @@
+{
+  "address_count": "139738",
+  "built_at": "2026-09-04T02:47:38.595597+00:00",
+  "conflict_count": "7",
+  "data_version": "2026-09",
+  "logical_hash": "5016a8a9494852c606d5bae320c12f3bd10d54f94c1bdde03fabe32aa5538a0f",
+  "raw_row_count": "399452",
+  "source_fetched_at": "2026-09-04T02:15:12.696453+00:00",
+  "source_max_last_edited_date": "1788462756000",
+  "source_service_url": "https://gisportal.boston.gov/arcgis/rest/services/SAM/Live_SAM_Address/FeatureServer/0",
+  "street_count": "4370",
+  "unmatched_point_count": "4852"
+}

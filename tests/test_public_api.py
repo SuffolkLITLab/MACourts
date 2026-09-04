@@ -63,10 +63,12 @@ def test_docassemble_adapter_is_duck_typed():
         county="Suffolk County",
         state="MA",
         zip="02108",
+        address="700 Boylston St",
         location=SimpleNamespace(latitude=42.36, longitude=-71.06),
     )
     location = location_from_object(address)
     assert location.coordinates == Coordinates(42.36, -71.06)
+    assert location.street_address == "700 Boylston St"
 
 
 def test_packaged_catalog_is_available():
@@ -84,3 +86,18 @@ def test_packaged_bmc_geometry_is_available():
 
 def test_zip_data_is_packaged():
     assert package_data().joinpath("ma_zip_codes.json").is_file()
+
+
+def test_bmc_address_lookup_without_coordinates():
+    matcher = BostonMunicipalCourtMatcher.from_package_data()
+    result = matcher.match(
+        Location(
+            street_address="700 Boylston St",
+            city="Boston",
+            state="MA",
+            postal_code="02116",
+        ),
+        ["Boston Municipal Court"],
+    )
+    assert result[0].name == "Central Division, Boston Municipal Court"
+    assert result[0].reason.kind == "address_index"

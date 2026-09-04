@@ -5,7 +5,10 @@ parse street addresses or geocode them: your application supplies the city,
 county, state, ZIP code, and (when needed) latitude/longitude.
 
 That separation keeps the library dependency-light and lets callers use any
-address or geocoding service they prefer.
+address or geocoding service they prefer. The one exception is Boston Municipal
+Court: a `street_address` inside Boston resolves to a BMC division from a
+packaged, offline address index, with no geocoding required — see
+[Example: a Boston street address without geocoding](#example-a-boston-street-address-without-geocoding).
 
 ## Install
 
@@ -46,11 +49,12 @@ The fields have different roles:
 | `state` | `"MA"` | `"MA"` and `"Massachusetts"` are accepted. Non-Massachusetts locations are rejected by the built-in matchers. |
 | `postal_code` | `"02118"` | Used on its own when nothing else is supplied: the ZIP expands to the municipalities it covers. |
 | `neighborhood` | `"South End"` | Used by the East Boston neighborhood rules for Housing and Juvenile Court. |
-| `coordinates` | `Coordinates(...)` | Required for geographic BMC division matching inside Boston. |
+| `coordinates` | `Coordinates(...)` | Geographic BMC division matching inside Boston. Takes priority over `street_address` when both are given. |
+| `street_address` | `"123 Main St"` | Boston-only, exact-match BMC division lookup when `coordinates` is absent. Ignored by every other department. |
 
-There is intentionally no street-line field. If you start with something like
-`"123 Main St, Boston, MA 02118"`, parse/geocode it outside MACourts and pass
-the resulting jurisdiction fields into `Location`.
+Outside Boston Municipal Court, there is intentionally no street-line field.
+For every other department, parse/geocode a full street address outside
+MACourts and pass the resulting jurisdiction fields into `Location`.
 
 ## A finder covering every department
 
@@ -67,7 +71,7 @@ It covers all nine departments:
 
 | Department | Matched by |
 | --- | --- |
-| Boston Municipal Court | packaged BMC ward geometry, plus the Winthrop special case |
+| Boston Municipal Court | coordinates against packaged BMC ward geometry, or a Boston street address against the packaged SAM address index, plus the Winthrop special case |
 | District Court | city/county rules |
 | Housing Court | ordered city/county/neighborhood rules |
 | Juvenile Court | city/county/neighborhood rules, with two sessions following BMC division lines |
@@ -145,6 +149,47 @@ print(match.reasons[0].kind)       # geometry
 print(match.reasons[0].detail)
 print(match.records[0].court_code) # when present in the catalog
 ```
+
+## Example: a Boston street address without geocoding
+
+A `street_address` inside Boston resolves to a BMC division directly, with no
+coordinates and no external geocoder:
+
+```python
+from macourts import Location
+
+location = Location(
+    street_address="700 Boylston St",
+    city="Boston",
+    state="MA",
+    postal_code="02116",
+)
+
+matches = finder.find(location, ["Boston Municipal Court"])
+
+print(matches[0].name)
+print(matches[0].reasons[0].kind)
+```
+
+Output:
+
+```text
+Central Division, Boston Municipal Court
+address_index
+```
+
+This is an **exact-match lookup** against a compiled snapshot of Boston's
+Street Address Management (SAM) system (see
+[BMC address index](bmc_address_index.md) for how it's built and refreshed).
+It does not fuzzy-match, guess a nearest street, or interpolate a house number
+that isn't in the source data — an address it doesn't recognize resolves to no
+match at all rather than a guess, so it is safe to treat "no BMC match" as
+"try geocoding this one instead." A ZIP code is optional but recommended: a
+handful of Boston street names repeat across neighborhoods, and the ZIP is
+what disambiguates them.
+
+`coordinates` still takes priority when both are supplied, so existing
+geocoding-based callers see no behavior change.
 
 ## Example: a Boston neighborhood name in the city field
 
@@ -402,11 +447,13 @@ The adapter reads:
 - `address.state`
 - `address.zip`
 - `address.neighborhood`
+- `address.address` (street line, used only for the BMC address index)
 - `address.location.latitude`
 - `address.location.longitude`
 
-Latitude and longitude are optional, but BMC geometry needs them for Boston
-addresses other than the Winthrop special case.
+Latitude and longitude are optional. For Boston addresses other than the
+Winthrop special case, BMC matching uses `address.location` when present and
+falls back to the packaged address index over `address.address` otherwise.
 
 ## Working with catalog records
 
@@ -444,8 +491,8 @@ A practical rule of thumb:
 
 | Address you have | What to pass |
 | --- | --- |
-| Full street address in Boston | Geocode externally; pass city/state plus coordinates, and county/ZIP when available. |
-| Boston neighborhood address | Pass the neighborhood/place name as `city` if it is one of the supported aliases, plus coordinates. |
+| Full street address in Boston, un-geocoded | Pass `street_address`, `city`, `state`, and (recommended) `postal_code` — no geocoder needed for BMC. Geocode externally only if you also need coordinates for other purposes, or the address doesn't resolve. |
+| Boston neighborhood address, already geocoded | Pass the neighborhood/place name as `city` if it is one of the supported aliases, plus coordinates. |
 | Winthrop address | `city="Winthrop"` and `state="MA"` are sufficient for BMC matching. |
 | Massachusetts address for Land/Appeals/SJC | City/state are sufficient; county/ZIP are still useful metadata. |
 | Massachusetts address for any other department | City is usually enough; pass county too, since a few rules need both. |
@@ -457,9 +504,14 @@ A practical rule of thumb:
 
 - Keep geocoding in the caller and cache it according to the terms of your
   geocoding provider.
-- Prefer a real geocoded point for Boston BMC matching. If a Boston point falls
-  outside the packaged polygons, the matcher returns the nearest BMC area and
-  records the reason as `geometry_nearest`.
+- Prefer a real geocoded point for Boston BMC matching when you already have
+  one. If a Boston point falls outside the packaged polygons, the matcher
+  returns the nearest BMC area and records the reason as `geometry_nearest`.
+- When you don't have coordinates, pass `street_address` instead of skipping
+  BMC matching or reaching for a geocoder — see
+  [Example: a Boston street address without geocoding](#example-a-boston-street-address-without-geocoding).
+  An address the packaged index doesn't recognize resolves to no match, so
+  geocoding remains a reasonable fallback for addresses that don't match.
 - Use `court_types` when calling `find()` if you only want a particular
   department.
 - Expect more than one match. Concurrent jurisdiction is normal in the District,

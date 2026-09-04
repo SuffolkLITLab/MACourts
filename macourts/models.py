@@ -48,6 +48,7 @@ class Location:
     postal_code: str | None = None
     neighborhood: str | None = None
     coordinates: Coordinates | None = None
+    street_address: str | None = None
 
     def is_massachusetts(self) -> bool:
         return not norm(self.state) or norm(self.state) in MASSACHUSETTS
@@ -90,6 +91,7 @@ def replace_location(location: Location, **changes: Any) -> Location:
         "postal_code": location.postal_code,
         "neighborhood": location.neighborhood,
         "coordinates": location.coordinates,
+        "street_address": location.street_address,
     }
     values.update(changes)
     return Location(**values)

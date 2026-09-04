@@ -3,6 +3,12 @@ from .boston import (
     BostonMunicipalCourtMatcher,
     JuvenileCourtMatcher,
 )
+from .boston_address import (
+    AddressResolution,
+    BostonAddressIndex,
+    ParsedStreetAddress,
+    parse_street_address,
+)
 from .catalog import CourtCatalog, load_data, package_data
 from .finder import (
     CourtFinder,
@@ -38,8 +44,10 @@ from .rules import (
 from .zips import ZipIndex, normalize_postal_code
 
 __all__ = [
+    "AddressResolution",
     "BMC",
     "BOSTON_CITY_ALIASES",
+    "BostonAddressIndex",
     "BostonMunicipalCourtMatcher",
     "Candidate",
     "Coordinates",
@@ -54,6 +62,7 @@ __all__ = [
     "MunicipalityIndex",
     "MunicipalityMatch",
     "NeighborhoodRule",
+    "ParsedStreetAddress",
     "RuleMatcher",
     "SELECT_ALL",
     "SELECT_FIRST",
@@ -69,5 +78,6 @@ __all__ = [
     "norm",
     "normalize_postal_code",
     "package_data",
+    "parse_street_address",
 ]
 

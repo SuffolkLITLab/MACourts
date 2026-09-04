@@ -17,7 +17,7 @@ where = ["."]
 include = ["macourts*"]
 
 [tool.setuptools.package-data]
-macourts = ["data/*.json", "data/*.geojson"]
+macourts = ["data/*.json", "data/*.geojson", "data/*.sqlite"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

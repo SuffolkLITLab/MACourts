@@ -261,4 +261,5 @@ def location_from_object(address: Any) -> Location:
         postal_code=getattr(address, "zip", None),
         neighborhood=getattr(address, "neighborhood", None),
         coordinates=coordinates,
+        street_address=getattr(address, "address", None),
     )
