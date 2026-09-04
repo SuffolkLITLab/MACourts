@@ -59,7 +59,7 @@ class Location:
             self.city or self.county or self.neighborhood or self.coordinates
         )
 
-    def with_inferred_county(self) -> "Location":
+    def with_inferred_county(self, county_lookup: Any | None = None) -> "Location":
         """Fill in Suffolk County for bare Boston-neighborhood cities.
 
         Every jurisdiction rule set treats a missing county as unmatchable, but
@@ -67,9 +67,18 @@ class Location:
         at all. Legacy MACourts special-cased this for each department; doing it
         once here keeps the rule data free of the workaround.
         """
-        if norm(self.county) or norm(self.city) not in BOSTON_CITY_ALIASES:
+        if norm(self.county):
             return self
-        return replace_location(self, county="Suffolk County")
+        if not self.city:
+            return self
+        if norm(self.city) in BOSTON_CITY_ALIASES:
+            return replace_location(self, county="Suffolk County")
+        if county_lookup is not None:
+            inferred = county_lookup(self.city)
+            if inferred:
+                return replace_location(self, county=inferred)
+        return self
+
 
 
 def replace_location(location: Location, **changes: Any) -> Location:

@@ -950,6 +950,62 @@
       "rationale": "Brighton BMC geography does not have a special Juvenile override; Boston Juvenile is returned."
     },
     {
+      "id": "juvenile-brookline",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Brookline",
+        "county": "Norfolk County",
+        "state": "MA"
+      },
+      "expected": [
+        "Dedham Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Mass.gov Norfolk County Juvenile Court directory assigns Brookline to Dedham Juvenile Court."
+    },
+    {
+      "id": "juvenile-mount-washington",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Mount Washington",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Great Barrington Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Mass.gov Southern Berkshire Juvenile Court directory assigns Mount Washington to Great Barrington."
+    },
+    {
+      "id": "juvenile-savoy",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Savoy",
+        "county": "Berkshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "North Adams Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Mass.gov Northern Berkshire Juvenile Court directory assigns Savoy to North Adams Juvenile Court."
+    },
+    {
+      "id": "juvenile-truro",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Truro",
+        "county": "Barnstable County",
+        "state": "MA"
+      },
+      "expected": [
+        "Orleans Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "Mass.gov Barnstable Second District Juvenile Court directory assigns Truro to Orleans Juvenile Court."
+    },
+    {
       "id": "land-anywhere-ma",
       "department": "Land Court",
       "location": {

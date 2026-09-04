@@ -69,6 +69,26 @@ CITY_REMOVALS = {
     },
 }
 
+# Towns missing from legacy service lists, added per current Mass.gov rosters.
+CITY_ADDITIONS = {
+    ("Juvenile Court", "Dedham Juvenile Court"): {
+        # Mass.gov Norfolk Juvenile Court session for Brookline.
+        "brookline",
+    },
+    ("Juvenile Court", "Great Barrington Juvenile Court"): {
+        # Mass.gov Southern Berkshire Juvenile Court session for Mount Washington.
+        "mount washington",
+    },
+    ("Juvenile Court", "North Adams Juvenile Court"): {
+        # Mass.gov Northern Berkshire Juvenile Court session for Savoy.
+        "savoy",
+    },
+    ("Juvenile Court", "Orleans Juvenile Court"): {
+        # Mass.gov Barnstable Second District Juvenile Court session for Truro.
+        "truro",
+    },
+}
+
 # Rules with no legacy equivalent, inserted before the named court's own rule.
 # ``mass.gov`` sources are recorded in docs/jurisdiction_rules.md.
 INSERTED_RULES = [
@@ -124,11 +144,13 @@ def apply_corrections(data: dict) -> dict:
         for rule in block["rules"]:
             courts = [renames.get(court, court) for court in rule["courts"]]
             removals: set[str] = set()
+            additions: set[str] = set()
             for court in courts:
                 removals |= CITY_REMOVALS.get((department, court), set())
-            cities = [
+                additions |= CITY_ADDITIONS.get((department, court), set())
+            cities = sorted(dict.fromkeys([
                 city for city in clean_cities(rule.get("cities", [])) if city not in removals
-            ]
+            ] + list(additions)))
             corrected = {
                 "courts": courts,
                 "counties": sorted(dict.fromkeys(rule.get("counties", []))),

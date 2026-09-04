@@ -14,6 +14,7 @@ from .models import (
     MatchReason,
     norm,
 )
+from .municipalities import MunicipalityIndex
 from .rules import RuleMatcher, load_jurisdiction_rules
 from .zips import ZipIndex
 
@@ -54,23 +55,48 @@ class CourtFinder:
         matchers: Iterable[Any],
         catalog: CourtCatalog | None = None,
         zip_index: ZipIndex | None = None,
+        municipality_index: MunicipalityIndex | None = None,
     ) -> None:
         self.matchers = tuple(matchers)
         self.catalog = catalog or CourtCatalog()
         self.zip_index = zip_index
+        self.municipality_index = municipality_index
 
     def _locations(
         self,
         location: Location | Iterable[Location],
-    ) -> list[tuple[Location, Location | None]]:
+    ) -> list[tuple[Location, Location | None, Location | None]]:
         locations = (
             [location] if isinstance(location, Location) else list(location)
         )
         if self.zip_index is not None:
-            pairs = self.zip_index.expand(locations)
+            zip_pairs = self.zip_index.expand(locations)
         else:
-            pairs = [(item, None) for item in locations]
-        return [(item.with_inferred_county(), origin) for item, origin in pairs]
+            zip_pairs = [(item, None) for item in locations]
+
+        expanded_pairs: list[tuple[Location, Location | None, Location | None]] = []
+        for loc, zip_origin in zip_pairs:
+            if self.municipality_index is not None:
+                muni_pairs = self.municipality_index.expand([loc])
+                for resolved, alias_origin in muni_pairs:
+                    expanded_pairs.append(
+                        (
+                            resolved.with_inferred_county(
+                                self.municipality_index.get_county
+                            ),
+                            zip_origin,
+                            alias_origin,
+                        )
+                    )
+            else:
+                expanded_pairs.append(
+                    (
+                        loc.with_inferred_county(),
+                        zip_origin,
+                        None,
+                    )
+                )
+        return expanded_pairs
 
     def find(
         self,
@@ -78,14 +104,22 @@ class CourtFinder:
         court_types: Collection[str] | None = None,
     ) -> list[CourtMatch]:
         grouped: dict[tuple[str, str], dict[str, Any]] = {}
-        for resolved, origin in self._locations(location):
+        for resolved, zip_origin, alias_origin in self._locations(location):
             reasons = []
-            if origin is not None:
+            if zip_origin is not None:
                 reasons.append(
                     MatchReason(
                         "postal_code",
-                        f"ZIP {origin.postal_code} covers {resolved.city}",
+                        f"ZIP {zip_origin.postal_code} covers {resolved.city}",
                         "ma_zip_codes.json",
+                    )
+                )
+            if alias_origin is not None:
+                reasons.append(
+                    MatchReason(
+                        "alias",
+                        f"'{alias_origin.city}' is an alias/locality in {resolved.city}",
+                        "municipality_aliases.json",
                     )
                 )
             for matcher in self.matchers:
@@ -155,7 +189,9 @@ def build_default_finder() -> CourtFinder:
         build_matchers(),
         catalog=CourtCatalog.from_package_data(),
         zip_index=ZipIndex.from_package_data(),
+        municipality_index=MunicipalityIndex.from_package_data(),
     )
+
 
 
 def location_from_object(address: Any) -> Location:

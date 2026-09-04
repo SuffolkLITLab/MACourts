@@ -923,6 +923,7 @@
           ],
           "cities": [
             "avon",
+            "brookline",
             "canton",
             "dedham",
             "dover",
@@ -1049,6 +1050,7 @@
             "lee",
             "lenox",
             "monterey",
+            "mount washington",
             "new marlborough",
             "otis",
             "sandisfield",
@@ -1267,6 +1269,7 @@
             "hancock",
             "new ashford",
             "north adams",
+            "savoy",
             "williamstown",
             "windsor"
           ]
@@ -1298,6 +1301,7 @@
             "harwich",
             "orleans",
             "provincetown",
+            "truro",
             "wellfleet"
           ]
         },

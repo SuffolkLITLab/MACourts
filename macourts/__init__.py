@@ -21,6 +21,12 @@ from .models import (
     MatchReason,
     norm,
 )
+from .municipalities import (
+    MunicipalityIndex,
+    MunicipalityMatch,
+    get_county,
+    is_canonical_municipality,
+)
 from .rules import (
     SELECT_ALL,
     SELECT_FIRST,
@@ -45,6 +51,8 @@ __all__ = [
     "Location",
     "LocationRule",
     "MatchReason",
+    "MunicipalityIndex",
+    "MunicipalityMatch",
     "NeighborhoodRule",
     "RuleMatcher",
     "SELECT_ALL",
@@ -53,6 +61,8 @@ __all__ = [
     "ZipIndex",
     "build_default_finder",
     "build_matchers",
+    "get_county",
+    "is_canonical_municipality",
     "load_data",
     "load_jurisdiction_rules",
     "location_from_object",
@@ -60,3 +70,4 @@ __all__ = [
     "normalize_postal_code",
     "package_data",
 ]
+
