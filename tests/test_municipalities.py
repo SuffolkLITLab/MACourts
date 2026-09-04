@@ -256,3 +256,17 @@ def test_a_county_rule_never_pre_empts_a_named_municipal_rule(finder):
     assert "Metro South Housing Court - Canton Session" not in names
 
 
+def test_resolve_place_keeps_a_municipality_when_the_county_is_wrong():
+    index = MunicipalityIndex.from_package_data()
+    assert index.resolve_place("Franklin", county="Franklin County") == (
+        MunicipalityMatch("Franklin", "Norfolk County", True),
+    )
+    assert index.resolve_place("Belmont", county="Norfolk County") == (
+        MunicipalityMatch("Belmont", "Middlesex County", True),
+    )
+    # A county that does point at a same-named village still disambiguates.
+    assert index.resolve_place("Franklin", county="Hampshire County") == (
+        MunicipalityMatch("Belchertown", "Hampshire County", False),
+    )
+
+

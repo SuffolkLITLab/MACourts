@@ -97,27 +97,31 @@ class MunicipalityIndex:
         key = norm(place_name)
         if not key:
             return ()
+        norm_county = norm(county)
 
-        # Canonical municipality
-        if key in self.municipalities:
-            entry = self.municipalities[key]
-            if not county or norm(county) == norm(entry["county"]):
-                return (
-                    MunicipalityMatch(
-                        name=entry["name"],
-                        county=entry["county"],
-                        is_canonical=True,
-                    ),
-                )
+        entry = self.municipalities.get(key)
+        canonical = (
+            (
+                MunicipalityMatch(
+                    name=entry["name"],
+                    county=entry["county"],
+                    is_canonical=True,
+                ),
+            )
+            if entry is not None
+            else ()
+        )
+        if canonical and (not norm_county or norm_county == norm(entry["county"])):
+            return canonical
 
-        # Alias lookup
-        if key in self.aliases:
-            targets = self.aliases[key]
-            if county:
-                norm_c = norm(county)
-                filtered = [t for t in targets if norm(t["county"]) == norm_c]
-                if filtered:
-                    targets = filtered
+        targets = list(self.aliases.get(key, ()))
+        if targets and norm_county:
+            narrowed = [t for t in targets if norm(t["county"]) == norm_county]
+            # A name that is itself a municipality only gives way to a village of
+            # the same name when the caller's county actually points at one;
+            # otherwise a slightly wrong county would return an unrelated town.
+            targets = narrowed if narrowed or canonical else targets
+        if targets:
             return tuple(
                 MunicipalityMatch(
                     name=target["municipality"],
@@ -127,7 +131,7 @@ class MunicipalityIndex:
                 for target in targets
             )
 
-        return ()
+        return canonical
 
     def canonical_municipalities(self) -> tuple[str, ...]:
         """All 351 official Massachusetts cities and towns in alphabetical order."""
