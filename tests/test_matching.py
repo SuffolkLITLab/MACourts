@@ -394,3 +394,13 @@ def test_matches_carry_their_catalog_records(finder):
 def test_finder_without_a_zip_index_leaves_postal_code_only_locations_alone():
     plain = CourtFinder(build_matchers(), catalog=CourtCatalog.from_package_data())
     assert plain.find(Location(postal_code="02072"), ["Housing Court"]) == []
+
+
+def test_four_digit_postal_code_strings_are_zero_padded(finder):
+    """A ZIP that lost its leading zero in a spreadsheet still routes."""
+    assert normalize_postal_code("2072") == "02072"
+    assert normalize_postal_code("02072") == "02072"
+    assert normalize_postal_code("02072-1234") == "02072-1234"
+    assert [m.name for m in finder.find_by_postal_code("2072")] == [
+        m.name for m in finder.find_by_postal_code("02072")
+    ]

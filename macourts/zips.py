@@ -18,7 +18,9 @@ def normalize_postal_code(value: object | None) -> str:
     if value is None or value == "":
         return ""
     if isinstance(value, str):
-        return value.strip()
+        text = value.strip()
+        # A ZIP that lost its leading zero to a spreadsheet arrives as "2072".
+        return text.zfill(5) if text.isdigit() and len(text) < 5 else text
     try:
         numeric = int(value)
     except (TypeError, ValueError):
