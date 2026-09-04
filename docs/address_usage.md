@@ -44,47 +44,64 @@ The fields have different roles:
 | `city` | `"Boston"` | Used by city-based rules and BMC matching. |
 | `county` | `"Suffolk County"` | Used by county-based rules. |
 | `state` | `"MA"` | `"MA"` and `"Massachusetts"` are accepted. Non-Massachusetts locations are rejected by the built-in matchers. |
-| `postal_code` | `"02118"` | Preserved on the location object. Current built-in matchers do not route by ZIP alone. |
-| `neighborhood` | `"South End"` | Preserved for callers and future rules. |
+| `postal_code` | `"02118"` | Used on its own when nothing else is supplied: the ZIP expands to the municipalities it covers. |
+| `neighborhood` | `"South End"` | Used by the East Boston neighborhood rules for Housing and Juvenile Court. |
 | `coordinates` | `Coordinates(...)` | Required for geographic BMC division matching inside Boston. |
 
 There is intentionally no street-line field. If you start with something like
 `"123 Main St, Boston, MA 02118"`, parse/geocode it outside MACourts and pass
 the resulting jurisdiction fields into `Location`.
 
-## A reusable finder for the implemented built-ins
+## A finder covering every department
 
-The package currently includes built-in matching for:
-
-- Boston Municipal Court, using the packaged BMC geometry;
-- Land Court;
-- Appeals Court (Single Justice);
-- Supreme Judicial Court.
-
-The catalog contains records for additional departments, and `RuleMatcher`
-supports application-supplied city/county rules, but the remaining shared
-jurisdiction matchers are still being ported.
-
-A convenient setup for the implemented built-ins is:
+`build_default_finder()` assembles every matcher, the packaged court catalog,
+and the ZIP lookup table:
 
 ```python
-from macourts import (
-    BostonMunicipalCourtMatcher,
-    CourtCatalog,
-    CourtFinder,
-    StatewideMatcher,
-)
+from macourts import build_default_finder
 
-catalog = CourtCatalog.from_package_data()
-
-finder = CourtFinder(
-    [
-        BostonMunicipalCourtMatcher.from_package_data(),
-        StatewideMatcher(),
-    ],
-    catalog,
-)
+finder = build_default_finder()
 ```
+
+It covers all nine departments:
+
+| Department | Matched by |
+| --- | --- |
+| Boston Municipal Court | packaged BMC ward geometry, plus the Winthrop special case |
+| District Court | city/county rules |
+| Housing Court | ordered city/county/neighborhood rules |
+| Juvenile Court | city/county/neighborhood rules, with two sessions following BMC division lines |
+| Probate and Family Court | city/county rules |
+| Superior Court | ordered county rules |
+| Land Court | statewide |
+| Appeals Court (Single Justice) | statewide |
+| Supreme Judicial Court | statewide |
+
+Passing no `court_types` returns every court serving the address:
+
+```python
+from macourts import Location
+
+for match in finder.find(Location(city="Springfield", county="Hampden County")):
+    print(match.department, "-", match.name)
+```
+
+Output:
+
+```text
+Appeals Court - Massachusetts Appeals Court (Single Justice)
+District Court - Springfield District Court
+Housing Court - Western Housing Court - Springfield Session
+Juvenile Court - Springfield Juvenile Court
+Land Court - Land Court
+Probate and Family Court - Hampden Probate and Family Court
+Superior Court - Hampden County Superior Court
+Supreme Judicial Court - Supreme Judicial Court
+```
+
+The jurisdiction rules behind this are data, not code; see
+[Jurisdiction rules](jurisdiction_rules.md) for the file format, the selection
+modes, and how to regenerate it.
 
 The examples below reuse this `finder`.
 
@@ -131,9 +148,11 @@ print(match.records[0].court_code) # when present in the catalog
 
 ## Example: a Boston neighborhood name in the city field
 
-The BMC matcher recognizes several common Boston place-name aliases, including
-Dorchester, Roxbury, Brighton, Charlestown, East Boston, Jamaica Plain, South
-Boston, and West Roxbury.
+MACourts recognizes the common Boston place-name aliases — Allston, Brighton,
+Charlestown, Dorchester, East Boston, Hyde Park, Jamaica Plain, Mattapan,
+Roslindale, Roxbury, South Boston, and West Roxbury. They tell the BMC matcher
+that the location is inside the Boston geography, and they let every other
+department fill in Suffolk County when the address carries no county at all.
 
 ```python
 from macourts import Coordinates, Location
@@ -218,6 +237,78 @@ Land Court
 The same `StatewideMatcher` also supports `"Appeals Court"` and
 `"Supreme Judicial Court"`.
 
+## Example: concurrent jurisdiction
+
+Some towns are served by more than one court, and `find()` returns all of them
+rather than picking one.
+
+```python
+from macourts import Location
+
+location = Location(city="Freetown", county="Bristol County", state="MA")
+
+for match in finder.find(location, ["District Court", "Housing Court"]):
+    print(match.name)
+```
+
+Output:
+
+```text
+Fall River District Court
+New Bedford District Court
+Southeast Housing Court - Fall River Session
+Southeast Housing Court - New Bedford Session
+```
+
+## Example: a Boston neighborhood that changes the venue
+
+East Boston neighborhoods are heard in Chelsea, so the `neighborhood` field
+changes the answer for an address whose city is just "Boston".
+
+```python
+from macourts import Location
+
+location = Location(
+    city="Boston",
+    county="Suffolk County",
+    state="MA",
+    neighborhood="Maverick Square",
+)
+
+print(finder.find(location, ["Housing Court"])[0].name)
+```
+
+Output:
+
+```text
+Eastern Housing Court - Chelsea Session
+```
+
+## Example: a ZIP code and nothing else
+
+When a location carries only a ZIP, the finder expands it to the municipalities
+that ZIP covers and unions the results. Each match records which ZIP it came
+from.
+
+```python
+from macourts import Location
+
+matches = finder.find_by_postal_code("02072", ["Housing Court"])
+
+print(matches[0].name)
+print([reason.kind for reason in matches[0].reasons])
+```
+
+Output:
+
+```text
+Metro South Housing Court - Stoughton Session
+['postal_code', 'location_rule']
+```
+
+`find()` also accepts several locations at once, unioning their courts — useful
+when a ZIP crosses municipal lines and you want to resolve it yourself.
+
 ## Example: an out-of-state address
 
 The built-in matchers do not return Massachusetts courts for a location in
@@ -239,8 +330,9 @@ assert matches == []
 
 ## Example: supply your own city/county rule
 
-`RuleMatcher` is useful when your application already has a jurisdiction rule
-that has not yet been promoted into a packaged MACourts matcher.
+The packaged rules are ordinary `LocationRule` objects, so an application can
+add its own — for a rule the Trial Court has just changed, say, ahead of a
+MACourts release.
 
 ```python
 from macourts import (
@@ -287,26 +379,12 @@ MACourts includes a duck-typed adapter for docassemble `Address` objects, but
 does not import docassemble itself.
 
 ```python
-from macourts import (
-    BostonMunicipalCourtMatcher,
-    CourtCatalog,
-    CourtFinder,
-    StatewideMatcher,
-    location_from_object,
-)
+from macourts import build_default_finder, location_from_object
 
 # address is an existing docassemble-style Address object.
 location = location_from_object(address)
 
-finder = CourtFinder(
-    [
-        BostonMunicipalCourtMatcher.from_package_data(),
-        StatewideMatcher(),
-    ],
-    CourtCatalog.from_package_data(),
-)
-
-matches = finder.find(location, ["Boston Municipal Court"])
+matches = build_default_finder().find(location)
 ```
 
 The adapter reads:
@@ -362,8 +440,9 @@ A practical rule of thumb:
 | Boston neighborhood address | Pass the neighborhood/place name as `city` if it is one of the supported aliases, plus coordinates. |
 | Winthrop address | `city="Winthrop"` and `state="MA"` are sufficient for BMC matching. |
 | Massachusetts address for Land/Appeals/SJC | City/state are sufficient; county/ZIP are still useful metadata. |
-| City/county-only address for a custom rule | Pass whichever of city or county your `LocationRule` uses. |
-| ZIP-only address | Add city/county before jurisdiction matching; ZIP alone is not currently a built-in routing input. |
+| Massachusetts address for any other department | City is usually enough; pass county too, since a few rules need both. |
+| East Boston address written as "Boston" | Pass `neighborhood` as well, or the Chelsea sessions will be missed. |
+| ZIP-only address | Pass it as `postal_code` and let the finder expand it, or use `find_by_postal_code()`. |
 | docassemble `Address` | Use `location_from_object(address)`. |
 
 ## Notes for production callers
@@ -375,6 +454,9 @@ A practical rule of thumb:
   records the reason as `geometry_nearest`.
 - Use `court_types` when calling `find()` if you only want a particular
   department.
+- Expect more than one match. Concurrent jurisdiction is normal in the District,
+  Juvenile, and Probate & Family Courts, and several semantic courts sit in more
+  than one location.
 - Treat the catalog's filing-location metadata separately from live EFSP/Tyler
   availability. MACourts can identify the legal filing location, while a live
   filing system should still verify its current route/category taxonomy.

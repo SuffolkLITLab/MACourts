@@ -1026,6 +1026,185 @@
       "expected": [],
       "status": "contract",
       "rationale": "State gate applies to statewide courts too."
+    },
+    {
+      "id": "housing-boston-east-boston-neighborhood",
+      "department": "Housing Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "neighborhood": "Maverick Square"
+      },
+      "expected": [
+        "Eastern Housing Court - Chelsea Session"
+      ],
+      "expected_reason": "location_rule",
+      "status": "contract",
+      "rationale": "East Boston neighborhoods are heard in the Chelsea session even when the address says 'Boston'."
+    },
+    {
+      "id": "juvenile-boston-east-boston-neighborhood",
+      "department": "Juvenile Court",
+      "location": {
+        "city": "Boston",
+        "county": "Suffolk County",
+        "state": "MA",
+        "neighborhood": "Orient Heights"
+      },
+      "expected": [
+        "Boston Juvenile Court",
+        "Chelsea Juvenile Court"
+      ],
+      "status": "contract",
+      "rationale": "East Boston neighborhoods keep concurrent Boston/Chelsea Juvenile jurisdiction."
+    },
+    {
+      "id": "district-winchendon-consolidated-into-gardner",
+      "department": "District Court",
+      "location": {
+        "city": "Winchendon",
+        "county": "Worcester County",
+        "state": "MA"
+      },
+      "expected": [
+        "Gardner District Court"
+      ],
+      "status": "contract",
+      "rationale": "Winchendon District Court was consolidated into Gardner District Court under St. 2025, c. 9; the towns it served now file in Gardner.",
+      "verified_on": "2026-09-03",
+      "sources": [
+        "https://www.mass.gov/locations/gardner-district-court"
+      ]
+    },
+    {
+      "id": "housing-westport-concurrent",
+      "department": "Housing Court",
+      "location": {
+        "city": "Westport",
+        "county": "Bristol County",
+        "state": "MA"
+      },
+      "expected": [
+        "Southeast Housing Court - Fall River Session",
+        "Southeast Housing Court - New Bedford Session"
+      ],
+      "status": "contract",
+      "rationale": "Westport has the same concurrent Fall River / New Bedford jurisdiction as Freetown.",
+      "verified_on": "2026-09-03",
+      "sources": [
+        "https://www.mass.gov/doc/southeast-division-of-the-housing-court-department/download"
+      ]
+    },
+    {
+      "id": "probate-north-reading-middlesex-north",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "North Reading",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Middlesex Probate and Family Court - North"
+      ],
+      "status": "contract",
+      "rationale": "The legacy list misspelled this town as 'northreading', so it silently matched nothing."
+    },
+    {
+      "id": "probate-pepperell-middlesex-north",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Pepperell",
+        "county": "Middlesex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Middlesex Probate and Family Court - North"
+      ],
+      "status": "contract",
+      "rationale": "The legacy list misspelled this town as 'pepperrell'."
+    },
+    {
+      "id": "superior-nahant-essex",
+      "department": "Superior Court",
+      "location": {
+        "city": "Nahant",
+        "county": "Essex County",
+        "state": "MA"
+      },
+      "expected": [
+        "Essex County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "The legacy list misspelled this town as 'nahunt'; the county rule still covered it, and now the city does too."
+    },
+    {
+      "id": "probate-southampton-hampshire",
+      "department": "Probate and Family Court",
+      "location": {
+        "city": "Southampton",
+        "county": "Hampshire County",
+        "state": "MA"
+      },
+      "expected": [
+        "Hampshire Probate and Family Court"
+      ],
+      "status": "contract",
+      "rationale": "The legacy list misspelled this town as 'southamptom'."
+    },
+    {
+      "id": "housing-boston-neighborhood-city-only",
+      "department": "Housing Court",
+      "location": {
+        "city": "Dorchester",
+        "state": "MA"
+      },
+      "expected": [
+        "Eastern Housing Court"
+      ],
+      "status": "contract",
+      "rationale": "An address written as a bare Boston neighborhood carries no county; Suffolk County is inferred."
+    },
+    {
+      "id": "superior-boston-neighborhood-city-only",
+      "department": "Superior Court",
+      "location": {
+        "city": "Dorchester",
+        "state": "MA"
+      },
+      "expected": [
+        "Suffolk County Superior Court"
+      ],
+      "status": "contract",
+      "rationale": "Same inference for the Superior Court, which is otherwise county-driven."
+    },
+    {
+      "id": "housing-stoughton-postal-code-only",
+      "department": "Housing Court",
+      "location": {
+        "postal_code": "02072",
+        "state": "MA"
+      },
+      "expected": [
+        "Metro South Housing Court - Stoughton Session"
+      ],
+      "expected_reason": "postal_code",
+      "status": "contract",
+      "rationale": "A ZIP with nothing else expands to the municipalities it covers."
+    },
+    {
+      "id": "district-amherst-postal-code-only",
+      "department": "District Court",
+      "location": {
+        "postal_code": "01002",
+        "state": "MA"
+      },
+      "expected": [
+        "Eastern Hampshire District Court"
+      ],
+      "expected_reason": "postal_code",
+      "status": "contract",
+      "rationale": "ZIP-only lookup for a single-municipality ZIP."
     }
   ]
 }

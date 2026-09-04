@@ -1,3 +1,5 @@
+"""Smoke tests for the exported `macourts` API and the packaged data files."""
+
 from types import SimpleNamespace
 
 from shapely.geometry import Polygon

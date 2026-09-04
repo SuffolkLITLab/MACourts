@@ -4,11 +4,10 @@ from pathlib import Path
 import pytest
 
 from macourts import (
-    BostonMunicipalCourtMatcher,
     Coordinates,
     CourtCatalog,
     Location,
-    StatewideMatcher,
+    build_default_finder,
 )
 
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "jurisdiction_cases.json"
@@ -16,8 +15,27 @@ CASES = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))["cases"]
 CONTRACT_CASES = [case for case in CASES if case["status"] == "contract"]
 REVIEW_CASES = [case for case in CASES if case["status"] == "review"]
 
-_BMC_MATCHER = None
-_STATEWIDE_MATCHER = StatewideMatcher()
+DEPARTMENTS = [
+    "Boston Municipal Court",
+    "District Court",
+    "Housing Court",
+    "Juvenile Court",
+    "Probate and Family Court",
+    "Superior Court",
+    "Land Court",
+    "Appeals Court",
+    "Supreme Judicial Court",
+]
+
+
+@pytest.fixture(scope="module")
+def finder():
+    return build_default_finder()
+
+
+@pytest.fixture(scope="module")
+def catalog():
+    return CourtCatalog.from_package_data()
 
 
 def make_location(case):
@@ -38,35 +56,9 @@ def make_location(case):
     )
 
 
-def run_implemented_matcher(case):
-    """Run departments already implemented in the shared package.
-
-    Other department cases remain executable contracts and are xfailed until
-    their matcher is ported. Add each new matcher here as migration progresses.
-    """
-    global _BMC_MATCHER
-
-    location = make_location(case)
-    department = case["department"]
-
-    if department == "Boston Municipal Court":
-        if _BMC_MATCHER is None:
-            _BMC_MATCHER = BostonMunicipalCourtMatcher.from_package_data()
-        return _BMC_MATCHER.match(location, [department])
-
-    if department in {"Land Court", "Appeals Court", "Supreme Judicial Court"}:
-        return _STATEWIDE_MATCHER.match(location, [department])
-
-    return None
-
-
 @pytest.mark.parametrize("case", CONTRACT_CASES, ids=lambda case: case["id"])
-def test_jurisdiction_contract(case):
-    matches = run_implemented_matcher(case)
-    if matches is None:
-        pytest.xfail(
-            f'{case["department"]} matcher has not been ported to shared MACourts yet'
-        )
+def test_jurisdiction_contract(finder, case):
+    matches = finder.find(make_location(case), [case["department"]])
 
     actual = sorted(match.name for match in matches)
     expected = sorted(case["expected"])
@@ -75,12 +67,18 @@ def test_jurisdiction_contract(case):
     expected_reason = case.get("expected_reason")
     if expected_reason:
         assert matches
-        assert all(match.reason.kind == expected_reason for match in matches)
+        for match in matches:
+            assert expected_reason in {reason.kind for reason in match.reasons}
+
+
+@pytest.mark.parametrize("case", CONTRACT_CASES, ids=lambda case: case["id"])
+def test_every_contract_match_resolves_to_a_court_record(finder, case):
+    for match in finder.find(make_location(case), [case["department"]]):
+        assert match.records, f'{case["id"]}: {match.name} has no catalog record'
 
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case["id"])
-def test_all_named_expected_courts_exist_in_packaged_catalog(case):
-    catalog = CourtCatalog.from_package_data()
+def test_all_named_expected_courts_exist_in_packaged_catalog(catalog, case):
     names = []
     names.extend(case.get("expected", []))
     names.extend(case.get("legacy_expected", []))
@@ -105,13 +103,13 @@ def test_review_cases_are_explicit_and_actionable():
         assert case.get("rationale")
 
 
-def test_bmc_contract_has_an_interior_point_for_every_division():
-    catalog = CourtCatalog.from_package_data()
-    catalog_names = {
-        record.name
-        for record in catalog.records
-        if record.department == "Boston Municipal Court"
-    }
+def test_every_department_has_contract_coverage():
+    covered = {case["department"] for case in CONTRACT_CASES}
+    assert covered == set(DEPARTMENTS)
+
+
+def test_bmc_contract_has_an_interior_point_for_every_division(catalog):
+    catalog_names = set(catalog.names("Boston Municipal Court"))
     covered_names = {
         case["expected"][0]
         for case in CONTRACT_CASES
@@ -120,3 +118,17 @@ def test_bmc_contract_has_an_interior_point_for_every_division():
         and case.get("expected")
     }
     assert covered_names == catalog_names
+
+
+def test_out_of_state_addresses_match_nothing(finder):
+    location = Location(city="Boston", county="Suffolk County", state="NY")
+    assert finder.find(location) == []
+
+
+def test_finder_covers_every_department_for_a_single_address(finder):
+    matches = finder.find(
+        Location(city="Worcester", county="Worcester County", state="MA")
+    )
+    assert {match.department for match in matches} == set(DEPARTMENTS) - {
+        "Boston Municipal Court"
+    }

@@ -1,0 +1,3119 @@
+{
+  "schema_version": 1,
+  "departments": [
+    {
+      "department": "District Court",
+      "selection": "all",
+      "rules": [
+        {
+          "courts": [
+            "Edgartown District Court"
+          ],
+          "counties": [
+            "dukes county"
+          ],
+          "cities": [
+            "aquinnah",
+            "chilmark",
+            "edgartown",
+            "elizabeth islands",
+            "gosnold",
+            "oak bluffs",
+            "tisbury",
+            "west tisbury"
+          ]
+        },
+        {
+          "courts": [
+            "Nantucket District Court"
+          ],
+          "counties": [
+            "nantucket county"
+          ],
+          "cities": [
+            "nantucket"
+          ]
+        },
+        {
+          "courts": [
+            "Barnstable District Court"
+          ],
+          "cities": [
+            "barnstable",
+            "sandwich",
+            "yarmouth"
+          ]
+        },
+        {
+          "courts": [
+            "Attleboro District Court"
+          ],
+          "cities": [
+            "attleboro",
+            "mansfield",
+            "north attleboro",
+            "north attleborough",
+            "norton"
+          ]
+        },
+        {
+          "courts": [
+            "Ayer District Court"
+          ],
+          "cities": [
+            "ashby",
+            "ayer",
+            "boxborough",
+            "devens regional enterprise zone",
+            "dunstable",
+            "groton",
+            "littleton",
+            "pepperell",
+            "shirley",
+            "townsend",
+            "westford"
+          ]
+        },
+        {
+          "courts": [
+            "Brockton District Court"
+          ],
+          "cities": [
+            "abington",
+            "bridgewater",
+            "brockton",
+            "east bridgewater",
+            "west bridgewater",
+            "whitman"
+          ]
+        },
+        {
+          "courts": [
+            "Brookline District Court"
+          ],
+          "cities": [
+            "brookline"
+          ]
+        },
+        {
+          "courts": [
+            "Cambridge District Court"
+          ],
+          "cities": [
+            "arlington",
+            "belmont",
+            "cambridge"
+          ]
+        },
+        {
+          "courts": [
+            "Chelsea District Court"
+          ],
+          "cities": [
+            "chelsea",
+            "revere"
+          ]
+        },
+        {
+          "courts": [
+            "Chicopee District Court"
+          ],
+          "cities": [
+            "chicopee"
+          ]
+        },
+        {
+          "courts": [
+            "Clinton District Court"
+          ],
+          "cities": [
+            "berlin",
+            "bolton",
+            "boylston",
+            "clinton",
+            "harvard",
+            "lancaster",
+            "sterling",
+            "west boylston"
+          ]
+        },
+        {
+          "courts": [
+            "Concord District Court"
+          ],
+          "cities": [
+            "acton",
+            "bedford",
+            "carlisle",
+            "concord",
+            "lexington",
+            "lincoln",
+            "maynard",
+            "stow"
+          ]
+        },
+        {
+          "courts": [
+            "Dedham District Court"
+          ],
+          "cities": [
+            "dedham",
+            "dover",
+            "medfield",
+            "needham",
+            "norwood",
+            "wellesley",
+            "westwood"
+          ]
+        },
+        {
+          "courts": [
+            "Dudley District Court"
+          ],
+          "cities": [
+            "charlton",
+            "dudley",
+            "oxford",
+            "southbridge",
+            "sturbridge",
+            "webster"
+          ]
+        },
+        {
+          "courts": [
+            "East Brookfield District Court"
+          ],
+          "cities": [
+            "barre",
+            "brookfield",
+            "east brookfield",
+            "hardwick",
+            "leicester",
+            "new braintree",
+            "north brookfield",
+            "oakham",
+            "paxton",
+            "rutland",
+            "spencer",
+            "warren",
+            "west brookfield"
+          ]
+        },
+        {
+          "courts": [
+            "Eastern Hampshire District Court"
+          ],
+          "cities": [
+            "amherst",
+            "belchertown",
+            "granby",
+            "hadley",
+            "m.d.c. quabbin reservoir",
+            "pelham",
+            "south hadley",
+            "ware",
+            "watershed area"
+          ]
+        },
+        {
+          "courts": [
+            "Fall River District Court"
+          ],
+          "cities": [
+            "fall river",
+            "freetown",
+            "somerset",
+            "swansea",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Falmouth District Court"
+          ],
+          "cities": [
+            "bourne",
+            "falmouth",
+            "mashpee"
+          ]
+        },
+        {
+          "courts": [
+            "Fitchburg District Court"
+          ],
+          "cities": [
+            "fitchburg",
+            "lunenburg"
+          ]
+        },
+        {
+          "courts": [
+            "Framingham District Court"
+          ],
+          "cities": [
+            "ashland",
+            "framingham",
+            "holliston",
+            "hopkinton",
+            "sudbury",
+            "wayland"
+          ]
+        },
+        {
+          "courts": [
+            "Gardner District Court"
+          ],
+          "cities": [
+            "gardner",
+            "hubbardston",
+            "petersham",
+            "westminster"
+          ]
+        },
+        {
+          "courts": [
+            "Gloucester District Court"
+          ],
+          "cities": [
+            "essex",
+            "gloucester",
+            "rockport"
+          ]
+        },
+        {
+          "courts": [
+            "Greenfield District Court"
+          ],
+          "cities": [
+            "ashfield",
+            "bernardston",
+            "buckland",
+            "charlemont",
+            "colrain",
+            "conway",
+            "deerfield",
+            "gill",
+            "greenfield",
+            "hawley",
+            "heath",
+            "leyden",
+            "monroe",
+            "montague",
+            "northfield",
+            "rowe",
+            "shelburne",
+            "shelburne falls",
+            "sunderland",
+            "whately"
+          ]
+        },
+        {
+          "courts": [
+            "Haverhill District Court"
+          ],
+          "cities": [
+            "boxford",
+            "bradford",
+            "georgetown",
+            "groveland",
+            "haverhill"
+          ]
+        },
+        {
+          "courts": [
+            "Hingham District Court"
+          ],
+          "cities": [
+            "hanover",
+            "hingham",
+            "hull",
+            "norwell",
+            "rockland",
+            "scituate"
+          ]
+        },
+        {
+          "courts": [
+            "Holyoke District Court"
+          ],
+          "cities": [
+            "holyoke"
+          ]
+        },
+        {
+          "courts": [
+            "Ipswich District Court"
+          ],
+          "cities": [
+            "hamilton",
+            "ipswich",
+            "topsfield",
+            "wenham"
+          ]
+        },
+        {
+          "courts": [
+            "Lawrence District Court"
+          ],
+          "cities": [
+            "andover",
+            "lawrence",
+            "methuen",
+            "north andover"
+          ]
+        },
+        {
+          "courts": [
+            "Leominster District Court"
+          ],
+          "cities": [
+            "holden",
+            "leominster",
+            "princeton"
+          ]
+        },
+        {
+          "courts": [
+            "Lowell District Court"
+          ],
+          "cities": [
+            "billerica",
+            "chelmsford",
+            "dracut",
+            "lowell",
+            "tewksbury",
+            "tyngsboro",
+            "tyngsborough"
+          ]
+        },
+        {
+          "courts": [
+            "Lynn District Court"
+          ],
+          "cities": [
+            "lynn",
+            "marblehead",
+            "nahant",
+            "saugus",
+            "swampscott"
+          ]
+        },
+        {
+          "courts": [
+            "Malden District Court"
+          ],
+          "cities": [
+            "everett",
+            "malden",
+            "melrose",
+            "wakefield"
+          ]
+        },
+        {
+          "courts": [
+            "Marlborough District Court"
+          ],
+          "cities": [
+            "hudson",
+            "marlboro",
+            "marlborough"
+          ]
+        },
+        {
+          "courts": [
+            "Milford District Court"
+          ],
+          "cities": [
+            "bellingham",
+            "hopedale",
+            "mendon",
+            "milford",
+            "upton"
+          ]
+        },
+        {
+          "courts": [
+            "Natick District Court"
+          ],
+          "cities": [
+            "natick",
+            "sherborn"
+          ]
+        },
+        {
+          "courts": [
+            "New Bedford District Court"
+          ],
+          "cities": [
+            "acushnet",
+            "dartmouth",
+            "fairhaven",
+            "freetown",
+            "new bedford",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Newburyport District Court"
+          ],
+          "cities": [
+            "amesbury",
+            "merrimac",
+            "newbury",
+            "newburyport",
+            "rowley",
+            "salisbury",
+            "west newbury"
+          ]
+        },
+        {
+          "courts": [
+            "Newton District Court"
+          ],
+          "cities": [
+            "newton"
+          ]
+        },
+        {
+          "courts": [
+            "Northampton District Court"
+          ],
+          "cities": [
+            "chesterfield",
+            "cummington",
+            "easthampton",
+            "goshen",
+            "hatfield",
+            "huntington",
+            "middlefield",
+            "northampton",
+            "plainfield",
+            "southampton",
+            "westhampton",
+            "williamsburg",
+            "worthington"
+          ]
+        },
+        {
+          "courts": [
+            "Northern Berkshire District Court"
+          ],
+          "cities": [
+            "adams",
+            "cheshire",
+            "clarksburg",
+            "florida",
+            "hancock",
+            "new ashford",
+            "north adams",
+            "savoy",
+            "williamstown",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Orange District Court"
+          ],
+          "cities": [
+            "athol",
+            "erving",
+            "leverett",
+            "new salem",
+            "orange",
+            "shutesbury",
+            "warwick",
+            "wendell"
+          ]
+        },
+        {
+          "courts": [
+            "Orleans District Court"
+          ],
+          "cities": [
+            "brewster",
+            "chatham",
+            "dennis",
+            "eastham",
+            "harwich",
+            "orleans",
+            "provincetown",
+            "truro",
+            "wellfleet"
+          ]
+        },
+        {
+          "courts": [
+            "Palmer District Court"
+          ],
+          "cities": [
+            "brimfield",
+            "east longmeadow",
+            "hampden",
+            "holland",
+            "ludlow",
+            "monson",
+            "palmer",
+            "wales",
+            "wilbraham"
+          ]
+        },
+        {
+          "courts": [
+            "Peabody District Court"
+          ],
+          "cities": [
+            "lynnfield",
+            "peabody"
+          ]
+        },
+        {
+          "courts": [
+            "Pittsfield District Court"
+          ],
+          "cities": [
+            "becket",
+            "dalton",
+            "hancock",
+            "hinsdale",
+            "lanesborough",
+            "lenox",
+            "peru",
+            "pittsfield",
+            "richmond",
+            "washington",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Plymouth District Court"
+          ],
+          "cities": [
+            "duxbury",
+            "halifax",
+            "hanson",
+            "kingston",
+            "marshfield",
+            "pembroke",
+            "plymouth",
+            "plympton"
+          ]
+        },
+        {
+          "courts": [
+            "Quincy District Court"
+          ],
+          "cities": [
+            "braintree",
+            "cohasset",
+            "holbrook",
+            "milton",
+            "quincy",
+            "randolph",
+            "weymouth"
+          ]
+        },
+        {
+          "courts": [
+            "Salem District Court"
+          ],
+          "cities": [
+            "beverly",
+            "danvers",
+            "manchester by the sea",
+            "manchester-by-the-sea",
+            "middleton",
+            "salem"
+          ]
+        },
+        {
+          "courts": [
+            "Somerville District Court"
+          ],
+          "cities": [
+            "medford",
+            "somerville"
+          ]
+        },
+        {
+          "courts": [
+            "Southern Berkshire District Court"
+          ],
+          "cities": [
+            "alford",
+            "becket",
+            "egremont",
+            "great barrington",
+            "lee",
+            "lenox",
+            "monterey",
+            "mount washington",
+            "new marlborough",
+            "otis",
+            "sandisfield",
+            "sheffield",
+            "stockbridge",
+            "tyringham",
+            "west stockbridge"
+          ]
+        },
+        {
+          "courts": [
+            "Springfield District Court"
+          ],
+          "cities": [
+            "longmeadow",
+            "springfield",
+            "west springfield"
+          ]
+        },
+        {
+          "courts": [
+            "Stoughton District Court"
+          ],
+          "cities": [
+            "avon",
+            "canton",
+            "sharon",
+            "stoughton"
+          ]
+        },
+        {
+          "courts": [
+            "Taunton District Court"
+          ],
+          "cities": [
+            "berkley",
+            "dighton",
+            "easton",
+            "raynham",
+            "rehoboth",
+            "seekonk",
+            "taunton"
+          ]
+        },
+        {
+          "courts": [
+            "Uxbridge District Court"
+          ],
+          "cities": [
+            "blackstone",
+            "douglas",
+            "millville",
+            "northbridge",
+            "sutton",
+            "uxbridge"
+          ]
+        },
+        {
+          "courts": [
+            "Waltham District Court"
+          ],
+          "cities": [
+            "waltham",
+            "watertown",
+            "weston"
+          ]
+        },
+        {
+          "courts": [
+            "Wareham District Court"
+          ],
+          "cities": [
+            "carver",
+            "lakeville",
+            "marion",
+            "mattapoisett",
+            "middleboro",
+            "middleborough",
+            "rochester",
+            "wareham"
+          ]
+        },
+        {
+          "courts": [
+            "Westborough District Court"
+          ],
+          "cities": [
+            "grafton",
+            "northborough",
+            "shrewsbury",
+            "southborough",
+            "westboro",
+            "westborough"
+          ]
+        },
+        {
+          "courts": [
+            "Westfield District Court"
+          ],
+          "cities": [
+            "agawam",
+            "blandford",
+            "chester",
+            "granville",
+            "montgomery",
+            "russell",
+            "southwick",
+            "tolland",
+            "westfield"
+          ]
+        },
+        {
+          "courts": [
+            "Gardner District Court"
+          ],
+          "cities": [
+            "ashburnham",
+            "phillipston",
+            "royalston",
+            "templeton",
+            "winchendon"
+          ]
+        },
+        {
+          "courts": [
+            "Woburn District Court"
+          ],
+          "cities": [
+            "burlington",
+            "north reading",
+            "reading",
+            "stoneham",
+            "wilmington",
+            "winchester",
+            "woburn"
+          ]
+        },
+        {
+          "courts": [
+            "Worcester District Court"
+          ],
+          "cities": [
+            "auburn",
+            "millbury",
+            "worcester"
+          ]
+        },
+        {
+          "courts": [
+            "Wrentham District Court"
+          ],
+          "cities": [
+            "foxborough",
+            "franklin",
+            "medway",
+            "millis",
+            "norfolk",
+            "plainville",
+            "walpole",
+            "wrentham"
+          ]
+        }
+      ]
+    },
+    {
+      "department": "Juvenile Court",
+      "selection": "all",
+      "rules": [
+        {
+          "courts": [
+            "Attleboro Juvenile Court"
+          ],
+          "cities": [
+            "attleboro",
+            "mansfield",
+            "north attleboro",
+            "north attleborough",
+            "norton"
+          ]
+        },
+        {
+          "courts": [
+            "Barnstable Juvenile Court"
+          ],
+          "cities": [
+            "barnstable",
+            "sandwich",
+            "yarmouth"
+          ]
+        },
+        {
+          "courts": [
+            "Belchertown Juvenile Court"
+          ],
+          "cities": [
+            "belchertown",
+            "granby",
+            "ware"
+          ]
+        },
+        {
+          "courts": [
+            "Chelsea Juvenile Court"
+          ],
+          "cities": [
+            "chelsea",
+            "east boston",
+            "revere",
+            "winthrop"
+          ],
+          "neighborhoods": [
+            {
+              "city": "boston",
+              "names": [
+                "central square",
+                "day square",
+                "eagle hill",
+                "east boston",
+                "jeffries point",
+                "maverick square",
+                "orient heights"
+              ]
+            }
+          ]
+        },
+        {
+          "courts": [
+            "Boston Juvenile Court"
+          ],
+          "cities": [
+            "boston",
+            "brighton",
+            "charlestown",
+            "roxbury",
+            "south boston"
+          ]
+        },
+        {
+          "courts": [
+            "Brockton Juvenile Court"
+          ],
+          "cities": [
+            "abington",
+            "bridgewater",
+            "brockton",
+            "east bridgewater",
+            "west bridgewater",
+            "whitman"
+          ]
+        },
+        {
+          "courts": [
+            "Cambridge Juvenile Court"
+          ],
+          "cities": [
+            "arlington",
+            "belmont",
+            "cambridge",
+            "everett",
+            "malden",
+            "medford",
+            "melrose",
+            "somerville",
+            "stoneham",
+            "wakefield"
+          ]
+        },
+        {
+          "courts": [
+            "Dedham Juvenile Court"
+          ],
+          "cities": [
+            "avon",
+            "canton",
+            "dedham",
+            "dover",
+            "foxborough",
+            "franklin",
+            "medfield",
+            "medway",
+            "millis",
+            "needham",
+            "norfolk",
+            "norwood",
+            "plainville",
+            "sharon",
+            "stoughton",
+            "walpole",
+            "wellesley",
+            "westwood",
+            "wrentham"
+          ]
+        },
+        {
+          "courts": [
+            "Dudley Juvenile Court"
+          ],
+          "cities": [
+            "charlton",
+            "dudley",
+            "oxford",
+            "southbridge",
+            "sturbridge",
+            "webster"
+          ]
+        },
+        {
+          "courts": [
+            "Edgartown Juvenile Court"
+          ],
+          "cities": [
+            "aquinnah",
+            "chilmark",
+            "edgartown",
+            "gosnold",
+            "oak bluffs",
+            "tisbury",
+            "west tisbury"
+          ]
+        },
+        {
+          "courts": [
+            "Fall River Juvenile Court"
+          ],
+          "cities": [
+            "fall river",
+            "freetown",
+            "somerset",
+            "swansea",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Falmouth Juvenile Court"
+          ],
+          "cities": [
+            "bourne",
+            "falmouth",
+            "mashpee"
+          ]
+        },
+        {
+          "courts": [
+            "Fitchburg Juvenile Court"
+          ],
+          "cities": [
+            "ashburnham",
+            "fitchburg",
+            "gardner",
+            "hubbardston",
+            "lunenburg",
+            "petersham",
+            "phillipston",
+            "princeton",
+            "royalston",
+            "templeton",
+            "westminster",
+            "winchendon"
+          ]
+        },
+        {
+          "courts": [
+            "Framingham Juvenile Court"
+          ],
+          "cities": [
+            "acton",
+            "ashland",
+            "bedford",
+            "carlisle",
+            "concord",
+            "framingham",
+            "holliston",
+            "hopkinton",
+            "hudson",
+            "lexington",
+            "lincoln",
+            "marlboro",
+            "marlborough",
+            "maynard",
+            "natick",
+            "sherborn",
+            "stow",
+            "sudbury",
+            "wayland"
+          ]
+        },
+        {
+          "courts": [
+            "Great Barrington Juvenile Court"
+          ],
+          "cities": [
+            "alford",
+            "becket",
+            "egremont",
+            "great barrington",
+            "lee",
+            "lenox",
+            "monterey",
+            "new marlborough",
+            "otis",
+            "sandisfield",
+            "sheffield",
+            "stockbridge",
+            "tyringham",
+            "west stockbridge"
+          ]
+        },
+        {
+          "courts": [
+            "Greenfield Juvenile Court"
+          ],
+          "cities": [
+            "ashfield",
+            "bernardston",
+            "buckland",
+            "charlemont",
+            "colrain",
+            "conway",
+            "deerfield",
+            "gill",
+            "greenfield",
+            "hawley",
+            "heath",
+            "leyden",
+            "monroe",
+            "montague",
+            "northfield",
+            "rowe",
+            "shelburne",
+            "shelburne falls",
+            "sunderland",
+            "whately"
+          ]
+        },
+        {
+          "courts": [
+            "Hadley Juvenile Court"
+          ],
+          "cities": [
+            "amherst",
+            "chesterfield",
+            "cummington",
+            "easthampton",
+            "goshen",
+            "hadley",
+            "hatfield",
+            "huntington",
+            "middlefield",
+            "northampton",
+            "pelham",
+            "plainfield",
+            "south hadley",
+            "southampton",
+            "westhampton",
+            "williamsburg",
+            "worthington"
+          ]
+        },
+        {
+          "courts": [
+            "Hingham Juvenile Court"
+          ],
+          "cities": [
+            "hanover",
+            "hingham",
+            "hull",
+            "norwell",
+            "rockland",
+            "scituate"
+          ]
+        },
+        {
+          "courts": [
+            "Holyoke Juvenile Court"
+          ],
+          "cities": [
+            "blandford",
+            "chester",
+            "granville",
+            "holyoke",
+            "montgomery",
+            "russell",
+            "southwick",
+            "tolland",
+            "westfield"
+          ]
+        },
+        {
+          "courts": [
+            "Lawrence Juvenile Court"
+          ],
+          "cities": [
+            "andover",
+            "boxford",
+            "bradford",
+            "georgetown",
+            "groveland",
+            "haverhill",
+            "lawrence",
+            "methuen",
+            "north andover"
+          ]
+        },
+        {
+          "courts": [
+            "Lowell Juvenile Court"
+          ],
+          "cities": [
+            "ashby",
+            "ayer",
+            "billerica",
+            "boxborough",
+            "burlington",
+            "chelmsford",
+            "dracut",
+            "dunstable",
+            "groton",
+            "littleton",
+            "lowell",
+            "north reading",
+            "pepperell",
+            "reading",
+            "shirley",
+            "tewksbury",
+            "townsend",
+            "tyngsborough",
+            "westford",
+            "wilmington",
+            "winchester",
+            "woburn"
+          ]
+        },
+        {
+          "courts": [
+            "Lynn Juvenile Court"
+          ],
+          "cities": [
+            "lynn",
+            "marblehead",
+            "nahant",
+            "saugus",
+            "swampscott"
+          ]
+        },
+        {
+          "courts": [
+            "Milford Juvenile Court"
+          ],
+          "cities": [
+            "bellingham",
+            "blackstone",
+            "douglas",
+            "hopedale",
+            "mendon",
+            "milford",
+            "millville",
+            "northbridge",
+            "sutton",
+            "upton",
+            "uxbridge"
+          ]
+        },
+        {
+          "courts": [
+            "Nantucket Juvenile Court"
+          ],
+          "counties": [
+            "nantucket county"
+          ]
+        },
+        {
+          "courts": [
+            "New Bedford Juvenile Court"
+          ],
+          "cities": [
+            "acushnet",
+            "dartmouth",
+            "fairhaven",
+            "freetown",
+            "new bedford",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Newburyport Juvenile Court"
+          ],
+          "cities": [
+            "amesbury",
+            "essex",
+            "gloucester",
+            "hamilton",
+            "ipswich",
+            "merrimac",
+            "newbury",
+            "newburyport",
+            "rockport",
+            "rowley",
+            "salisbury",
+            "topsfield",
+            "wenham",
+            "west newbury"
+          ]
+        },
+        {
+          "courts": [
+            "North Adams Juvenile Court"
+          ],
+          "cities": [
+            "adams",
+            "cheshire",
+            "clarksburg",
+            "florida",
+            "hancock",
+            "new ashford",
+            "north adams",
+            "williamstown",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Orange Juvenile Court"
+          ],
+          "cities": [
+            "athol",
+            "erving",
+            "leverett",
+            "new salem",
+            "orange",
+            "shutesbury",
+            "warwick",
+            "wendell"
+          ]
+        },
+        {
+          "courts": [
+            "Orleans Juvenile Court"
+          ],
+          "cities": [
+            "brewster",
+            "chatham",
+            "dennis",
+            "eastham",
+            "harwich",
+            "orleans",
+            "provincetown",
+            "wellfleet"
+          ]
+        },
+        {
+          "courts": [
+            "Palmer Juvenile Court"
+          ],
+          "cities": [
+            "brimfield",
+            "east longmeadow",
+            "hampden",
+            "holland",
+            "ludlow",
+            "monson",
+            "palmer",
+            "wales",
+            "wilbraham"
+          ]
+        },
+        {
+          "courts": [
+            "Pittsfield Juvenile Court"
+          ],
+          "cities": [
+            "becket",
+            "dalton",
+            "hancock",
+            "hinsdale",
+            "lanesborough",
+            "lenox",
+            "peru",
+            "pittsfield",
+            "richmond",
+            "washington",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Plymouth Juvenile Court"
+          ],
+          "cities": [
+            "duxbury",
+            "halifax",
+            "hanson",
+            "kingston",
+            "marshfield",
+            "pembroke",
+            "plymouth",
+            "plympton"
+          ]
+        },
+        {
+          "courts": [
+            "Quincy Juvenile Court"
+          ],
+          "cities": [
+            "braintree",
+            "cohasset",
+            "holbrook",
+            "milton",
+            "quincy",
+            "randolph",
+            "weymouth"
+          ]
+        },
+        {
+          "courts": [
+            "Salem Juvenile Court"
+          ],
+          "cities": [
+            "beverly",
+            "danvers",
+            "lynnfield",
+            "manchester by the sea",
+            "manchester-by-the-sea",
+            "middleton",
+            "peabody",
+            "salem"
+          ]
+        },
+        {
+          "courts": [
+            "Springfield Juvenile Court"
+          ],
+          "cities": [
+            "agawam",
+            "chicopee",
+            "longmeadow",
+            "springfield",
+            "west springfield"
+          ]
+        },
+        {
+          "courts": [
+            "Taunton Juvenile Court"
+          ],
+          "cities": [
+            "berkley",
+            "dighton",
+            "easton",
+            "raynham",
+            "rehoboth",
+            "seekonk",
+            "taunton"
+          ]
+        },
+        {
+          "courts": [
+            "Waltham Juvenile Court"
+          ],
+          "cities": [
+            "concord",
+            "newton",
+            "waltham",
+            "watertown",
+            "weston"
+          ]
+        },
+        {
+          "courts": [
+            "Wareham Juvenile Court"
+          ],
+          "cities": [
+            "carver",
+            "lakeville",
+            "marion",
+            "mattapoisett",
+            "middleborough",
+            "rochester",
+            "wareham"
+          ]
+        },
+        {
+          "courts": [
+            "Worcester Juvenile Court"
+          ],
+          "cities": [
+            "auburn",
+            "barre",
+            "berlin",
+            "bolton",
+            "boylston",
+            "brookfield",
+            "clinton",
+            "east brookfield",
+            "grafton",
+            "hardwick",
+            "harvard",
+            "holden",
+            "lancaster",
+            "leicester",
+            "leominster",
+            "millbury",
+            "new braintree",
+            "north brookfield",
+            "northborough",
+            "oakham",
+            "paxton",
+            "princeton",
+            "rutland",
+            "shrewsbury",
+            "southborough",
+            "spencer",
+            "sterling",
+            "warren",
+            "west boylston",
+            "west brookfield",
+            "westborough",
+            "worcester"
+          ]
+        }
+      ]
+    },
+    {
+      "department": "Probate and Family Court",
+      "selection": "all",
+      "rules": [
+        {
+          "courts": [
+            "Barnstable Probate and Family Court"
+          ],
+          "counties": [
+            "barnstable county"
+          ],
+          "cities": [
+            "bourne",
+            "brewster",
+            "chatham",
+            "dennis",
+            "eastham",
+            "falmouth",
+            "harwich",
+            "mashpee",
+            "orleans",
+            "provincetown",
+            "sandwich",
+            "truro",
+            "wellfleet",
+            "yarmouth"
+          ]
+        },
+        {
+          "courts": [
+            "Berkshire Probate and Family Court"
+          ],
+          "counties": [
+            "berkshire county"
+          ],
+          "cities": [
+            "adams",
+            "alford",
+            "becket",
+            "cheshire",
+            "clarksburg",
+            "dalton",
+            "egremont",
+            "florida",
+            "great barrington",
+            "hancock",
+            "hinsdale",
+            "lanesborough",
+            "lee",
+            "lenox",
+            "monterey",
+            "mount washington",
+            "new ashford",
+            "new marlborough",
+            "north adams",
+            "otis",
+            "peru",
+            "pittsfield",
+            "richmond",
+            "sandisfield",
+            "savoy",
+            "sheffield",
+            "stockbridge",
+            "tyringham",
+            "washington",
+            "west stockbridge",
+            "williamstown",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Bristol Probate and Family Court",
+            "Fall River Probate and Family Court",
+            "New Bedford Probate and Family Court"
+          ],
+          "counties": [
+            "bristol county"
+          ],
+          "cities": [
+            "acushnet",
+            "attleboro",
+            "berkley",
+            "dartmouth",
+            "dighton",
+            "easton",
+            "fairhaven",
+            "fall river",
+            "freetown",
+            "mansfield",
+            "new bedford",
+            "north attleborough",
+            "norton",
+            "raynham",
+            "rehoboth",
+            "seekonk",
+            "somerset",
+            "swansea",
+            "taunton",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Dukes Probate and Family Court"
+          ],
+          "counties": [
+            "dukes county"
+          ],
+          "cities": [
+            "aquinnah",
+            "chilmark",
+            "edgartown",
+            "gosnold",
+            "oak bluffs",
+            "tisbury",
+            "west tisbury"
+          ]
+        },
+        {
+          "courts": [
+            "Essex Probate and Family Court",
+            "Lawrence Probate and Family Court"
+          ],
+          "counties": [
+            "essex county"
+          ],
+          "cities": [
+            "amesbury",
+            "andover",
+            "beverly",
+            "boxford",
+            "danvers",
+            "essex",
+            "georgetown",
+            "gloucester",
+            "groveland",
+            "hamilton",
+            "haverhill",
+            "ipswich",
+            "lawrence",
+            "lynn",
+            "lynnfield",
+            "manchester by the sea",
+            "manchester-by-the-sea",
+            "marblehead",
+            "merrimac",
+            "methuen",
+            "middleton",
+            "nahant",
+            "newbury",
+            "newburyport",
+            "north andover",
+            "peabody",
+            "rockport",
+            "rowley",
+            "salem",
+            "salisbury",
+            "saugus",
+            "swampscott",
+            "topsfield",
+            "wenham",
+            "west newbury"
+          ]
+        },
+        {
+          "courts": [
+            "Franklin Probate and Family Court"
+          ],
+          "counties": [
+            "franklin county"
+          ],
+          "cities": [
+            "ashfield",
+            "bernardston",
+            "buckland",
+            "charlemont",
+            "colrain",
+            "conway",
+            "deerfield",
+            "erving",
+            "gill",
+            "greenfield",
+            "hawley",
+            "heath",
+            "leverett",
+            "leyden",
+            "monroe",
+            "montague",
+            "new salem",
+            "northfield",
+            "orange",
+            "rowe",
+            "shelburne",
+            "shelburne falls",
+            "shutesbury",
+            "sunderland",
+            "warwick",
+            "wendell",
+            "whately"
+          ]
+        },
+        {
+          "courts": [
+            "Hampden Probate and Family Court"
+          ],
+          "counties": [
+            "hampden county"
+          ],
+          "cities": [
+            "agawam",
+            "blandford",
+            "brimfield",
+            "chester",
+            "chicopee",
+            "east longmeadow",
+            "granville",
+            "hampden",
+            "holland",
+            "holyoke",
+            "longmeadow",
+            "ludlow",
+            "monson",
+            "montgomery",
+            "palmer",
+            "russell",
+            "southwick",
+            "springfield",
+            "tolland",
+            "wales",
+            "west springfield",
+            "westfield",
+            "wilbraham"
+          ]
+        },
+        {
+          "courts": [
+            "Hampshire Probate and Family Court"
+          ],
+          "counties": [
+            "hampshire county"
+          ],
+          "cities": [
+            "amherst",
+            "belchertown",
+            "chesterfield",
+            "cummington",
+            "easthampton",
+            "goshen",
+            "granby",
+            "hadley",
+            "hatfield",
+            "huntington",
+            "middlefield",
+            "northampton",
+            "pelham",
+            "plainfield",
+            "south hadley",
+            "southampton",
+            "ware",
+            "westhampton",
+            "williamsburg",
+            "worthington"
+          ]
+        },
+        {
+          "courts": [
+            "Middlesex Probate and Family Court - South"
+          ],
+          "counties": [
+            "middlesex county"
+          ],
+          "cities": [
+            "arlington",
+            "belmont",
+            "cambridge",
+            "everett",
+            "lexington",
+            "malden",
+            "medford",
+            "melrose",
+            "newton",
+            "somerville",
+            "stoneham",
+            "wakefield",
+            "waltham",
+            "watertown",
+            "weston",
+            "winchester",
+            "woburn"
+          ],
+          "require_all": true
+        },
+        {
+          "courts": [
+            "Middlesex Probate and Family Court - North"
+          ],
+          "counties": [
+            "middlesex county"
+          ],
+          "cities": [
+            "acton",
+            "ashby",
+            "ashland",
+            "ayer",
+            "bedford",
+            "billerica",
+            "boxborough",
+            "burlington",
+            "carlisle",
+            "chelmsford",
+            "concord",
+            "dracut",
+            "dunstable",
+            "framingham",
+            "groton",
+            "holliston",
+            "hopkinton",
+            "hudson",
+            "lincoln",
+            "littleton",
+            "lowell",
+            "marlborough",
+            "maynard",
+            "natick",
+            "north reading",
+            "pepperell",
+            "reading",
+            "sherborn",
+            "shirley",
+            "stow",
+            "sudbury",
+            "tewksbury",
+            "townsend",
+            "tyngsborough",
+            "wayland",
+            "westford",
+            "wilmington"
+          ],
+          "require_all": true
+        },
+        {
+          "courts": [
+            "Nantucket Probate and Family Court"
+          ],
+          "counties": [
+            "nantucket county"
+          ],
+          "cities": [
+            "nantucket"
+          ]
+        },
+        {
+          "courts": [
+            "Norfolk Probate and Family Court"
+          ],
+          "counties": [
+            "norfolk county"
+          ],
+          "cities": [
+            "avon",
+            "bellingham",
+            "braintree",
+            "brookline",
+            "canton",
+            "cohasset",
+            "dedham",
+            "dover",
+            "foxborough",
+            "franklin",
+            "holbrook",
+            "medfield",
+            "medway",
+            "millis",
+            "milton",
+            "needham",
+            "norfolk",
+            "norwood",
+            "plainville",
+            "quincy",
+            "randolph",
+            "sharon",
+            "stoughton",
+            "walpole",
+            "wellesley",
+            "westwood",
+            "weymouth",
+            "wrentham"
+          ]
+        },
+        {
+          "courts": [
+            "Plymouth Probate and Family Court"
+          ],
+          "counties": [
+            "plymouth county"
+          ],
+          "cities": [
+            "abington",
+            "bridgewater",
+            "brockton",
+            "carver",
+            "duxbury",
+            "east bridgewater",
+            "halifax",
+            "hanover",
+            "hanson",
+            "hingham",
+            "hull",
+            "kingston",
+            "lakeville",
+            "marion",
+            "marshfield",
+            "mattapoisett",
+            "middleborough",
+            "norwell",
+            "pembroke",
+            "plymouth",
+            "rochester",
+            "rockland",
+            "scituate",
+            "wareham",
+            "west bridgewater",
+            "whitman"
+          ]
+        },
+        {
+          "courts": [
+            "Suffolk Probate and Family Court"
+          ],
+          "counties": [
+            "suffolk county"
+          ],
+          "cities": [
+            "boston",
+            "chelsea",
+            "revere",
+            "winthrop"
+          ]
+        },
+        {
+          "courts": [
+            "Worcester Probate and Family Court"
+          ],
+          "counties": [
+            "worcester county"
+          ],
+          "cities": [
+            "ashburnham",
+            "athol",
+            "auburn",
+            "barre",
+            "berlin",
+            "blackstone",
+            "bolton",
+            "boylston",
+            "brookfield",
+            "charlton",
+            "clinton",
+            "douglas",
+            "dudley",
+            "east brookfield",
+            "fitchburg",
+            "gardner",
+            "grafton",
+            "hardwick",
+            "harvard",
+            "holden",
+            "hopedale",
+            "hubbardston",
+            "lancaster",
+            "leicester",
+            "leominster",
+            "lunenburg",
+            "mendon",
+            "milford",
+            "millbury",
+            "millville",
+            "new braintree",
+            "north brookfield",
+            "northborough",
+            "northbridge",
+            "oakham",
+            "oxford",
+            "paxton",
+            "petersham",
+            "phillipston",
+            "princeton",
+            "royalston",
+            "rutland",
+            "shrewsbury",
+            "southborough",
+            "southbridge",
+            "spencer",
+            "sterling",
+            "sturbridge",
+            "sutton",
+            "templeton",
+            "upton",
+            "uxbridge",
+            "warren",
+            "webster",
+            "west boylston",
+            "west brookfield",
+            "westborough",
+            "westminster",
+            "winchendon",
+            "worcester"
+          ]
+        },
+        {
+          "courts": [
+            "Brockton Probate and Family Court"
+          ],
+          "cities": [
+            "abington",
+            "bridgewater",
+            "brockton",
+            "carver",
+            "duxbury",
+            "east bridgewater",
+            "halifax",
+            "hanover",
+            "hanson",
+            "hingham",
+            "hull",
+            "kingston",
+            "lakeville",
+            "marion",
+            "marshfield",
+            "mattapoisett",
+            "middleboro",
+            "norwell",
+            "pembroke",
+            "plymouth",
+            "plympton",
+            "rochester",
+            "rockland",
+            "scituate",
+            "wareham",
+            "west bridgewater",
+            "whitman"
+          ]
+        }
+      ]
+    },
+    {
+      "department": "Superior Court",
+      "selection": "first",
+      "rules": [
+        {
+          "courts": [
+            "Barnstable County Superior Court"
+          ],
+          "counties": [
+            "barnstable county"
+          ],
+          "cities": [
+            "barnstable",
+            "bourne",
+            "brewster",
+            "chatham",
+            "dennis",
+            "eastham",
+            "falmouth",
+            "harwich",
+            "mashpee",
+            "orleans",
+            "provincetown",
+            "sandwich",
+            "truro",
+            "wellfleet",
+            "yarmouth"
+          ]
+        },
+        {
+          "courts": [
+            "Berkshire County Superior Court"
+          ],
+          "counties": [
+            "berkshire county"
+          ],
+          "cities": [
+            "adams",
+            "alford",
+            "becket",
+            "cheshire",
+            "clarksburg",
+            "dalton",
+            "egremont",
+            "florida",
+            "great barrington",
+            "hancock",
+            "hinsdale",
+            "lanesborough",
+            "lee",
+            "lenox",
+            "monterey",
+            "mount washington",
+            "new ashford",
+            "new marlborough",
+            "north adams",
+            "otis",
+            "peru",
+            "pittsfield",
+            "richmond",
+            "sandisfield",
+            "savoy",
+            "sheffield",
+            "stockbridge",
+            "tyringham",
+            "washington",
+            "west stockbridge",
+            "williamstown",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Bristol County Superior Court"
+          ],
+          "counties": [
+            "bristol county"
+          ],
+          "cities": [
+            "acushnet",
+            "attleboro",
+            "berkley",
+            "dartmouth",
+            "dighton",
+            "easton",
+            "fairhaven",
+            "fall river",
+            "freetown",
+            "mansfield",
+            "new bedford",
+            "north attleborough",
+            "norton",
+            "raynham",
+            "rehoboth",
+            "seekonk",
+            "somerset",
+            "swansea",
+            "taunton",
+            "westport"
+          ]
+        },
+        {
+          "courts": [
+            "Dukes County Superior Court"
+          ],
+          "counties": [
+            "dukes county"
+          ],
+          "cities": [
+            "aquinnah",
+            "chilmark",
+            "edgartown",
+            "gosnold",
+            "oak bluffs",
+            "tisbury",
+            "west tisbury"
+          ]
+        },
+        {
+          "courts": [
+            "Essex County Superior Court"
+          ],
+          "counties": [
+            "essex county"
+          ],
+          "cities": [
+            "amesbury",
+            "andover",
+            "beverly",
+            "boxford",
+            "danvers",
+            "essex",
+            "georgetown",
+            "gloucester",
+            "groveland",
+            "hamilton",
+            "haverhill",
+            "ipswich",
+            "lawrence",
+            "lynn",
+            "lynnfield",
+            "manchester by the sea",
+            "manchester-by-the-sea",
+            "marblehead",
+            "merrimac",
+            "methuen",
+            "middleton",
+            "nahant",
+            "newbury",
+            "newburyport",
+            "north andover",
+            "peabody",
+            "rockport",
+            "rowley",
+            "salem",
+            "salisbury",
+            "saugus",
+            "swampscott",
+            "topsfield",
+            "wenham",
+            "west newbury"
+          ]
+        },
+        {
+          "courts": [
+            "Franklin County Superior Court"
+          ],
+          "counties": [
+            "franklin county"
+          ],
+          "cities": [
+            "ashfield",
+            "bernardston",
+            "buckland",
+            "charlemont",
+            "colrain",
+            "conway",
+            "deerfield",
+            "erving",
+            "gill",
+            "greenfield",
+            "hawley",
+            "heath",
+            "leverett",
+            "leyden",
+            "monroe",
+            "montague",
+            "new salem",
+            "northfield",
+            "orange",
+            "rowe",
+            "shelburne",
+            "shelburne falls",
+            "shutesbury",
+            "sunderland",
+            "warwick",
+            "wendell",
+            "whately"
+          ]
+        },
+        {
+          "courts": [
+            "Hampden County Superior Court"
+          ],
+          "counties": [
+            "hampden county"
+          ],
+          "cities": [
+            "agawam",
+            "blandford",
+            "brimfield",
+            "chester",
+            "chicopee",
+            "east longmeadow",
+            "granville",
+            "hampden",
+            "holland",
+            "holyoke",
+            "longmeadow",
+            "ludlow",
+            "monson",
+            "montgomery",
+            "palmer",
+            "russell",
+            "southwick",
+            "springfield",
+            "tolland",
+            "wales",
+            "west springfield",
+            "westfield",
+            "wilbraham"
+          ]
+        },
+        {
+          "courts": [
+            "Hampshire County Superior Court"
+          ],
+          "counties": [
+            "hampshire county"
+          ],
+          "cities": [
+            "amherst",
+            "belchertown",
+            "chesterfield",
+            "cummington",
+            "easthampton",
+            "goshen",
+            "granby",
+            "hadley",
+            "hatfield",
+            "huntington",
+            "middlefield",
+            "northampton",
+            "pelham",
+            "plainfield",
+            "south hadley",
+            "southampton",
+            "ware",
+            "westhampton",
+            "williamsburg",
+            "worthington"
+          ]
+        },
+        {
+          "courts": [
+            "Middlesex County Superior Court"
+          ],
+          "counties": [
+            "middlesex county"
+          ],
+          "cities": [
+            "acton",
+            "arlington",
+            "ashby",
+            "ashland",
+            "ayer",
+            "bedford",
+            "belmont",
+            "billerica",
+            "boxborough",
+            "burlington",
+            "cambridge",
+            "carlisle",
+            "chelmsford",
+            "concord",
+            "dracut",
+            "dunstable",
+            "everett",
+            "framingham",
+            "groton",
+            "holliston",
+            "hopkinton",
+            "hudson",
+            "lexington",
+            "lincoln",
+            "littleton",
+            "lowell",
+            "malden",
+            "marlboro",
+            "marlborough",
+            "maynard",
+            "medford",
+            "melrose",
+            "natick",
+            "newton",
+            "north reading",
+            "pepperell",
+            "reading",
+            "sherborn",
+            "shirley",
+            "somerville",
+            "stoneham",
+            "stow",
+            "sudbury",
+            "tewksbury",
+            "townsend",
+            "tyngsborough",
+            "wakefield",
+            "waltham",
+            "watertown",
+            "wayland",
+            "westford",
+            "weston",
+            "wilmington",
+            "winchester",
+            "woburn"
+          ]
+        },
+        {
+          "courts": [
+            "Nantucket County Superior Court"
+          ],
+          "counties": [
+            "nantucket county"
+          ],
+          "cities": [
+            "nantucket"
+          ]
+        },
+        {
+          "courts": [
+            "Norfolk County Superior Court"
+          ],
+          "counties": [
+            "norfolk county"
+          ],
+          "cities": [
+            "avon",
+            "bellingham",
+            "braintree",
+            "brookline",
+            "canton",
+            "cohasset",
+            "dedham",
+            "dover",
+            "foxborough",
+            "franklin",
+            "holbrook",
+            "medfield",
+            "medway",
+            "millis",
+            "milton",
+            "needham",
+            "norfolk",
+            "norwood",
+            "plainville",
+            "quincy",
+            "randolph",
+            "sharon",
+            "stoughton",
+            "walpole",
+            "wellesley",
+            "westwood",
+            "weymouth",
+            "wrentham"
+          ]
+        },
+        {
+          "courts": [
+            "Plymouth County Superior Court"
+          ],
+          "counties": [
+            "plymouth county"
+          ],
+          "cities": [
+            "abington",
+            "bridgewater",
+            "brockton",
+            "carver",
+            "duxbury",
+            "east bridgewater",
+            "halifax",
+            "hanover",
+            "hanson",
+            "hingham",
+            "hull",
+            "kingston",
+            "lakeville",
+            "marion",
+            "marshfield",
+            "mattapoisett",
+            "middleborough",
+            "norwell",
+            "pembroke",
+            "plymouth",
+            "rochester",
+            "rockland",
+            "scituate",
+            "wareham",
+            "west bridgewater",
+            "whitman"
+          ]
+        },
+        {
+          "courts": [
+            "Suffolk County Superior Court"
+          ],
+          "counties": [
+            "suffolk county"
+          ],
+          "cities": [
+            "boston",
+            "chelsea",
+            "revere",
+            "winthrop"
+          ]
+        },
+        {
+          "courts": [
+            "Worcester County Superior Court"
+          ],
+          "counties": [
+            "worcester county"
+          ],
+          "cities": [
+            "ashburnham",
+            "athol",
+            "auburn",
+            "barre",
+            "berlin",
+            "blackstone",
+            "bolton",
+            "boylston",
+            "brookfield",
+            "charlton",
+            "clinton",
+            "douglas",
+            "dudley",
+            "east brookfield",
+            "fitchburg",
+            "gardner",
+            "grafton",
+            "hardwick",
+            "harvard",
+            "holden",
+            "hopedale",
+            "hubbardston",
+            "lancaster",
+            "leicester",
+            "leominster",
+            "lunenburg",
+            "mendon",
+            "milford",
+            "millbury",
+            "millville",
+            "new braintree",
+            "north brookfield",
+            "northborough",
+            "northbridge",
+            "oakham",
+            "oxford",
+            "paxton",
+            "petersham",
+            "phillipston",
+            "princeton",
+            "royalston",
+            "rutland",
+            "shrewsbury",
+            "southborough",
+            "southbridge",
+            "spencer",
+            "sterling",
+            "sturbridge",
+            "sutton",
+            "templeton",
+            "upton",
+            "uxbridge",
+            "warren",
+            "webster",
+            "west boylston",
+            "west brookfield",
+            "westborough",
+            "westminster",
+            "winchendon",
+            "worcester"
+          ]
+        }
+      ]
+    },
+    {
+      "department": "Housing Court",
+      "selection": "first",
+      "rules": [
+        {
+          "courts": [
+            "Eastern Housing Court - Chelsea Session"
+          ],
+          "cities": [
+            "charlestown",
+            "chelsea",
+            "e. boston",
+            "east boston",
+            "revere",
+            "winthrop"
+          ],
+          "neighborhoods": [
+            {
+              "city": "boston",
+              "names": [
+                "central square",
+                "day square",
+                "eagle hill",
+                "east boston",
+                "jeffries point",
+                "maverick square",
+                "orient heights"
+              ]
+            }
+          ]
+        },
+        {
+          "courts": [
+            "Eastern Housing Court"
+          ],
+          "counties": [
+            "suffolk county"
+          ],
+          "cities": [
+            "brookline"
+          ]
+        },
+        {
+          "courts": [
+            "Eastern Housing Court - Middlesex Session"
+          ],
+          "cities": [
+            "arlington",
+            "belmont",
+            "cambridge",
+            "medford",
+            "newton",
+            "somerville"
+          ]
+        },
+        {
+          "courts": [
+            "Western Housing Court - Greenfield Session"
+          ],
+          "cities": [
+            "ashfield",
+            "bernardston",
+            "buckland",
+            "charlemont",
+            "colrain",
+            "conway",
+            "deerfield",
+            "erving",
+            "gill",
+            "greenfield",
+            "hawley",
+            "heath",
+            "leverett",
+            "leyden",
+            "monroe",
+            "montague",
+            "new salem",
+            "northfield",
+            "orange",
+            "rowe",
+            "shelburne",
+            "shelburne falls",
+            "shutesbury",
+            "sunderland",
+            "warwick",
+            "wendell",
+            "whately"
+          ]
+        },
+        {
+          "courts": [
+            "Western Housing Court - Hadley Session"
+          ],
+          "cities": [
+            "amherst",
+            "belchertown",
+            "chesterfield",
+            "cummington",
+            "easthampton",
+            "goshen",
+            "granby",
+            "hadley",
+            "hatfield",
+            "huntington",
+            "middlefield",
+            "northampton",
+            "pelham",
+            "plainfield",
+            "south hadley",
+            "southampton",
+            "ware",
+            "westhampton",
+            "williamsburg",
+            "worthington"
+          ]
+        },
+        {
+          "courts": [
+            "Western Housing Court - Pittsfield Session"
+          ],
+          "counties": [
+            "berkshire county"
+          ]
+        },
+        {
+          "courts": [
+            "Western Housing Court - Pittsfield Session"
+          ],
+          "cities": [
+            "adams",
+            "alford",
+            "becket",
+            "cheshire",
+            "clarksburg",
+            "dalton",
+            "egremont",
+            "florida",
+            "great barrington",
+            "hancock",
+            "hinsdale",
+            "lanesborough",
+            "lee",
+            "lenox",
+            "monterey",
+            "mount washington",
+            "new ashford",
+            "new marlborough",
+            "north adams",
+            "otis",
+            "peru",
+            "pittsfield",
+            "richmond",
+            "sandisfield",
+            "savoy",
+            "sheffield",
+            "stockbridge",
+            "tyringham",
+            "washington",
+            "west stockbridge",
+            "williamstown",
+            "windsor"
+          ]
+        },
+        {
+          "courts": [
+            "Western Housing Court - Springfield Session"
+          ],
+          "cities": [
+            "agawam",
+            "blandford",
+            "brimfield",
+            "chester",
+            "chicopee",
+            "east longmeadow",
+            "granville",
+            "hampden",
+            "holland",
+            "holyoke",
+            "longmeadow",
+            "ludlow",
+            "monson",
+            "montgomery",
+            "palmer",
+            "russell",
+            "southwick",
+            "springfield",
+            "tolland",
+            "wales",
+            "west springfield",
+            "westfield",
+            "wilbraham"
+          ]
+        },
+        {
+          "courts": [
+            "Central Housing Court - Dudley Session"
+          ],
+          "cities": [
+            "charlton",
+            "dudley",
+            "oxford",
+            "southbridge",
+            "sturbridge",
+            "webster"
+          ]
+        },
+        {
+          "courts": [
+            "Central Housing Court - Leominster Session"
+          ],
+          "cities": [
+            "ashburnham",
+            "athol",
+            "fitchburg",
+            "gardner",
+            "holden",
+            "hubbardston",
+            "leominster",
+            "lunenburg",
+            "petersham",
+            "phillipston",
+            "princeton",
+            "royalston",
+            "templeton",
+            "westminster",
+            "winchendon"
+          ]
+        },
+        {
+          "courts": [
+            "Central Housing Court - Marlborough Session"
+          ],
+          "cities": [
+            "ashland",
+            "berlin",
+            "bolton",
+            "framingham",
+            "harvard",
+            "holliston",
+            "hopkinton",
+            "hudson",
+            "marlborough",
+            "natick",
+            "northborough",
+            "sherborn",
+            "southborough",
+            "sudbury",
+            "wayland",
+            "westborough"
+          ]
+        },
+        {
+          "courts": [
+            "Central Housing Court - Worcester Session"
+          ],
+          "cities": [
+            "auburn",
+            "barre",
+            "blackstone",
+            "boylston",
+            "brookfield",
+            "clinton",
+            "douglas",
+            "east brookfield",
+            "grafton",
+            "hardwick",
+            "hopedale",
+            "lancaster",
+            "leicester",
+            "mendon",
+            "milford",
+            "millbury",
+            "millville",
+            "new braintree",
+            "north brookfield",
+            "northbridge",
+            "oakham",
+            "oxford",
+            "paxton",
+            "rutland",
+            "shrewsbury",
+            "spencer",
+            "sterling",
+            "sutton",
+            "upton",
+            "uxbridge",
+            "w. brookfield",
+            "warren",
+            "west boylston",
+            "west brookfield",
+            "worcester"
+          ]
+        },
+        {
+          "courts": [
+            "Metro South Housing Court - Stoughton Session"
+          ],
+          "cities": [
+            "stoughton"
+          ],
+          "note": "Stoughton has its own Metro South session; filings go to Canton."
+        },
+        {
+          "courts": [
+            "Metro South Housing Court - Brockton Session"
+          ],
+          "cities": [
+            "abington",
+            "avon",
+            "braintree",
+            "bridgewater",
+            "brockton",
+            "canton",
+            "cohasset",
+            "dedham",
+            "dover",
+            "east bridgewater",
+            "eastham",
+            "foxborough",
+            "franklin",
+            "holbrook",
+            "medfield",
+            "medway",
+            "millis",
+            "milton",
+            "needham",
+            "norfolk",
+            "norwood",
+            "plainville",
+            "quincy",
+            "randolph",
+            "sharon",
+            "walpole",
+            "wellesley",
+            "west bridgewater",
+            "westwood",
+            "weymouth",
+            "whitman",
+            "wrentham"
+          ]
+        },
+        {
+          "courts": [
+            "Metro South Housing Court - Canton Session"
+          ],
+          "counties": [
+            "norfolk county"
+          ],
+          "excluded_cities": [
+            "brookline",
+            "newton"
+          ],
+          "require_all": true
+        },
+        {
+          "courts": [
+            "Northeast Housing Court - Lawrence Session"
+          ],
+          "cities": [
+            "amesbury",
+            "andover",
+            "boxford",
+            "georgetown",
+            "groveland",
+            "haverhill",
+            "lawrence",
+            "merrimac",
+            "methuen",
+            "newbury",
+            "newburyport",
+            "north andover",
+            "rowley",
+            "salisbury",
+            "west newbury"
+          ]
+        },
+        {
+          "courts": [
+            "Northeast Housing Court - Lowell Session"
+          ],
+          "cities": [
+            "acton",
+            "ashby",
+            "ayer",
+            "billerica",
+            "boxborough",
+            "carlisle",
+            "chelmsford",
+            "devens",
+            "dracut",
+            "dunstable",
+            "groton",
+            "littleton",
+            "lowell",
+            "maynard",
+            "pepperell",
+            "shirley",
+            "stow",
+            "tewksbury",
+            "townsend",
+            "tyngsborough",
+            "westford"
+          ]
+        },
+        {
+          "courts": [
+            "Northeast Housing Court - Lynn Session"
+          ],
+          "cities": [
+            "lynn",
+            "nahant",
+            "saugus"
+          ]
+        },
+        {
+          "courts": [
+            "Northeast Housing Court - Salem Session"
+          ],
+          "cities": [
+            "beverly",
+            "danvers",
+            "essex",
+            "gloucester",
+            "hamilton",
+            "ipswich",
+            "lynnfield",
+            "manchester-by-the-sea",
+            "marblehead",
+            "middleton",
+            "peabody",
+            "rockport",
+            "salem",
+            "swampscott",
+            "topsfield",
+            "wenham"
+          ]
+        },
+        {
+          "courts": [
+            "Northeast Housing Court - Woburn Session"
+          ],
+          "cities": [
+            "bedford",
+            "burlington",
+            "concord",
+            "everett",
+            "lexington",
+            "lincoln",
+            "malden",
+            "melrose",
+            "north reading",
+            "reading",
+            "stoneham",
+            "wakefield",
+            "waltham",
+            "watertown",
+            "weston",
+            "wilmington",
+            "winchester",
+            "woburn"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Fall River Session",
+            "Southeast Housing Court - New Bedford Session"
+          ],
+          "cities": [
+            "freetown",
+            "westport"
+          ],
+          "note": "Concurrent jurisdiction; both sessions list these towns."
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Fall River Session"
+          ],
+          "cities": [
+            "fall river",
+            "somerset",
+            "swansea"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - New Bedford Session"
+          ],
+          "cities": [
+            "acushnet",
+            "dartmouth",
+            "fairhaven",
+            "new bedford"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Barnstable session"
+          ],
+          "counties": [
+            "barnstable county",
+            "dukes county",
+            "nantucket county"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Barnstable session"
+          ],
+          "cities": [
+            "aquinnah",
+            "barnstable",
+            "bourne",
+            "brewster",
+            "chatham",
+            "chilmark",
+            "dennis",
+            "eastham",
+            "edgartown",
+            "falmouth",
+            "harwich",
+            "mashpee",
+            "nantucket",
+            "oak bluffs",
+            "orleans",
+            "provincetown",
+            "sandwich",
+            "west tisbury",
+            "yarmouth"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Plymouth Session"
+          ],
+          "cities": [
+            "accord",
+            "aquinnah",
+            "assinippi",
+            "barnstable",
+            "bourne",
+            "brewster",
+            "carver",
+            "chatham",
+            "chilmark",
+            "dennis",
+            "duxbury",
+            "edgartown",
+            "falmouth",
+            "gosnold",
+            "halifax",
+            "hanover",
+            "hanson",
+            "harwich",
+            "hingham",
+            "hull",
+            "humarock",
+            "kingston",
+            "lakeville",
+            "marion",
+            "marshfield",
+            "mashpee",
+            "mattapoisett",
+            "middleborough",
+            "nantucket",
+            "norwell",
+            "oak bluffs",
+            "pembroke",
+            "plymouth",
+            "plympton",
+            "provincetown",
+            "rochester",
+            "rockland",
+            "sandwich",
+            "scituate",
+            "tisbury",
+            "wareham"
+          ]
+        },
+        {
+          "courts": [
+            "Southeast Housing Court - Taunton Session"
+          ],
+          "cities": [
+            "attleboro",
+            "berkley",
+            "dighton",
+            "easton",
+            "mansfield",
+            "north attleborough",
+            "norton",
+            "raynham",
+            "rehoboth",
+            "seekonk",
+            "taunton"
+          ]
+        }
+      ]
+    }
+  ]
+}

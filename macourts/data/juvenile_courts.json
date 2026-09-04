@@ -292,7 +292,12 @@
     ],
     "description": "The Norfolk County Juvenile Court in Dedham serves Avon, Canton, Dedham, Dover, Foxborough, Franklin, Medfield, Medway, Millis, Needham, Norfolk, Norwood, Plainville, Sharon, Stoughton, Walpole, Wellesley, Westwood, and Wrentham.",
     "address_source": "https://www.mass.gov/orgs/juvenile-court/locations",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "location_name": "Dedham Juvenile Court",
+    "appearance_locations": [
+      "Dedham Juvenile Court",
+      "Stoughton Juvenile Court"
+    ]
   },
   {
     "fax": "(617) 436-3595",
@@ -1292,7 +1297,10 @@
     "description": "Cases are heard at the Norfolk County Juvenile Court in Stoughton when scheduled by the court.",
     "url": "https://www.mass.gov/locations/stoughton-juvenile-court",
     "address_source": "https://www.mass.gov/locations/stoughton-juvenile-court",
-    "address_verified": "2026-09-03"
+    "address_verified": "2026-09-03",
+    "location_name": "Stoughton Juvenile Court",
+    "accepts_filings": false,
+    "filing_location": "Dedham Juvenile Court"
   },
   {
     "fax": "",
