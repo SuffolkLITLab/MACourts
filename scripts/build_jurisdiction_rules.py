@@ -30,6 +30,7 @@ CITY_SPELLING_FIXES = {
     "pepperrell": "pepperell",
     "southamptom": "southampton",
     "nahunt": "nahant",
+    "middleboro": "middleborough",
 }
 
 # Not a municipality: a stray list entry in the Berkshire housing chain.

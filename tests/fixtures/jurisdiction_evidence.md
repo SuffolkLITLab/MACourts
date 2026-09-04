@@ -52,3 +52,19 @@ Expanding the alias to all four towns returned three Housing Court sessions for
 one address, plus both Middlesex and Worcester Superior and Probate courts. The
 alias is overridden to Ayer alone.
 
+## Middleborough — concurrent Plymouth / Brockton Probate & Family sessions
+
+Plymouth County's Probate and Family Court hears matters in two locations, at 52
+Obery Street in Plymouth and 215 Main Street in Brockton, and both list the same
+27 Plymouth County towns — Middleborough among them.
+
+- Plymouth Probate and Family Court:
+  https://www.mass.gov/locations/plymouth-probate-and-family-court
+- Brockton Probate and Family Court:
+  https://www.mass.gov/locations/brockton-probate-and-family-court
+
+The legacy chains spelled the town "middleborough" in the Plymouth rule and
+"middleboro" in the Brockton rule, so neither list contained both spellings and
+each spelling returned only one of the two courts. Corrected via
+`CITY_SPELLING_FIXES`, which is where the other legacy misspellings are handled.
+

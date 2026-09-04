@@ -99,6 +99,7 @@ the legacy code compared casefolded string literals:
 | `pepperrell` | `pepperell` | Pepperell had no Probate & Family match at all |
 | `southamptom` | `southampton` | Southampton matched only through its county |
 | `nahunt` | `nahant` | Nahant matched only through its county |
+| `middleboro` | `middleborough` | Middleborough was dropped from the Brockton Probate & Family list |
 | `county` | *(dropped)* | Not a municipality; a stray entry in the Berkshire housing list |
 
 ### Housing Court jurisdiction updates
@@ -130,6 +131,10 @@ Verified 2026-09-03; see also
   Superior and Probate courts. Mass.gov routes the whole enterprise zone through
   Ayer, in Middlesex. The override lives in
   `scripts/build_municipality_aliases.py`.
+- **Middleborough** → both the Plymouth and Brockton Probate & Family sessions.
+  Plymouth County's Probate and Family Court sits in two locations and both
+  serve the whole county; the legacy lists split the two spellings of the town
+  between them, so each spelling returned a different court.
 
 ## Coverage
 

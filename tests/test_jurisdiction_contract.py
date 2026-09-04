@@ -132,3 +132,49 @@ def test_finder_covers_every_department_for_a_single_address(finder):
     assert {match.department for match in matches} == set(DEPARTMENTS) - {
         "Boston Municipal Court"
     }
+
+
+# Place names in the rule data that deliberately answer differently from the
+# municipality they sit in, because the Trial Court gives them their own venue.
+INTENTIONAL_VENUE_EXCEPTIONS = {
+    "charlestown",
+    "east boston",
+}
+
+
+def test_spelling_variants_in_rules_agree_with_their_municipality(finder):
+    """A rule naming a variant spelling must not answer differently from the town.
+
+    `match_named_place` lets a name the rule data spells out win before it is
+    normalized, which is what gives East Boston its Chelsea sessions. The same
+    precedence turns a *spelling* variant into a bug when the two spellings land
+    in different rules: "middleboro" once returned Brockton Probate & Family and
+    "middleborough" returned Plymouth, for one town served by both.
+    """
+    index = finder.municipality_index
+    rule_cities = {
+        city.casefold()
+        for block in json.loads(
+            (Path(__file__).parents[1] / "macourts" / "data" / "jurisdiction_rules.json")
+            .read_text(encoding="utf-8")
+        )["departments"]
+        for rule in block["rules"]
+        for city in rule.get("cities", ())
+    }
+
+    divergent = {}
+    for name in sorted(rule_cities - set(INTENTIONAL_VENUE_EXCEPTIONS)):
+        if index.is_canonical_municipality(name):
+            continue
+        targets = index.resolve_alias(name)
+        if len(targets) != 1:
+            continue  # a village spanning several towns, not a spelling variant
+        canonical = targets[0].name
+        variant_courts = {m.name for m in finder.find(Location(city=name))}
+        town_courts = {m.name for m in finder.find(Location(city=canonical))}
+        if variant_courts != town_courts:
+            divergent[name] = (canonical, sorted(town_courts ^ variant_courts))
+
+    assert not divergent, f"spelling variants answering differently: {divergent}"
+
+

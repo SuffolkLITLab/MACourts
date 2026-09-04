@@ -283,3 +283,8 @@ def test_devens_is_one_venue_rather_than_the_four_towns_it_spans(finder):
         assert not {n for n in names if n.startswith("Central Housing Court")}
 
 
+def test_both_spellings_of_middleborough_agree(finder):
+    """Plymouth County's two Probate & Family locations both serve the town."""
+    canonical = {m.name for m in finder.find(Location(city="Middleborough"))}
+    assert {"Plymouth Probate and Family Court", "Brockton Probate and Family Court"} <= canonical
+    assert {m.name for m in finder.find(Location(city="Middleboro"))} == canonical
