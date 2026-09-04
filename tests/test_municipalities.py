@@ -270,3 +270,16 @@ def test_resolve_place_keeps_a_municipality_when_the_county_is_wrong():
     )
 
 
+def test_devens_is_one_venue_rather_than_the_four_towns_it_spans(finder):
+    """Mass.gov routes the whole enterprise zone through Ayer, in Middlesex."""
+    for spelling in ("Devens", "Devens Regional Enterprise Zone"):
+        names = {m.name for m in finder.find(Location(city=spelling))}
+        assert "Ayer District Court" in names
+        assert "Northeast Housing Court - Lowell Session" in names
+        assert "Middlesex County Superior Court" in names
+        # Harvard and Lancaster are in Worcester County; Devens does not follow them.
+        assert not {n for n in names if n.startswith("Worcester")}
+        assert "Clinton District Court" not in names
+        assert not {n for n in names if n.startswith("Central Housing Court")}
+
+

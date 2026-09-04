@@ -17,6 +17,20 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "macourts" / "data"
 EXCEL_PATH = DATA_DIR / "massachusetts_municipalities_counties_aliases.xlsx"
 OUTPUT_PATH = DATA_DIR / "municipality_aliases.json"
 
+# Aliases the source spreadsheet lists against every municipality whose land they
+# touch, but which the Trial Court treats as a single venue. Each is recorded in
+# docs/jurisdiction_rules.md with its Mass.gov source.
+ALIAS_OVERRIDES: dict[str, list[dict[str, str]]] = {
+    # Devens spans Ayer, Harvard, Lancaster, and Shirley, but Mass.gov routes the
+    # whole enterprise zone through Ayer: Ayer District Court names the "Devens
+    # Regional Enterprise Zone", and the Northeast Housing Court's Lowell session
+    # names Devens. Both are Middlesex, as is Ayer.
+    "devens": [{"municipality": "Ayer", "county": "Middlesex County"}],
+    "devens regional enterprise zone": [
+        {"municipality": "Ayer", "county": "Middlesex County"}
+    ],
+}
+
 
 def normalize_county(county_name: str) -> str:
     cleaned = county_name.strip()
@@ -67,6 +81,8 @@ def build_data(excel_path: Path = EXCEL_PATH) -> dict[str, Any]:
 
         if entry not in aliases[alias_key]:
             aliases[alias_key].append(entry)
+
+    aliases.update(ALIAS_OVERRIDES)
 
     # Sort aliases deterministically
     sorted_aliases: dict[str, list[dict[str, str]]] = {}

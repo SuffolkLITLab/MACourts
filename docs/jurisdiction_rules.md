@@ -119,6 +119,18 @@ Verified 2026-09-03; see also
   spells this with a lowercase "session". One canonical spelling is used so
   matches always resolve to a record.
 
+### Alias corrections
+
+Verified 2026-09-03; see also
+[`tests/fixtures/jurisdiction_evidence.md`](../tests/fixtures/jurisdiction_evidence.md).
+
+- **Devens** → Ayer. The source spreadsheet lists Devens against all four towns
+  whose land the former base spans (Ayer, Harvard, Lancaster, Shirley), which
+  made a Devens address return three Housing Court sessions and two counties'
+  Superior and Probate courts. Mass.gov routes the whole enterprise zone through
+  Ayer, in Middlesex. The override lives in
+  `scripts/build_municipality_aliases.py`.
+
 ## Coverage
 
 `tests/test_matching.py` asserts that every court in the packaged catalog which

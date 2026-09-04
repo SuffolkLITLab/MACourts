@@ -30,3 +30,25 @@ There is a conflicting newer Mass.gov page, "Courts serving Freetown," which nam
 https://www.mass.gov/info-details/courts-serving-freetown
 
 Because both current session pages still affirm service and the explicit jurisdiction record says either session is permitted, MACourts treats **Fall River + New Bedford** as the court-finder result. The town-specific page should be rechecked periodically in case the Trial Court publishes a formal jurisdiction change.
+
+## Devens — a single venue, routed through Ayer
+
+Devens is a regional enterprise zone on the former Fort Devens, spanning land in
+Ayer, Harvard, Lancaster, and Shirley. The municipality alias spreadsheet lists
+it against all four, which is geographically right and jurisdictionally wrong:
+Mass.gov names Devens as a single service area under Ayer's courts.
+
+- Ayer District Court serves "Ashby, Ayer, Boxborough, Dunstable, Groton,
+  Littleton, Pepperell, Shirley, Townsend, Westford, and Devens Regional
+  Enterprise Zone": https://www.mass.gov/locations/ayer-district-court
+- Northeast Housing Court - Lowell Session names Devens in its service list:
+  https://www.mass.gov/locations/northeast-housing-court-lowell-session
+- Ayer is in Middlesex County, so Superior, Juvenile, and Probate & Family
+  follow Middlesex (Middlesex Probate and Family Court - North, in Lowell,
+  names Ayer and Shirley):
+  https://www.mass.gov/locations/middlesex-probate-and-family-court-north-lowell
+
+Expanding the alias to all four towns returned three Housing Court sessions for
+one address, plus both Middlesex and Worcester Superior and Probate courts. The
+alias is overridden to Ayer alone.
+

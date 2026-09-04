@@ -3,7 +3,7 @@
   "metadata": {
     "source": "massachusetts_municipalities_counties_aliases.xlsx",
     "canonical_municipality_count": 351,
-    "alias_count": 4129
+    "alias_count": 4130
   },
   "municipalities": {
     "abington": {
@@ -5744,17 +5744,11 @@
       {
         "municipality": "Ayer",
         "county": "Middlesex County"
-      },
+      }
+    ],
+    "devens regional enterprise zone": [
       {
-        "municipality": "Harvard",
-        "county": "Worcester County"
-      },
-      {
-        "municipality": "Lancaster",
-        "county": "Worcester County"
-      },
-      {
-        "municipality": "Shirley",
+        "municipality": "Ayer",
         "county": "Middlesex County"
       }
     ],
