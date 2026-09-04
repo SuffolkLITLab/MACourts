@@ -6,11 +6,19 @@ These exercise the file that actually ships, as opposed to
 
 from __future__ import annotations
 
+import csv
 import sqlite3
+from pathlib import Path
 
 import pytest
 
+from macourts.boston import BostonMunicipalCourtMatcher
 from macourts.boston_address import BostonAddressIndex
+from macourts.models import Coordinates
+
+FOOD_INSPECTION_FIXTURE = (
+    Path(__file__).parent / "fixtures" / "boston_food_inspection_addresses_no_sam.csv"
+)
 
 # The 8 BMC divisions the catalog and boston_wards.geojson both name.
 EXPECTED_DIVISIONS = {
@@ -104,3 +112,58 @@ def test_no_foreign_key_orphans(index: BostonAddressIndex) -> None:
         """
     ).fetchone()
     assert orphans == 0
+
+
+@pytest.fixture(scope="module")
+def coordinate_matcher() -> BostonMunicipalCourtMatcher:
+    return BostonMunicipalCourtMatcher.from_package_data()
+
+
+def test_matches_independent_geocoded_food_establishment_data(
+    index: BostonAddressIndex,
+    coordinate_matcher: BostonMunicipalCourtMatcher,
+) -> None:
+    """Cross-check against 100 real, independently geocoded Boston addresses.
+
+    These are City of Boston food establishment license records, not part of
+    the SAM snapshot the index was built from, each carrying both a street
+    address and a geocoded point -- so the point gives an independent ground
+    truth to check the address-index resolution against.
+    """
+    if not FOOD_INSPECTION_FIXTURE.is_file():
+        pytest.skip(f"{FOOD_INSPECTION_FIXTURE} not found")
+
+    with FOOD_INSPECTION_FIXTURE.open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    assert rows
+
+    mismatches = []
+    resolved = 0
+    for row in rows:
+        coordinates = Coordinates(
+            latitude=float(row["latitude"]), longitude=float(row["longitude"])
+        )
+        ground_truth = coordinate_matcher.court_for_coordinates(
+            coordinates, allow_nearest=True
+        )
+        resolution = index.resolve(row["address"], zip_code=row["zip"])
+        if resolution.match_kind != "success":
+            continue
+        resolved += 1
+        expected = ground_truth.name if ground_truth else None
+        if resolution.court_name != expected:
+            mismatches.append(
+                (row["establishment"], row["address"], expected, resolution.court_name)
+            )
+
+    # A wrong division would be a real bug and must never happen. An
+    # unresolved address -- a rare ward-boundary geometry gap, see
+    # docs/bmc_address_index.md -- is a tracked, acceptable shortfall, not a
+    # correctness failure, so it only lowers the resolved-count floor below.
+    assert not mismatches, mismatches
+    # Currently all 100 resolve (including via nearest-boundary fallback for
+    # ward-polygon boundary gaps). A small buffer below that guards against
+    # this becoming a flaky test on a future SAM refresh's minor data drift
+    # (e.g. a newly-duplicated point creating a build conflict) without
+    # masking a real regression.
+    assert resolved >= 98, f"only {resolved}/{len(rows)} resolved"

@@ -69,6 +69,13 @@ class AddressResolution:
     normalized_number: str | None
     normalized_street: str | None
     data_version: str | None
+    #: Only meaningful when match_kind is "success". True when some SAM point
+    #: at this address was strictly inside its division's ward polygon; False
+    #: when every one needed the compiler's nearest-boundary fallback (see
+    #: docs/bmc_address_index.md) -- a safe answer since BMC divisions have
+    #: concurrent, not exclusive, jurisdiction across Boston, but worth a
+    #: caller being able to tell apart from a strict-containment match.
+    exact: bool | None = None
 
 
 NOT_FOUND = "not_found"
@@ -224,7 +231,7 @@ class BostonAddressIndex:
         placeholders = ",".join("?" for _ in street_ids)
         rows = connection.execute(
             f"""
-            SELECT division_id, zip_code
+            SELECT division_id, zip_code, exact
             FROM addresses
             WHERE street_id IN ({placeholders}) AND number_key = ?
             """,
@@ -239,40 +246,46 @@ class BostonAddressIndex:
                 self._data_version,
             )
 
-        target_zip = normalize_zip_code(zip_code)
-        if target_zip:
-            # zip_code is stored as an int (see build_bmc_address_index.py);
-            # target_zip is always a 5-digit string, so int() is exact here.
-            zip_rows = [row for row in rows if row[1] == int(target_zip)]
-            if not zip_rows:
+        # ZIP only matters when the street+number alone is ambiguous: real ZIPs
+        # on third-party records (food licenses, etc.) commonly name a
+        # neighboring postal ZIP rather than SAM's own, and every row already
+        # agreeing on one division is a stronger signal than that ZIP is.
+        divisions = {row[0] for row in rows}
+        if len(divisions) > 1:
+            target_zip = normalize_zip_code(zip_code)
+            if target_zip:
+                # zip_code is stored as an int (see build_bmc_address_index.py);
+                # target_zip is always a 5-digit string, so int() is exact.
+                zip_rows = [row for row in rows if row[1] == int(target_zip)]
+                if not zip_rows:
+                    return AddressResolution(
+                        None,
+                        ZIP_MISMATCH,
+                        parsed.number_key,
+                        parsed.street_key,
+                        self._data_version,
+                    )
+                divisions = {row[0] for row in zip_rows}
+            if len(divisions) > 1:
                 return AddressResolution(
                     None,
-                    ZIP_MISMATCH,
+                    AMBIGUOUS,
                     parsed.number_key,
                     parsed.street_key,
                     self._data_version,
                 )
-            rows = zip_rows
-
-        divisions = {row[0] for row in rows}
-        if len(divisions) > 1:
-            return AddressResolution(
-                None,
-                AMBIGUOUS,
-                parsed.number_key,
-                parsed.street_key,
-                self._data_version,
-            )
 
         division_id = next(iter(divisions))
         court_row = connection.execute(
             "SELECT court_name FROM divisions WHERE id = ?", (division_id,)
         ).fetchone()
         court_name = court_row[0] if court_row else None
+        exact = any(row[2] for row in rows if row[0] == division_id)
         return AddressResolution(
             court_name,
             SUCCESS,
             parsed.number_key,
             parsed.street_key,
             self._data_version,
+            exact=bool(exact),
         )

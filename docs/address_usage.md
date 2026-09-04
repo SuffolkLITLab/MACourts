@@ -181,12 +181,19 @@ address_index
 This is an **exact-match lookup** against a compiled snapshot of Boston's
 Street Address Management (SAM) system (see
 [BMC address index](bmc_address_index.md) for how it's built and refreshed).
-It does not fuzzy-match, guess a nearest street, or interpolate a house number
-that isn't in the source data — an address it doesn't recognize resolves to no
-match at all rather than a guess, so it is safe to treat "no BMC match" as
-"try geocoding this one instead." A ZIP code is optional but recommended: a
-handful of Boston street names repeat across neighborhoods, and the ZIP is
-what disambiguates them.
+It does not fuzzy-match street *names*, guess a nearest street, or interpolate
+a house number that isn't in the source data — an address it doesn't
+recognize resolves to no match at all rather than a guess, so it is safe to
+treat "no BMC match" as "try geocoding this one instead." A ZIP code is
+optional but recommended: a handful of Boston street names repeat across
+neighborhoods, and the ZIP is what disambiguates them.
+
+A small fraction of addresses resolve via the compiled index's own
+nearest-*boundary* fallback (`reasons[0].kind == "address_index_nearest"`
+instead of `"address_index"`) rather than strict ward-polygon containment —
+this is a different thing from street-name guessing: it mirrors the existing
+coordinate matcher's `geometry_nearest`, and is safe specifically because BMC
+divisions have concurrent, not exclusive, jurisdiction across Boston.
 
 `coordinates` still takes priority when both are supplied, so existing
 geocoding-based callers see no behavior change.

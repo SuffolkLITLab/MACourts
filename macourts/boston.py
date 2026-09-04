@@ -173,14 +173,22 @@ class BostonMunicipalCourtMatcher:
                 source = "bmc_addresses.sqlite"
                 if resolution.data_version:
                     source = f"{source}:{resolution.data_version}"
+                if resolution.exact:
+                    kind, detail = "address_index", "exact Boston SAM address matched"
+                else:
+                    # Mirrors geometry_nearest: BMC divisions have concurrent,
+                    # not exclusive, jurisdiction across Boston, so the SAM
+                    # address's nearest-ward-boundary division is a safe
+                    # answer, just one worth telling apart from a strict
+                    # containment match.
+                    kind, detail = (
+                        "address_index_nearest",
+                        "nearest-boundary Boston SAM address matched",
+                    )
                 return Candidate(
                     resolution.court_name,
                     BMC,
-                    MatchReason(
-                        "address_index",
-                        f"exact Boston SAM address matched {resolution.court_name}",
-                        source,
-                    ),
+                    MatchReason(kind, f"{detail} {resolution.court_name}", source),
                 )
         return None
 

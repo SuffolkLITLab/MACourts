@@ -81,6 +81,7 @@ CREATE TABLE addresses (
     number_key  TEXT NOT NULL,
     zip_code    INTEGER NOT NULL DEFAULT 0,
     division_id INTEGER NOT NULL,
+    exact       INTEGER NOT NULL DEFAULT 1,
     PRIMARY KEY (street_id, number_key, zip_code)
 ) WITHOUT ROWID;
 
@@ -119,16 +120,19 @@ def index(tmp_path) -> BostonAddressIndex:
         ],
     )
     connection.executemany(
-        "INSERT INTO addresses VALUES (?, ?, ?, ?)",
+        "INSERT INTO addresses VALUES (?, ?, ?, ?, ?)",
         [
-            (1, "100", 2118, 1),
+            (1, "100", 2118, 1, 1),
             # Same street+number, two ZIPs, same division: still a clean match.
-            (1, "200", 2118, 1),
-            (1, "200", 2119, 1),
+            (1, "200", 2118, 1, 1),
+            (1, "200", 2119, 1, 1),
             # The duplicate-name case: same number on both streets, different
             # ZIPs and different divisions.
-            (2, "50", 2120, 1),
-            (3, "50", 2121, 2),
+            (2, "50", 2120, 1, 1),
+            (3, "50", 2121, 2, 1),
+            # A nearest-boundary-fallback-only address (see
+            # docs/bmc_address_index.md): resolvable, but not exact.
+            (1, "300", 2118, 1, 0),
         ],
     )
     connection.commit()
@@ -141,6 +145,16 @@ def test_resolve_success_via_canonical_name(index: BostonAddressIndex) -> None:
     assert resolution.match_kind == SUCCESS
     assert resolution.court_name == CENTRAL
     assert resolution.data_version == "test-fixture"
+    assert resolution.exact is True
+
+
+def test_resolve_success_marks_nearest_boundary_fallback_as_inexact(
+    index: BostonAddressIndex,
+) -> None:
+    resolution = index.resolve("300 Main St")
+    assert resolution.match_kind == SUCCESS
+    assert resolution.court_name == CENTRAL
+    assert resolution.exact is False
 
 
 def test_resolve_success_via_generated_variant(index: BostonAddressIndex) -> None:
@@ -191,9 +205,24 @@ def test_resolve_zip_disambiguates_duplicate_street_name(
 def test_resolve_zip_mismatch_is_not_silently_ignored(
     index: BostonAddressIndex,
 ) -> None:
-    resolution = index.resolve("100 Main St", zip_code="09999")
+    # ZIP only matters once the street+number alone is ambiguous (the
+    # duplicate-name "Oak Ave" case): an unmatched ZIP there is a real
+    # signal, unlike an unmatched ZIP on an otherwise-unambiguous address
+    # (see test_resolve_unambiguous_address_ignores_a_mismatched_zip).
+    resolution = index.resolve("50 Oak Ave", zip_code="09999")
     assert resolution.match_kind == ZIP_MISMATCH
     assert resolution.court_name is None
+
+
+def test_resolve_unambiguous_address_ignores_a_mismatched_zip(
+    index: BostonAddressIndex,
+) -> None:
+    # Real-world ZIPs on third-party records often name a neighboring postal
+    # ZIP rather than SAM's own; when every candidate row already agrees on
+    # one division, that's a stronger signal than an unmatched ZIP.
+    resolution = index.resolve("100 Main St", zip_code="09999")
+    assert resolution.match_kind == SUCCESS
+    assert resolution.court_name == CENTRAL
 
 
 def test_resolve_unparseable_address_is_not_found(index: BostonAddressIndex) -> None:

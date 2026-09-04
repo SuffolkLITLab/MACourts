@@ -29,10 +29,16 @@ suffix-variant street spellings without a second source.
 1. Loads `boston_wards.geojson` through the same
    `BostonMunicipalCourtMatcher` runtime code uses, and spatially assigns every
    SAM address point to a BMC division via
-   `court_for_coordinates(point, allow_nearest=False)` — the same method, same
-   polygons, same division names the coordinate-based matcher uses. An address
-   whose point isn't covered by any ward polygon is left out of the index and
-   reported in the QA output rather than assigned to a nearest guess.
+   `court_for_coordinates(point, allow_nearest=True)` — the same method, same
+   polygons, same division names, same nearest-boundary fallback the
+   coordinate-based matcher itself uses for a point no ward polygon strictly
+   contains. This is safe here specifically because BMC divisions have
+   concurrent, not exclusive, jurisdiction across Boston (the same rule
+   `docassemble-MACourts` uses for coordinate lookups) — a nearest-boundary
+   answer is a legitimate one, not a guess. Each compiled address row records
+   whether it came from strict containment or the nearest-boundary fallback
+   (the `exact` column), so `resolve()` can still tell a caller which kind of
+   match it gave.
 2. Ignores `UNIT` entirely (a unit can't change BMC jurisdiction) and expands a
    SAM range address (e.g. `6-10 A St`, meaning one building/entrance spans
    house numbers 6, 8, and 10) into its individual house numbers at the
@@ -70,6 +76,7 @@ CREATE TABLE addresses (
     number_key  TEXT NOT NULL,
     zip_code    INTEGER NOT NULL DEFAULT 0,  -- e.g. 2118 for "02118"
     division_id INTEGER NOT NULL,
+    exact       INTEGER NOT NULL DEFAULT 1,  -- 1 strict containment, 0 nearest-boundary fallback
     PRIMARY KEY (street_id, number_key, zip_code)
 ) WITHOUT ROWID;
 ```
@@ -111,10 +118,25 @@ that isn't in the index. An address it doesn't recognize comes back
 | --- | --- |
 | Street name not in the index | `not_found` |
 | Street exists, house number doesn't | `not_found` |
-| One matching row, or several rows all in the same division | `success` |
-| A ZIP is given and exactly one candidate division matches it | `success` |
-| A ZIP is given but matches none of the candidate rows | `zip_mismatch` |
-| Rows resolve to more than one division and the ZIP doesn't disambiguate | `ambiguous` |
+| One matching row, or several rows all in the same division | `success`, regardless of ZIP |
+| Rows disagree on division, and the given ZIP matches exactly one candidate | `success` |
+| Rows disagree on division, and the given ZIP matches none of them | `zip_mismatch` |
+| Rows disagree on division, and no ZIP was given (or it still doesn't disambiguate) | `ambiguous` |
+
+ZIP is deliberately only consulted once the street name and house number
+*alone* are ambiguous (rows disagree on division) — not as a blanket
+validation check. Real-world ZIPs on third-party records (food licenses,
+etc.) commonly name a neighboring postal ZIP rather than SAM's own, and every
+candidate row already agreeing on one division is a stronger signal than an
+unmatched ZIP. It still matters where it counts: duplicate street names
+recur across different physical Boston streets far more than you'd guess
+(see below), and there ZIP is exactly what disambiguates them.
+
+On `success`, `AddressResolution.exact` says which kind of match it was: `True`
+for strict ward-polygon containment, `False` for the nearest-boundary
+fallback described above. `BostonMunicipalCourtMatcher.division()` surfaces
+this as the `MatchReason.kind` — `"address_index"` vs `"address_index_nearest"`
+— mirroring `"geometry"` vs `"geometry_nearest"` for coordinate matching.
 
 `macourts.boston.BostonMunicipalCourtMatcher.division()` only consults this
 index when `location.coordinates` is absent — a geocoded point always takes
@@ -123,11 +145,19 @@ priority, so existing coordinate-based callers are unaffected.
 ## Validation against known addresses
 
 `scripts/build_bmc_address_index.py`'s own QA report covers every compiled
-row. As an independent cross-check, every real, geocoded Boston location in
-`tests/fixtures/massachusetts_addresses_diverse_and_geocoded.xlsx` (Boston
-Public Library branches, spanning all 8 BMC divisions) resolves to the same
-division through the address index as it does through the existing
-coordinate-based matcher — see `tests/test_bmc_address_data.py`.
+row. Two independent, geocoded fixtures cross-check the compiled index
+against the existing coordinate-based matcher's `court_for_coordinates()` as
+ground truth — both in `tests/test_bmc_address_data.py`:
+
+- `tests/fixtures/massachusetts_addresses_diverse_and_geocoded.xlsx`: 18 real
+  Boston Public Library branches, one per BMC division. All 18 resolve to the
+  same division through the address index as through coordinates.
+- `tests/fixtures/boston_food_inspection_addresses_no_sam.csv`: 100 real City
+  of Boston food establishment licenses, each carrying both a street address
+  and an independently geocoded point (not part of the SAM snapshot the index
+  is built from). All 100 resolve, all agreeing exactly with the
+  coordinate-based match — including the addresses only reachable through the
+  nearest-boundary fallback described below.
 
 ## Refreshing the data
 
@@ -154,21 +184,42 @@ python scripts/compare_bmc_address_index.py \
 
 ## Known data-quality notes (first build, 2026-09)
 
-- **~1.2% of SAM address points fall outside every BMC ward polygon** (mostly
-  labeled "Boston", "East Boston", or "Dorchester" in SAM's own
-  `MAILING_NEIGHBORHOOD` field). This is a pre-existing mismatch between the
-  ward-boundary GIS layer and SAM's address points — the same boundary
-  geometry the coordinate-based matcher already uses (and already falls back
-  to `geometry_nearest` for) — not something introduced by the address index.
-  These addresses are simply absent from the index rather than assigned a
-  guess; a lookup for one returns `not_found`.
-- **7 address keys, out of ~155,800, are genuine build conflicts**: SAM
+- **~1.2% of SAM address points (4,852 of 399,452 raw rows) fall outside
+  every BMC ward polygon** (mostly labeled "Boston", "East Boston", or
+  "Dorchester" in SAM's own `MAILING_NEIGHBORHOOD` field) — a pre-existing
+  mismatch between the ward-boundary GIS layer and SAM's address points, the
+  same one the coordinate-based matcher already falls back to
+  `geometry_nearest` for. These are no longer excluded from the index: since
+  BMC divisions have concurrent, not exclusive, jurisdiction across Boston,
+  they're compiled via the same nearest-boundary fallback and flagged
+  `exact=False` — see the schema and resolution-rules sections above. The
+  first build with strict-only containment excluded all of these; recovering
+  them dropped the food-establishment cross-check's unresolved count from
+  10/100 to 0/100.
+- **24 address keys, out of ~139,700, are genuine build conflicts**: SAM
   carries two slightly offset points for the same `(street, number, ZIP)`
   that land in different divisions, always right at a ward boundary (e.g.
   Walnut Park in Roxbury/West Roxbury, Huntington Ave in Central/Roxbury).
   These are excluded from the index by design rather than resolved by
-  picking one division.
+  picking one division. Rescuing the boundary points above (previous bullet)
+  raised this from 8 to 24 — some previously-excluded points land close
+  enough to a boundary that their nearest division genuinely differs from a
+  duplicate point at nearly the same address.
 
 Both are reported by every build in `build/bmc_address_report.md`; the
 percentage/count thresholds in the build script are worth revisiting against
 a few more refresh cycles' worth of data before tightening them.
+
+Two more gaps the food-establishment cross-check surfaced have been fixed at
+the parser/builder level, not just worked around in the data:
+
+- **`AV` as an Avenue abbreviation.** SAM only stores `Ave`/`Avenue`; real
+  address text (e.g. "1010 Harrison AV") commonly uses the two-letter form.
+  `EXTRA_SUFFIX_ABBREVIATIONS` in `build_bmc_address_index.py` adds known
+  alternates like this beyond what SAM's own fields generate — currently just
+  `AV`, extend it as more evidence turns up.
+- **Range endpoints with a letter suffix**, e.g. `RANGE_TO="1480B"` for
+  `"1480-1480B"` (a base house number plus a lettered sub-address). These
+  used to fail the pure-integer check and fall back to storing the useless
+  literal `"1480-1480B"` string; the builder now extracts each endpoint's
+  base house number and expands from that instead.

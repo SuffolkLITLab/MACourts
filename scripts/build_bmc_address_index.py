@@ -18,6 +18,7 @@ import gzip
 import hashlib
 import itertools
 import json
+import re
 import sqlite3
 import sys
 from collections import defaultdict
@@ -58,6 +59,15 @@ DIRECTIONS = {
 
 MAX_EXPANDED_RANGE = 1000  # sanity guard against a garbage RANGE_FROM/RANGE_TO
 
+_LEADING_DIGITS_RE = re.compile(r"^(\d+)")
+
+# Common alternate abbreviations real address text uses that SAM's own
+# STREET_SUFFIX_ABBR/STREET_FULL_SUFFIX pair doesn't cover. Keyed by the
+# uppercased full suffix; extend as evidence turns up more of these.
+EXTRA_SUFFIX_ABBREVIATIONS: dict[str, tuple[str, ...]] = {
+    "AVENUE": ("AV",),
+}
+
 
 def iter_snapshot_rows(path: Path) -> Iterator[dict[str, Any]]:
     with gzip.open(path, "rt", encoding="utf-8") as handle:
@@ -85,8 +95,20 @@ def expand_number_keys(row: dict[str, Any]) -> set[str]:
     """
     if row.get("IS_RANGE") and row.get("RANGE_FROM") and row.get("RANGE_TO"):
         range_from, range_to = str(row["RANGE_FROM"]), str(row["RANGE_TO"])
+        bounds = None
         if range_from.isdigit() and range_to.isdigit():
-            lo, hi = int(range_from), int(range_to)
+            bounds = (int(range_from), int(range_to))
+        else:
+            # A range endpoint can carry a letter suffix (e.g. RANGE_TO
+            # "1480B" for "1480-1480B", a base number plus a lettered
+            # sub-address). The base house number is still real and worth
+            # indexing, so fall back to each endpoint's leading digit run.
+            from_match = _LEADING_DIGITS_RE.match(range_from)
+            to_match = _LEADING_DIGITS_RE.match(range_to)
+            if from_match and to_match:
+                bounds = (int(from_match.group(1)), int(to_match.group(1)))
+        if bounds is not None:
+            lo, hi = bounds
             if lo <= hi and hi - lo <= MAX_EXPANDED_RANGE:
                 step = 2 if (hi - lo) % 2 == 0 else 1
                 # A real caller types their own single house number, never the
@@ -115,7 +137,10 @@ def street_name_variants(row: dict[str, Any]) -> dict[str, int]:
     abbr = row.get("STREET_SUFFIX_ABBR")
     full = row.get("STREET_FULL_SUFFIX")
     if abbr or full:
-        suffix_options = sorted({s for s in (abbr, full) if s})
+        options = {s for s in (abbr, full) if s}
+        if full:
+            options.update(EXTRA_SUFFIX_ABBREVIATIONS.get(str(full).strip().upper(), ()))
+        suffix_options = sorted(options)
 
     dir_options = [None]
     if row.get("STREET_SUFFIX_DIR"):
@@ -148,11 +173,11 @@ def build_index(
     division_ids = {name: i + 1 for i, name in enumerate(all_divisions)}
 
     street_names: dict[str, dict[str, int]] = {}  # street_id -> {name_key: kind}
-    # (street_id, number_key, zip) -> set of division names seen for that key
-    address_divisions: dict[tuple[int, str, str], set[str]] = defaultdict(set)
+    # (street_id, number_key, zip) -> {division_name: was_ever_an_exact_hit}
+    address_divisions: dict[tuple[int, str, str], dict[str, bool]] = defaultdict(dict)
 
     raw_row_count = 0
-    unmatched_points = 0
+    nearest_fallback_count = 0
     seen_street_ids: set[int] = set()
 
     for row in iter_snapshot_rows(snapshot_dir / "addresses.jsonl.gz"):
@@ -167,24 +192,34 @@ def build_index(
             variants = street_name_variants(row)
             street_names[street_id] = variants
 
+        # BMC divisions have concurrent, not exclusive, jurisdiction across
+        # Boston (matching the existing docassemble-MACourts rule for
+        # coordinate lookups), so a point the ward polygons don't strictly
+        # contain is safe to assign to its nearest division rather than
+        # leaving out of the index entirely -- exactly what runtime
+        # coordinate matching already does via allow_nearest=True.
         candidate = matcher.court_for_coordinates(
-            Coordinates(latitude=y, longitude=x), allow_nearest=False
+            Coordinates(latitude=y, longitude=x), allow_nearest=True
         )
-        if candidate is None:
-            unmatched_points += 1
-            continue
+        is_exact = candidate.reason.kind == "geometry"
+        if not is_exact:
+            nearest_fallback_count += 1
 
         zip_code = normalize_zip_code(row.get("ZIP_CODE")) or ""
         for number_key in expand_number_keys(row):
-            address_divisions[(street_id, number_key, zip_code)].add(candidate.name)
+            key = (street_id, number_key, zip_code)
+            address_divisions[key][candidate.name] = (
+                address_divisions[key].get(candidate.name, False) or is_exact
+            )
 
     conflicts: list[tuple[int, str, str, list[str]]] = []
-    addresses: dict[tuple[int, str, str], str] = {}
+    addresses: dict[tuple[int, str, str], tuple[str, bool]] = {}
     for key, divisions in address_divisions.items():
         if len(divisions) > 1:
             conflicts.append((*key, sorted(divisions)))
             continue
-        addresses[key] = next(iter(divisions))
+        (division_name, is_exact), = divisions.items()
+        addresses[key] = (division_name, is_exact)
 
     return {
         "matcher": matcher,
@@ -194,14 +229,14 @@ def build_index(
         "addresses": addresses,
         "conflicts": conflicts,
         "raw_row_count": raw_row_count,
-        "unmatched_points": unmatched_points,
+        "nearest_fallback_count": nearest_fallback_count,
     }
 
 
 def logical_hash(
     division_ids: dict[str, int],
     street_names: dict[int, dict[str, int]],
-    addresses: dict[tuple[int, str, str], str],
+    addresses: dict[tuple[int, str, str], tuple[str, bool]],
 ) -> str:
     hasher = hashlib.sha256()
     for name in sorted(division_ids):
@@ -210,9 +245,12 @@ def logical_hash(
         for name_key in sorted(street_names[street_id]):
             kind = street_names[street_id][name_key]
             hasher.update(f"S\t{name_key}\t{street_id}\t{kind}\n".encode())
-    for (street_id, number_key, zip_code), division_name in sorted(addresses.items()):
+    for (street_id, number_key, zip_code), (division_name, is_exact) in sorted(
+        addresses.items()
+    ):
         hasher.update(
-            f"A\t{street_id}\t{number_key}\t{zip_code}\t{division_name}\n".encode()
+            f"A\t{street_id}\t{number_key}\t{zip_code}\t{division_name}\t"
+            f"{int(is_exact)}\n".encode()
         )
     return hasher.hexdigest()
 
@@ -222,7 +260,7 @@ def write_database(
     *,
     division_ids: dict[str, int],
     street_names: dict[int, dict[str, int]],
-    addresses: dict[tuple[int, str, str], str],
+    addresses: dict[tuple[int, str, str], tuple[str, bool]],
     metadata: dict[str, str],
 ) -> None:
     if db_path.exists():
@@ -261,6 +299,14 @@ def write_database(
                 -- query this column directly.
                 zip_code    INTEGER NOT NULL DEFAULT 0,
                 division_id INTEGER NOT NULL,
+                -- 1 if some raw SAM point at this key was strictly inside its
+                -- division's ward polygon, 0 if every one needed the same
+                -- nearest-boundary fallback runtime coordinate matching uses
+                -- (see court_for_coordinates). BMC divisions have concurrent,
+                -- not exclusive, jurisdiction across Boston, so a
+                -- nearest-boundary answer is a safe one, not a guess -- this
+                -- column only exists so resolve() can say which kind it gave.
+                exact       INTEGER NOT NULL DEFAULT 1,
                 PRIMARY KEY (street_id, number_key, zip_code)
             ) WITHOUT ROWID;
             """
@@ -289,20 +335,22 @@ def write_database(
             ),
         )
         connection.executemany(
-            "INSERT INTO addresses (street_id, number_key, zip_code, division_id) "
-            "VALUES (?, ?, ?, ?)",
+            "INSERT INTO addresses "
+            "(street_id, number_key, zip_code, division_id, exact) "
+            "VALUES (?, ?, ?, ?, ?)",
             sorted(
                 (
                     street_id,
                     number_key,
                     int(zip_code) if zip_code else 0,
                     division_ids[division_name],
+                    int(is_exact),
                 )
                 for (
                     street_id,
                     number_key,
                     zip_code,
-                ), division_name in addresses.items()
+                ), (division_name, is_exact) in addresses.items()
             ),
         )
         connection.commit()
@@ -324,8 +372,11 @@ def write_report(
     db_size: int,
 ) -> None:
     divisions_count = defaultdict(int)
-    for division_name in result["addresses"].values():
+    nearest_addresses_count = 0
+    for division_name, is_exact in result["addresses"].values():
         divisions_count[division_name] += 1
+        if not is_exact:
+            nearest_addresses_count += 1
 
     lines = [
         f"# BMC address index build report ({data_version})",
@@ -341,8 +392,14 @@ def write_report(
         f"{len(result['all_divisions'])}",
         f"- SQLite size: {db_size / 1_000_000:.2f} MB",
         f"- Logical content hash: {logical_hash_value}",
-        f"- Points not contained by any BMC polygon: {result['unmatched_points']} "
-        f"({result['unmatched_points'] / max(result['raw_row_count'], 1):.2%})",
+        f"- Raw SAM points resolved via nearest-boundary fallback "
+        f"(not strictly inside any ward polygon): "
+        f"{result['nearest_fallback_count']} "
+        f"({result['nearest_fallback_count'] / max(result['raw_row_count'], 1):.2%}) "
+        f"-- assigned rather than excluded, since BMC divisions have "
+        f"concurrent jurisdiction across Boston",
+        f"- Compiled address keys resolved only via nearest-boundary fallback: "
+        f"{nearest_addresses_count}",
         f"- Ambiguous/conflicting address keys: {len(result['conflicts'])}",
         "",
         "## Addresses per BMC division",
@@ -385,7 +442,8 @@ def main() -> int:
     print("Compiling address index from snapshot...", file=sys.stderr)
     result = build_index(args.snapshot_dir, args.wards_path)
 
-    missing_divisions = set(result["all_divisions"]) - set(result["addresses"].values())
+    resolved_divisions = {name for name, _ in result["addresses"].values()}
+    missing_divisions = set(result["all_divisions"]) - resolved_divisions
     logical_hash_value = logical_hash(
         result["division_ids"], result["street_names"], result["addresses"]
     )
@@ -400,7 +458,7 @@ def main() -> int:
         "address_count": str(len(result["addresses"])),
         "street_count": str(len(result["street_names"])),
         "conflict_count": str(len(result["conflicts"])),
-        "unmatched_point_count": str(result["unmatched_points"]),
+        "nearest_fallback_count": str(result["nearest_fallback_count"]),
         "built_at": datetime.now(timezone.utc).isoformat(),
     }
 
