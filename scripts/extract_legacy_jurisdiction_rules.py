@@ -135,7 +135,7 @@ def parse_neighborhood_group(node: ast.BoolOp) -> dict:
     return {"city": city, "names": names}
 
 
-def parse_comparison(node: ast.Compare, rule: dict) -> None:
+def parse_comparison(node: ast.Compare, rule: dict, within_or: bool = False) -> None:
     if len(node.ops) != 1:
         raise Unsupported(ast.dump(node)[:200])
     left = zero_arg_call_path(node.left)
@@ -152,7 +152,7 @@ def parse_comparison(node: ast.Compare, rule: dict) -> None:
         return
     if left.endswith(".city.lower") and isinstance(operator, ast.NotIn):
         values = string_list(right)
-        if values is None:
+        if values is None or within_or:
             raise Unsupported(ast.dump(node)[:200])
         rule.setdefault("excluded_cities", []).extend(values)
         return
@@ -177,19 +177,24 @@ def parse_test(node: ast.AST) -> dict:
     """Turn one chain test into a rule predicate dict."""
     rule: dict = {}
 
-    def walk(test: ast.AST) -> None:
+    # The rule schema is flat: one set of city/county/neighborhood tests, combined
+    # by a single ``require_all``, with ``excluded_cities`` vetoing unconditionally.
+    # ``A or (B and C)`` and ``A or B not in C`` have no flat equivalent, so they
+    # are reported as unsupported rather than silently flattened into something
+    # narrower than the legacy code.
+    def walk(test: ast.AST, within_or: bool = False) -> None:
         if isinstance(test, ast.UnaryOp) and isinstance(test.op, ast.Not):
             inner = test.operand
             if isinstance(inner, ast.Compare) and len(inner.ops) == 1 and isinstance(inner.ops[0], ast.In):
                 values = string_list(inner.comparators[0])
                 left = zero_arg_call_path(inner.left)
-                if values is not None and left and left.endswith(".city.lower"):
+                if values is not None and left and left.endswith(".city.lower") and not within_or:
                     rule.setdefault("excluded_cities", []).extend(values)
                     return
             raise Unsupported(ast.dump(test)[:200])
         if isinstance(test, ast.BoolOp) and isinstance(test.op, ast.Or):
             for value in test.values:
-                walk(value)
+                walk(value, within_or=True)
             return
         if isinstance(test, ast.BoolOp) and isinstance(test.op, ast.And):
             # An ``and`` is either a neighborhood group or a real conjunction.
@@ -200,12 +205,14 @@ def parse_test(node: ast.AST) -> dict:
             if group is not None:
                 rule.setdefault("neighborhoods", []).append(group)
                 return
+            if within_or:
+                raise Unsupported(ast.dump(test)[:200])
             for value in test.values:
                 walk(value)
             rule["require_all"] = True
             return
         if isinstance(test, ast.Compare):
-            parse_comparison(test, rule)
+            parse_comparison(test, rule, within_or)
             return
         raise Unsupported(ast.dump(test)[:200])
 
