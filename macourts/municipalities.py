@@ -7,7 +7,15 @@ from functools import lru_cache
 from typing import Any, Iterable
 
 from .catalog import load_data
-from .models import Coordinates, Location, MatchReason, norm, replace_location
+from .models import (
+    Coordinates,
+    Location,
+    MatchReason,
+    damerau_levenshtein_distance,
+    fuzzy_match_threshold,
+    norm,
+    replace_location,
+)
 
 MUNICIPALITY_ALIASES_FILE = "municipality_aliases.json"
 
@@ -37,6 +45,36 @@ class MunicipalityIndex:
         self._by_county = {
             county: tuple(sorted(names)) for county, names in sorted(by_county.items())
         }
+        # Every canonical municipality name and every alias/neighborhood
+        # name, as the candidate pool typo rescue matches a misspelled city
+        # against -- one unified pass covers both "Sommerville" (a canonical
+        # town, typo'd) and "Drochester" (an alias/neighborhood, typo'd).
+        self._fuzzy_candidates = frozenset(self.municipalities) | frozenset(
+            self.aliases
+        )
+
+    def fuzzy_correct_city(self, city: object | None) -> str | None:
+        """A single municipality/alias spelling within typo-rescue distance of ``city``.
+
+        Returns ``None`` if ``city`` is already recognized (nothing to
+        correct), if nothing is close enough, or if more than one candidate
+        is -- an ambiguous typo rescue is refused, matching every other
+        fuzzy-match safeguard in this package.
+        """
+        city_key = norm(city)
+        if not city_key or city_key in self._fuzzy_candidates:
+            return None
+        threshold = fuzzy_match_threshold(city_key)
+        if threshold is None:
+            return None
+        candidates = {
+            candidate
+            for candidate in self._fuzzy_candidates
+            if abs(len(candidate) - len(city_key)) <= threshold
+            and damerau_levenshtein_distance(city_key, candidate, threshold)
+            <= threshold
+        }
+        return next(iter(candidates)) if len(candidates) == 1 else None
 
     @classmethod
     @lru_cache(maxsize=1)
@@ -143,22 +181,37 @@ class MunicipalityIndex:
 
     def expand(
         self, locations: Location | Iterable[Location]
-    ) -> list[tuple[Location, Location | None]]:
-        """Expand locations whose city is an alias into their canonical municipality locations."""
+    ) -> list[tuple[Location, Location | None, Location | None]]:
+        """Expand locations whose city is an alias into their canonical municipality locations.
+
+        Each result is ``(resolved_location, alias_origin, fuzzy_origin)``:
+        ``alias_origin`` is set when the resolution went through an
+        alias/neighborhood lookup (not a canonical name), ``fuzzy_origin`` is
+        set when the city didn't match anything until it was typo-corrected.
+        A location can have neither, either, or both set -- a typo'd alias
+        (e.g. "Dorchestr", one edit from "Dorchester") sets both.
+        """
         input_locations = (
             [locations] if isinstance(locations, Location) else list(locations)
         )
-        expanded: list[tuple[Location, Location | None]] = []
+        expanded: list[tuple[Location, Location | None, Location | None]] = []
 
         for loc in input_locations:
             city = loc.city
             if not city or self.is_canonical_municipality(city):
-                expanded.append((loc, None))
+                expanded.append((loc, None, None))
                 continue
 
             matches = self.resolve_place(city, county=loc.county)
+            fuzzy_origin = None
             if not matches:
-                expanded.append((loc, None))
+                corrected = self.fuzzy_correct_city(city)
+                if corrected is not None:
+                    matches = self.resolve_place(corrected, county=loc.county)
+                    if matches:
+                        fuzzy_origin = loc
+            if not matches:
+                expanded.append((loc, None, None))
                 continue
 
             for match in matches:
@@ -167,7 +220,8 @@ class MunicipalityIndex:
                     city=match.name,
                     county=match.county,
                 )
-                expanded.append((resolved, loc))
+                alias_origin = loc if not match.is_canonical else None
+                expanded.append((resolved, alias_origin, fuzzy_origin))
 
         return expanded
 

@@ -148,7 +148,16 @@ class BostonMunicipalCourtMatcher:
         )
 
     def division(self, location: Location) -> Candidate | None:
-        """Resolve the BMC division serving a location, or None."""
+        """Resolve the BMC division serving a location, or None.
+
+        A typo'd city name (e.g. "Bostno", "Drochester") is not handled
+        here: ``CourtFinder`` already rescues it before any matcher sees the
+        location, by fuzzy-correcting against every Massachusetts
+        municipality and alias in ``MunicipalityIndex`` (see
+        ``docs/address_usage.md``) and retrying with the corrected city. By
+        the time a location reaches this method its city, if recognized at
+        all, is already spelled exactly.
+        """
         if not location.is_massachusetts():
             return None
         if norm(location.city) == "winthrop":
@@ -173,22 +182,30 @@ class BostonMunicipalCourtMatcher:
                 source = "bmc_addresses.sqlite"
                 if resolution.data_version:
                     source = f"{source}:{resolution.data_version}"
-                if resolution.exact:
-                    kind, detail = "address_index", "exact Boston SAM address matched"
+                kind_parts = ["address_index"]
+                detail_parts = []
+                if resolution.fuzzy_street:
+                    kind_parts.append("fuzzy")
+                    detail_parts.append("fuzzy-matched")
                 else:
-                    # Mirrors geometry_nearest: BMC divisions have concurrent,
-                    # not exclusive, jurisdiction across Boston, so the SAM
-                    # address's nearest-ward-boundary division is a safe
-                    # answer, just one worth telling apart from a strict
-                    # containment match.
-                    kind, detail = (
-                        "address_index_nearest",
-                        "nearest-boundary Boston SAM address matched",
-                    )
+                    detail_parts.append("exact")
+                if not resolution.exact:
+                    # Mirrors geometry_nearest: BMC divisions have
+                    # concurrent, not exclusive, jurisdiction across Boston,
+                    # so the SAM address's nearest-ward-boundary division is
+                    # a safe answer, just one worth telling apart from a
+                    # strict containment match.
+                    kind_parts.append("nearest")
+                    detail_parts.append("nearest-boundary")
+                detail = " ".join(detail_parts)
                 return Candidate(
                     resolution.court_name,
                     BMC,
-                    MatchReason(kind, f"{detail} {resolution.court_name}", source),
+                    MatchReason(
+                        "_".join(kind_parts),
+                        f"{detail} Boston SAM address matched {resolution.court_name}",
+                        source,
+                    ),
                 )
         return None
 

@@ -178,15 +178,17 @@ Central Division, Boston Municipal Court
 address_index
 ```
 
-This is an **exact-match lookup** against a compiled snapshot of Boston's
-Street Address Management (SAM) system (see
-[BMC address index](bmc_address_index.md) for how it's built and refreshed).
-It does not fuzzy-match street *names*, guess a nearest street, or interpolate
-a house number that isn't in the source data — an address it doesn't
-recognize resolves to no match at all rather than a guess, so it is safe to
-treat "no BMC match" as "try geocoding this one instead." A ZIP code is
-optional but recommended: a handful of Boston street names repeat across
-neighborhoods, and the ZIP is what disambiguates them.
+This is primarily an **exact-match lookup** against a compiled snapshot of
+Boston's Street Address Management (SAM) system (see
+[BMC address index](bmc_address_index.md) for how it's built and refreshed,
+and its typo-rescue rules in detail). It never interpolates a house number
+that isn't in the source data, and a street-name typo is only ever rescued
+when it's unambiguous *and* the house number actually exists on the rescued
+street — an address it doesn't recognize (or can't safely disambiguate)
+resolves to no match at all rather than a guess, so it is safe to treat "no
+BMC match" as "try geocoding this one instead." A ZIP code is optional but
+recommended: a handful of Boston street names repeat across neighborhoods,
+and the ZIP is what disambiguates them.
 
 A small fraction of addresses resolve via the compiled index's own
 nearest-*boundary* fallback (`reasons[0].kind == "address_index_nearest"`
@@ -492,6 +494,54 @@ there is exactly one location.
 For an appearance-only session, use `catalog.filing_location_for(record)` to
 resolve the location that accepts filings.
 
+## Typo rescue for city and street names
+
+A misspelled `city` — a real one, not an out-of-state or nonexistent place —
+is rescued automatically for every department, not just BMC. `build_default_finder()`
+tries the literal city first and, only on a miss, fuzzy-corrects it against
+all 351 official municipalities and every village/neighborhood alias
+(`MunicipalityIndex.fuzzy_correct_city`) before handing the corrected location
+to every matcher:
+
+```python
+from macourts import Location, build_default_finder
+
+finder = build_default_finder()
+matches = finder.find(Location(city="Sommerville", state="MA"))
+
+print(matches[0].name)
+print([r.kind for r in matches[0].reasons])
+```
+
+Output:
+
+```text
+Somerville District Court
+['fuzzy_place']
+```
+
+The same rescue applies to a typo'd Boston neighborhood or "Winthrop" for BMC
+purposes, since those are registered in the same municipality/alias data — no
+separate BMC-specific city correction exists. Inside the BMC's own street
+index, a street *name* typo is separately rescued the same way (see
+[BMC address index](bmc_address_index.md)); `city` and `street_address`
+typos are corrected independently of each other.
+
+Both use the same length-gated Damerau-Levenshtein distance: a name of 4
+characters or fewer is never fuzzy-matched at all (protects "Avon"/"Acton",
+"Ware"/"Barre", "D St"/"K St"), 5–7 characters allows distance 1, and 8+
+characters allows distance 2 — comfortably enough to catch a dropped letter
+("Framinghm"), a substitution ("Bostno"), or an adjacent-letter transposition
+("Cambrdige"). If a typo is close enough to more than one *different* real
+place, it is refused rather than guessed — e.g. "Drochester" is equally close
+to "Dorchester" (a Boston neighborhood) and "Rochester" (a separate Plymouth
+County town), so it resolves to nothing rather than picking one. This
+safeguard triggers often: about 45% of Massachusetts municipality and village
+names have at least one other real name within their own rescue distance
+(many small villages follow patterns like "___ Hill" or "___ville"), so a
+typo of an uncommon place name is more likely to come back unresolved than
+silently wrong — geocoding remains the fallback for those.
+
 ## Choosing which address fields to provide
 
 A practical rule of thumb:
@@ -521,6 +571,12 @@ A practical rule of thumb:
   geocoding remains a reasonable fallback for addresses that don't match.
 - Use `court_types` when calling `find()` if you only want a particular
   department.
+- Typo rescue only runs after an exact match already missed, so it costs
+  nothing on the (typical) exact-match path. When it does run, it's a pure-Python
+  scan against every municipality/alias name (or, inside the BMC index, every
+  street spelling) and costs tens of milliseconds rather than the
+  sub-millisecond exact-match cost — fine for interactive/API use, but worth
+  knowing if you're validating a large batch of addresses with many typos.
 - Expect more than one match. Concurrent jurisdiction is normal in the District,
   Juvenile, and Probate & Family Courts, and several semantic courts sit in more
   than one location.

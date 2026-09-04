@@ -8,9 +8,13 @@ and division names as :mod:`macourts.boston`) and compiles the result into
 ``macourts/data/bmc_addresses.sqlite``. This module only ever reads that file.
 
 Everything here is deliberately boring: normalization is a fixed set of string
-rules, and resolution is an exact-match SQL lookup. There is no fuzzy matching,
-no nearest-street fallback, and no house-number interpolation. An address this
-module doesn't recognize comes back ``not_found`` rather than a guess.
+rules, and resolution is primarily an exact-match SQL lookup. There is no
+house-number interpolation. When a street name doesn't match exactly,
+``resolve()`` can rescue a typo via a length-gated Damerau-Levenshtein
+fallback (see ``fuzzy_match_threshold``) -- tight enough that short names
+(4 characters or fewer) are never fuzzy-matched at all, and a rescued street
+must still have the queried house number and resolve unambiguously, or it
+falls back to ``not_found``/``ambiguous`` rather than a guess.
 """
 
 from __future__ import annotations
@@ -26,6 +30,7 @@ from pathlib import Path
 from typing import Any
 
 from .catalog import package_data
+from .models import damerau_levenshtein_distance, fuzzy_match_threshold
 
 DB_FILENAME = "bmc_addresses.sqlite"
 
@@ -76,6 +81,10 @@ class AddressResolution:
     #: concurrent, not exclusive, jurisdiction across Boston, but worth a
     #: caller being able to tell apart from a strict-containment match.
     exact: bool | None = None
+    #: Only meaningful when match_kind is "success". True when the street
+    #: name only resolved via the Damerau-Levenshtein typo rescue (see
+    #: fuzzy_match_threshold), not an exact spelling already in the index.
+    fuzzy_street: bool = False
 
 
 NOT_FOUND = "not_found"
@@ -141,6 +150,8 @@ def normalize_zip_code(value: str | None) -> str | None:
     return digits[:5]
 
 
+
+
 class BostonAddressIndex:
     """Exact-match street-address lookup against the compiled SQLite index.
 
@@ -201,12 +212,42 @@ class BostonAddressIndex:
         """The underlying read-only SQLite connection, opened on first access."""
         return self._connect()
 
+    def _fuzzy_street_ids(self, street_key: str) -> list[int]:
+        """Street IDs with a spelling within the length-gated typo-rescue distance.
+
+        Scanned in Python against every distinct spelling already in the
+        index (there is no SQL edit-distance function), but this only ever
+        runs after an exact lookup has already missed, and a length
+        pre-filter skips the DP computation for the vast majority of rows.
+        """
+        threshold = fuzzy_match_threshold(street_key)
+        if threshold is None:
+            return []
+        connection = self._connect()
+        candidates: set[int] = set()
+        for name_key, street_id in connection.execute(
+            "SELECT name_key, street_id FROM street_names"
+        ):
+            if abs(len(name_key) - len(street_key)) > threshold:
+                continue
+            if damerau_levenshtein_distance(street_key, name_key, threshold) <= threshold:
+                candidates.add(street_id)
+        return sorted(candidates)
+
     def resolve(
         self,
         street_address: str,
         zip_code: str | None = None,
+        allow_fuzzy: bool = True,
     ) -> AddressResolution:
-        """Resolve one street address to a BMC division, or explain why not."""
+        """Resolve one street address to a BMC division, or explain why not.
+
+        A street name that doesn't match any spelling already in the index is
+        tried against a length-gated Damerau-Levenshtein typo rescue when
+        ``allow_fuzzy`` is true (the default) -- see ``fuzzy_match_threshold``.
+        A rescued candidate still has to carry the queried house number and
+        resolve unambiguously; it is never enough on its own.
+        """
         connection = self._connect()
         parsed = parse_street_address(street_address)
         if parsed is None:
@@ -219,6 +260,10 @@ class BostonAddressIndex:
                 (parsed.street_key,),
             )
         ]
+        fuzzy_street = False
+        if not street_ids and allow_fuzzy:
+            street_ids = self._fuzzy_street_ids(parsed.street_key)
+            fuzzy_street = bool(street_ids)
         if not street_ids:
             return AddressResolution(
                 None,
@@ -288,4 +333,5 @@ class BostonAddressIndex:
             parsed.street_key,
             self._data_version,
             exact=bool(exact),
+            fuzzy_street=fuzzy_street,
         )

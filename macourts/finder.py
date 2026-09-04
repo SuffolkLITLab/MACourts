@@ -63,6 +63,7 @@ class _Attempt:
     location: Location
     zip_origin: Location | None = None
     alias_origin: Location | None = None
+    fuzzy_origin: Location | None = None
 
     @property
     def reasons(self) -> tuple[MatchReason, ...]:
@@ -80,6 +81,14 @@ class _Attempt:
                 MatchReason(
                     "alias",
                     f"'{self.alias_origin.city}' is an alias/locality in {self.location.city}",
+                    "municipality_aliases.json",
+                )
+            )
+        if self.fuzzy_origin is not None:
+            reasons.append(
+                MatchReason(
+                    "fuzzy_place",
+                    f"'{self.fuzzy_origin.city}' fuzzy-matched to {self.location.city}",
                     "municipality_aliases.json",
                 )
             )
@@ -127,9 +136,9 @@ class CourtFinder:
             expansions: tuple[_Attempt, ...] = ()
             if index is not None:
                 expansions = tuple(
-                    _Attempt(resolved, zip_origin, alias_origin)
-                    for resolved, alias_origin in index.expand([given])
-                    if alias_origin is not None
+                    _Attempt(resolved, zip_origin, alias_origin, fuzzy_origin)
+                    for resolved, alias_origin, fuzzy_origin in index.expand([given])
+                    if alias_origin is not None or fuzzy_origin is not None
                 )
             attempts.append((_Attempt(given, zip_origin), expansions))
         return attempts

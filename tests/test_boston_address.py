@@ -117,6 +117,22 @@ def index(tmp_path) -> BostonAddressIndex:
             ("OAK AVE", 3, 0),
             # street_id=4 exists but has no addresses rows at all.
             ("PINE ST", 4, 0),
+            # street_id=9/10: a typo of "NEWBURY ST" ("NEWBERY ST", distance 1)
+            # is equally close to "NEWBERN ST" -- only house-number
+            # verification (street_id=9 has 279, street_id=10 doesn't) picks
+            # NEWBURY out.
+            ("NEWBURY ST", 9, 0),
+            ("NEWBERN ST", 10, 0),
+            # street_id=11/12: both within typo-rescue distance of a
+            # deliberately misspelled query, both carrying the queried house
+            # number, but in different divisions -- a fuzzy match must not
+            # silently pick one.
+            ("OAK ST", 11, 0),
+            ("OAT ST", 12, 0),
+            # street_id=13: a 4-character name a typo must never be rescued
+            # against, no matter how close ("D ST" vs a 1-edit "K ST").
+            ("D ST", 13, 0),
+            ("K ST", 14, 0),
         ],
     )
     connection.executemany(
@@ -133,6 +149,15 @@ def index(tmp_path) -> BostonAddressIndex:
             # A nearest-boundary-fallback-only address (see
             # docs/bmc_address_index.md): resolvable, but not exact.
             (1, "300", 2118, 1, 0),
+            # NEWBURY ST has #279; NEWBERN ST does not (only #10).
+            (9, "279", 2118, 1, 1),
+            (10, "10", 2118, 1, 1),
+            # OAK ST and OAT ST both have #77, in different divisions.
+            (11, "77", 2118, 1, 1),
+            (12, "77", 2119, 2, 1),
+            # D ST and K ST both have #5.
+            (13, "5", 2118, 1, 1),
+            (14, "5", 2118, 1, 1),
         ],
     )
     connection.commit()
@@ -228,3 +253,55 @@ def test_resolve_unambiguous_address_ignores_a_mismatched_zip(
 def test_resolve_unparseable_address_is_not_found(index: BostonAddressIndex) -> None:
     resolution = index.resolve("Main St")
     assert resolution.match_kind == NOT_FOUND
+
+
+# --- typo rescue --------------------------------------------------------
+
+
+def test_resolve_rescues_a_street_name_typo(index: BostonAddressIndex) -> None:
+    resolution = index.resolve("100 Msin St")  # substitution, distance 1
+    assert resolution.match_kind == SUCCESS
+    assert resolution.court_name == CENTRAL
+    assert resolution.fuzzy_street is True
+
+
+def test_resolve_house_number_prunes_a_close_but_wrong_street(
+    index: BostonAddressIndex,
+) -> None:
+    # "Newbery" is distance 1 from both "Newbury" (has #279) and "Newbern"
+    # (doesn't) -- only checking whether the queried house number actually
+    # exists on each candidate street picks Newbury out.
+    resolution = index.resolve("279 Newbery St")
+    assert resolution.match_kind == SUCCESS
+    assert resolution.court_name == CENTRAL
+    assert resolution.fuzzy_street is True
+
+
+def test_resolve_fuzzy_candidates_in_different_divisions_are_ambiguous(
+    index: BostonAddressIndex,
+) -> None:
+    # "Oab St" is distance 1 from both "Oak St" and "Oat St"; both carry
+    # #77, but in different divisions, so this must not silently pick one.
+    resolution = index.resolve("77 Oab St")
+    assert resolution.match_kind == AMBIGUOUS
+    assert resolution.court_name is None
+
+
+def test_resolve_never_fuzzy_matches_a_short_name(index: BostonAddressIndex) -> None:
+    # "F St" is distance 1 from "D St", but 4-character names are never
+    # fuzzy-matched, regardless of distance (protects names like "K St").
+    resolution = index.resolve("5 F St")
+    assert resolution.match_kind == NOT_FOUND
+
+
+def test_resolve_allow_fuzzy_false_disables_typo_rescue(
+    index: BostonAddressIndex,
+) -> None:
+    resolution = index.resolve("100 Msin St", allow_fuzzy=False)
+    assert resolution.match_kind == NOT_FOUND
+
+
+def test_resolve_exact_match_never_reports_fuzzy(index: BostonAddressIndex) -> None:
+    resolution = index.resolve("100 Main St")
+    assert resolution.match_kind == SUCCESS
+    assert resolution.fuzzy_street is False

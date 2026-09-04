@@ -109,19 +109,39 @@ that reason.
 
 ## Runtime resolution rules
 
-`BostonAddressIndex.resolve(street_address, zip_code=None)` never does fuzzy,
-phonetic, or nearest-street matching, and never interpolates a house number
-that isn't in the index. An address it doesn't recognize comes back
-`not_found` rather than a guess:
+`BostonAddressIndex.resolve(street_address, zip_code=None, allow_fuzzy=True)`
+never does phonetic matching or house-number interpolation, and only ever
+fuzzy-matches the *street name* (never the house number, never the ZIP). An
+address it doesn't recognize, or can't safely disambiguate, comes back
+`not_found`/`ambiguous` rather than a guess:
 
 | Situation | `match_kind` |
 | --- | --- |
-| Street name not in the index | `not_found` |
-| Street exists, house number doesn't | `not_found` |
+| Street name not in the index, and no typo rescue found one either | `not_found` |
+| Street exists (exactly or via typo rescue), house number doesn't | `not_found` |
 | One matching row, or several rows all in the same division | `success`, regardless of ZIP |
 | Rows disagree on division, and the given ZIP matches exactly one candidate | `success` |
 | Rows disagree on division, and the given ZIP matches none of them | `zip_mismatch` |
 | Rows disagree on division, and no ZIP was given (or it still doesn't disambiguate) | `ambiguous` |
+
+### Street-name typo rescue
+
+When the street name doesn't match any spelling already in the index exactly,
+`resolve()` retries against every distinct spelling using the same
+length-gated Damerau-Levenshtein distance described in
+[Typo rescue for city and street names](address_usage.md#typo-rescue-for-city-and-street-names)
+(4 characters or fewer: no rescue; 5–7: distance ≤ 1; 8+: distance ≤ 2). A
+rescued street name is never enough on its own — every candidate still has to
+carry the queried house number (a street within typo distance but without
+that house number is silently dropped, e.g. a query for "279 Newbery St"
+considers both "Newbury St" and "Newbern St" as spelling candidates, but only
+Newbury actually has #279), and if more than one candidate street survives
+with the house number in *different* divisions, the result is `ambiguous`
+rather than a guess — exactly the same rule that already applies to two
+different real streets sharing one exact spelling. `AddressResolution.fuzzy_street`
+says whether a `success` result went through this path; `resolve(...,
+allow_fuzzy=False)` disables it entirely for a caller that wants exact-match
+guarantees only.
 
 ZIP is deliberately only consulted once the street name and house number
 *alone* are ambiguous (rows disagree on division) — not as a blanket
@@ -132,11 +152,21 @@ unmatched ZIP. It still matters where it counts: duplicate street names
 recur across different physical Boston streets far more than you'd guess
 (see below), and there ZIP is exactly what disambiguates them.
 
-On `success`, `AddressResolution.exact` says which kind of match it was: `True`
-for strict ward-polygon containment, `False` for the nearest-boundary
-fallback described above. `BostonMunicipalCourtMatcher.division()` surfaces
-this as the `MatchReason.kind` — `"address_index"` vs `"address_index_nearest"`
-— mirroring `"geometry"` vs `"geometry_nearest"` for coordinate matching.
+On `success`, `AddressResolution.exact` and `.fuzzy_street` say which kind of
+match it was — strict ward-polygon containment vs. the nearest-boundary
+fallback, and an exact spelling vs. a typo rescue. `BostonMunicipalCourtMatcher.division()`
+composes both into `MatchReason.kind`:
+
+| `exact` | `fuzzy_street` | `MatchReason.kind` |
+| --- | --- | --- |
+| `True` | `False` | `address_index` |
+| `True` | `True` | `address_index_fuzzy` |
+| `False` | `False` | `address_index_nearest` |
+| `False` | `True` | `address_index_fuzzy_nearest` |
+
+`"geometry"` vs `"geometry_nearest"` for coordinate matching only has the
+first axis, since there's no street name to typo when a caller already has
+coordinates.
 
 `macourts.boston.BostonMunicipalCourtMatcher.division()` only consults this
 index when `location.coordinates` is absent — a geocoded point always takes

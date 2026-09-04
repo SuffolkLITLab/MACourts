@@ -25,6 +25,8 @@ from .models import (
     CourtRecord,
     Location,
     MatchReason,
+    damerau_levenshtein_distance,
+    fuzzy_match_threshold,
     norm,
 )
 from .municipalities import (
@@ -70,6 +72,8 @@ __all__ = [
     "ZipIndex",
     "build_default_finder",
     "build_matchers",
+    "damerau_levenshtein_distance",
+    "fuzzy_match_threshold",
     "get_county",
     "is_canonical_municipality",
     "load_data",

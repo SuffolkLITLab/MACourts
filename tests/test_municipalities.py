@@ -288,3 +288,71 @@ def test_both_spellings_of_middleborough_agree(finder):
     canonical = {m.name for m in finder.find(Location(city="Middleborough"))}
     assert {"Plymouth Probate and Family Court", "Brockton Probate and Family Court"} <= canonical
     assert {m.name for m in finder.find(Location(city="Middleboro"))} == canonical
+
+
+# --- typo rescue --------------------------------------------------------
+
+
+def test_fuzzy_correct_city_rescues_a_canonical_municipality_typo(muni_index):
+    assert muni_index.fuzzy_correct_city("Sommerville") == "somerville"
+    assert muni_index.fuzzy_correct_city("Framinghm") == "framingham"
+    assert muni_index.fuzzy_correct_city("Bostno") == "boston"
+
+
+def test_fuzzy_correct_city_rescues_an_alias_typo(muni_index):
+    assert muni_index.fuzzy_correct_city("Hyanis") == "hyannis"
+
+
+def test_fuzzy_correct_city_refuses_a_genuine_ambiguity(muni_index):
+    # "Drochester" is distance 1 from both "Dorchester" (a Boston alias) and
+    # "Rochester" (a real, separate Plymouth County town) -- the safeguard
+    # must refuse to guess between two different real places.
+    assert muni_index.is_canonical_municipality("Rochester")
+    assert muni_index.fuzzy_correct_city("Drochester") is None
+
+
+def test_fuzzy_correct_city_never_rescues_a_short_name(muni_index):
+    # "Ware" and "Barre" are both real, distinct, short town names.
+    assert muni_index.is_canonical_municipality("Ware")
+    assert muni_index.is_canonical_municipality("Barre")
+    assert muni_index.fuzzy_correct_city("Wari") is None
+
+
+def test_fuzzy_correct_city_returns_none_for_an_exact_match(muni_index):
+    # Nothing to correct -- exact matches never take the fuzzy path.
+    assert muni_index.fuzzy_correct_city("Boston") is None
+    assert muni_index.fuzzy_correct_city("Dorchester") is None
+
+
+def test_finder_rescues_a_typo_in_a_canonical_municipality(finder):
+    matches = finder.find(Location(city="Sommerville", state="MA"))
+    names = {m.name for m in matches}
+    assert "Somerville District Court" in names
+    reason_kinds = {r.kind for m in matches for r in m.reasons}
+    assert "fuzzy_place" in reason_kinds
+
+
+def test_finder_rescues_a_typo_in_a_boston_neighborhood_for_bmc(finder):
+    from macourts import Coordinates
+
+    # 690 Adams St, a real Dorchester address (see the geocoded fixture).
+    location = Location(
+        city="Dorchestr",
+        state="MA",
+        coordinates=Coordinates(latitude=42.286304, longitude=-71.054401),
+    )
+    matches = finder.find(location, ["Boston Municipal Court"])
+    assert [m.name for m in matches] == [
+        "Dorchester Division, Boston Municipal Court"
+    ]
+    reason_kinds = {r.kind for m in matches for r in m.reasons}
+    assert "fuzzy_place" in reason_kinds
+
+
+def test_finder_does_not_rescue_a_genuinely_ambiguous_city_typo(finder):
+    # See test_fuzzy_correct_city_refuses_a_genuine_ambiguity: "Drochester"
+    # must not resolve to either Dorchester's or Rochester's courts.
+    names = {m.name for m in finder.find(Location(city="Drochester", state="MA"))}
+    assert "Wareham District Court" not in names  # Rochester's District Court
+    assert "Wareham Juvenile Court" not in names  # Rochester's Juvenile Court
+    assert "Boston Juvenile Court" not in names  # Dorchester/Boston's Juvenile Court

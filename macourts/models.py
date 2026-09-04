@@ -11,6 +11,63 @@ def norm(value: object | None) -> str:
     return "" if value is None else str(value).strip().casefold()
 
 
+def fuzzy_match_threshold(text: str) -> int | None:
+    """The max typo-rescue edit distance for a name of this length, or ``None``
+    to disable fuzzy matching entirely (names this short are too easy to
+    collide: "Avon"/"Acton", "D St"/"K St", "Ware"/"Barre").
+
+    ``text`` is a full normalized name (e.g. "D ST", including any suffix),
+    matching how the length is measured in every example this threshold is
+    calibrated against. Shared by every place where a typo in a Massachusetts
+    place or street name is worth rescuing: municipality/alias matching in
+    :mod:`macourts.municipalities` and street names in
+    :mod:`macourts.boston_address`.
+    """
+    length = len(text)
+    if length <= 4:
+        return None
+    if length <= 7:
+        return 1
+    return 2
+
+
+def damerau_levenshtein_distance(a: str, b: str, max_distance: int) -> int:
+    """Optimal-string-alignment edit distance, capped at ``max_distance`` + 1.
+
+    Counts insertions, deletions, substitutions, and adjacent transpositions
+    (e.g. "Cambrdige" -> "Cambridge" is distance 1, not 2) each as one edit.
+    The exact value past ``max_distance`` is never needed by a caller, so
+    anything beyond it may be returned as ``max_distance + 1`` rather than
+    computed precisely.
+    """
+    if a == b:
+        return 0
+    len_a, len_b = len(a), len(b)
+    if abs(len_a - len_b) > max_distance:
+        return max_distance + 1
+
+    # d[i][j] = edit distance between a[:i] and b[:j].
+    d = [[0] * (len_b + 1) for _ in range(len_a + 1)]
+    for i in range(len_a + 1):
+        d[i][0] = i
+    for j in range(len_b + 1):
+        d[0][j] = j
+
+    for i in range(1, len_a + 1):
+        for j in range(1, len_b + 1):
+            cost = 0 if a[i - 1] == b[j - 1] else 1
+            value = min(
+                d[i - 1][j] + 1,  # deletion
+                d[i][j - 1] + 1,  # insertion
+                d[i - 1][j - 1] + cost,  # substitution
+            )
+            if i > 1 and j > 1 and a[i - 1] == b[j - 2] and a[i - 2] == b[j - 1]:
+                value = min(value, d[i - 2][j - 2] + 1)  # adjacent transposition
+            d[i][j] = value
+
+    return min(d[len_a][len_b], max_distance + 1)
+
+
 # Boston neighborhoods that Massachusetts addresses commonly give as the city.
 # They are all in Suffolk County and all inside the BMC's geometry.
 BOSTON_CITY_ALIASES = frozenset(

@@ -47,6 +47,11 @@ The package includes:
 - statewide court matching;
 - Suffolk County inference for addresses given as a bare Boston neighborhood;
 - ZIP-code expansion for addresses that carry nothing else;
+- length-gated Damerau-Levenshtein typo rescue for a misspelled `city`
+  (any of the 351 municipalities or their aliases, not just Boston/Winthrop)
+  and, inside the BMC address index, a misspelled street name — both refuse
+  to guess when a typo is genuinely ambiguous between two different real
+  places; see [Typo rescue](docs/address_usage.md#typo-rescue-for-city-and-street-names);
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
 Every match carries the reasons it was returned, plus any catalog records for
