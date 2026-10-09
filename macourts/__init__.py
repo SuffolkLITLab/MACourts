@@ -14,10 +14,14 @@ from .dockets import (
     DocketCourt,
     DocketCourtIdentification,
     DocketNumberParser,
+    ParsedDocketNumber,
     TylerCourt,
+    docket_number_variants,
     identify_court_from_docket_number,
     get_sequence_number_from_docket_number,
     get_year_from_docket_number,
+    normalize_docket_number,
+    parse_docket_number,
 )
 from .finder import (
     CourtFinder,
@@ -76,6 +80,7 @@ __all__ = [
     "MunicipalityIndex",
     "MunicipalityMatch",
     "NeighborhoodRule",
+    "ParsedDocketNumber",
     "ParsedStreetAddress",
     "RuleMatcher",
     "SELECT_ALL",
@@ -86,6 +91,7 @@ __all__ = [
     "build_default_finder",
     "build_matchers",
     "damerau_levenshtein_distance",
+    "docket_number_variants",
     "fuzzy_match_threshold",
     "get_county",
     "get_sequence_number_from_docket_number",
@@ -96,8 +102,10 @@ __all__ = [
     "load_jurisdiction_rules",
     "location_from_object",
     "norm",
+    "normalize_docket_number",
     "normalize_postal_code",
     "package_data",
+    "parse_docket_number",
     "parse_street_address",
 ]
 

@@ -59,6 +59,9 @@ The package includes:
   with (from a snapshot refreshed by `scripts/fetch_tyler_courts.py`), and
   `existing_case_courts`, the Tyler courts an existing case could be filed
   into (usually exactly one);
+  `normalize_docket_number()` and `docket_number_variants()` turn handwritten
+  numbers like `23-56sp-12345` into the exact spellings Tyler's case search
+  needs (`2356SP012345`, or `2356SP012345-EF` for e-filed cases);
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
 Every match carries the reasons it was returned, plus any catalog records for

@@ -9,7 +9,9 @@ from macourts import (
     get_sequence_number_from_docket_number,
     get_year_from_docket_number,
     TylerCourt,
+    docket_number_variants,
     identify_court_from_docket_number,
+    normalize_docket_number,
 )
 
 
@@ -390,8 +392,23 @@ def test_year_without_one():
 
 def test_year_in_the_future():
     with pytest.raises(ValueError):
-        get_year_from_docket_number("2677CV00982", today=date(2025, 1, 1))
+        get_year_from_docket_number("2026-P-0001", today=date(2025, 1, 1))
     assert get_year_from_docket_number("2577CV00982", today=date(2025, 1, 1)) == "2025"
+
+
+@pytest.mark.parametrize(
+    "docket_number, expected_year",
+    [
+        # A two-digit year after this one is from the last century.
+        ("2677CV00982", "1926"),
+        ("99H84CV001099", "1999"),
+        ("9977CV00001", "1999"),
+        ("1999-P-0001", "1999"),
+        ("ES94D2029DV1", "1994"),
+    ],
+)
+def test_year_before_2000(docket_number, expected_year):
+    assert get_year_from_docket_number(docket_number, today=date(2025, 1, 1)) == expected_year
 
 
 @pytest.mark.parametrize(
@@ -404,7 +421,123 @@ def test_year_in_the_future():
         ("1448CV001026", "001026"),
         ("07 TL 000456", "000456"),
         ("15 SBQ 00025 09 - 001", "001"),
+        ("23-56SP-12345", "012345"),
+        ("2362SC002985-EF", "002985"),
     ],
 )
 def test_sequence_number(docket_number, expected_sequence):
     assert get_sequence_number_from_docket_number(docket_number) == expected_sequence
+
+
+@pytest.mark.parametrize(
+    "docket_number, normalized",
+    [
+        # Handwritten, with separators and without leading zeros.
+        ("23-56SP-12345", "2356SP012345"),
+        ("23-56sp-12345", "2356SP012345"),
+        ("2601 CR 001", "2601CR000001"),
+        ("1473-CV-213", "1473CV00213"),
+        ("15 H84 SP 436", "15H84SP000436"),
+        ("2362sc002985-ef", "2362SC002985-EF"),
+        ("2362 SC 2985 EF", "2362SC002985-EF"),
+        ("es 25 a 436 sj", "ES25A0436SJ"),
+        ("26yo10ne", "26YO0010NE"),
+        ("07-TL-001026", "07 TL 001026"),
+        ("07tl1026", "07 TL 001026"),
+        ("15 SBQ 25 9 – 1", "15 SBQ 00025 09 - 001"),
+        ("2020 - P - 0874", "2020-P-0874"),
+        ("20-p-874", "2020-P-0874"),
+        ("sjc 5546", "SJC-05546"),
+        ("SJ-21-189", "SJ-2021-0189"),
+        ("sj20210189", "SJ-2021-0189"),
+        # Formats already canonical, including older Probate numbers.
+        ("1448CV001026", "1448CV001026"),
+        ("ES94D2029DV1", "ES94D2029DV1"),
+        ("ES43951", "ES43951"),
+        ("06 SBQ 27811 11 - 001", "06 SBQ 27811 11 - 001"),
+    ],
+)
+def test_normalize_docket_number(docket_number, normalized):
+    assert normalize_docket_number(docket_number) == normalized
+
+
+@pytest.mark.parametrize(
+    "docket_number", ["", "complete gibberish", "12", "1000-K-1234", "XX15A0064AD"]
+)
+def test_normalize_docket_number_not_recognized(docket_number):
+    assert normalize_docket_number(docket_number) is None
+
+
+@pytest.mark.parametrize(
+    "docket_number, variants",
+    [
+        # Tyler only finds e-filed trial court cases with their "-EF" suffix.
+        ("23-62sc-2985", ("2362SC002985", "2362SC002985-EF", "23-62SC-2985")),
+        ("2362SC002985-EF", ("2362SC002985-EF", "2362SC002985")),
+        ("12-p-880", ("2012-P-0880", "12-P-880")),
+        ("ES25A0436SJ", ("ES25A0436SJ",)),
+        ("not a docket", ("NOT A DOCKET",)),
+        ("  ", ()),
+    ],
+)
+def test_docket_number_variants(docket_number, variants):
+    assert docket_number_variants(docket_number) == variants
+
+
+@pytest.mark.parametrize(
+    "docket_number, department, name",
+    [
+        # Each used to be misread or rejected: "2020 - P - 0874" as Chicopee
+        # District Court (code 20).
+        ("2020 - P - 0874", "Appeals Court", "Massachusetts Appeals Court (Panel)"),
+        ("23-56SP-12345", "District Court", "Quincy District Court"),
+        ("07-TL-001026", "Land Court", "Land Court"),
+        ("2601 CR 001", "Boston Municipal Court", "Central Division, Boston Municipal Court"),
+    ],
+)
+def test_identify_court_tolerates_punctuation(parser, docket_number, department, name):
+    identification = parser.identify_court(docket_number)
+    assert (identification.department, identification.name) == (department, name)
+
+
+@pytest.mark.parametrize(
+    "docket_number, expected_case_type",
+    [
+        ("07-TL-001026", "Tax Lien"),
+        ("2601 CR 001", "Criminal"),
+        # The Juvenile Court publishes no case-type codes.
+        ("26YO0010NE", None),
+        # Older Probate codes no longer listed.
+        ("ES94D2029DV1", None),
+        ("ES43951", None),
+    ],
+)
+def test_case_type_variations(parser, docket_number, expected_case_type):
+    assert parser.case_type_from_docket_number(docket_number) == expected_case_type
+
+
+@pytest.mark.parametrize(
+    "docket_number, tyler_code",
+    [
+        ("SJC-13103", "sjc:commfc"),
+        ("SJ-2020-0123", "sjc:singlej"),
+        ("BD-2020-0123", "sjc:suffolk"),
+        ("15H84SP000436", "537"),
+        ("15H83SP000436", None),
+    ],
+)
+def test_court_from_docket_number_tyler_code_matches_identify_court(
+    parser, docket_number, tyler_code
+):
+    assert parser.court_from_docket_number(docket_number).tyler_code == tyler_code
+
+
+def test_tyler_names_prefer_own_environment():
+    tyler_courts = {
+        "prod": {"986:SP": {"name": "Juvenile Court -- Hampden County -- Springfield"}},
+        "test": {"0986:SP": {"name": "Juvenile Court -- Hampden County -- Palmer"}},
+    }
+    prod = DocketNumberParser(tyler_courts=tyler_courts)
+    test = DocketNumberParser(tyler_courts=tyler_courts, tyler_environment="test")
+    assert prod.identify_court("25YO0002SP").name == "Springfield Juvenile Court"
+    assert test.identify_court("25YO0002SP").name == "Palmer Juvenile Court"

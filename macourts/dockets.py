@@ -10,6 +10,10 @@ The Juvenile Court publishes no format. Its docket numbers (e.g.
 ``26YO0010NE``: year, case type, sequence, session) end in a session code that
 usually matches the suffix of the session's Tyler code (``1015:NE``).
 
+Parsing tolerates the variations people write (any case, spaces, dashes, and
+missing leading zeros), and :func:`docket_number_variants` gives the exact
+spellings to try in a Tyler case search, which matches only the stored form.
+
 Each identification also carries the Tyler EFSP court codes and names for its
 locations, from the ``tyler_courts.json`` snapshot of the EFSP proxy's court
 list (refreshed by ``scripts/fetch_tyler_courts.py``).
@@ -136,31 +140,256 @@ SJC_TYLER_CODES = {
     "BD": "sjc:suffolk",  # "Supreme Judicial Court - Suffolk - Bar Docket"
 }
 
-# Land Court: "07 TL 001026", or for Subsequent cases "15 SBQ 00025 09 - 001".
-_LAND_COURT_RE = re.compile(
-    r"^\d{2}[\s-]*(%s)(?=[\s-]*\d)"
-    % "|".join(sorted(LAND_COURT_CASE_TYPE_CODES, key=len, reverse=True)),
-    re.I,
-)
-# Appeals Court: "2020-P-0874" (panel) or "2020-J-0123" (single justice).
-_APPEALS_COURT_RE = re.compile(r"^\d{4}\s*-\s*([PJ])\s*-\s*\d+$", re.I)
-# Supreme Judicial Court: "SJC-13103", "SJ-2020-0123", or "BD-2020-0123".
-_SJC_RE = re.compile(r"^(SJC|SJ|BD)\s*-\s*\d", re.I)
+# Every format below was checked against mass.gov's case number format pages
+# and against docket numbers in the Tyler EFSP. Tyler's docket search matches
+# only the exact stored spelling: upper case, zero-padded, and with any "-EF"
+# suffix (seen on e-filed District Court cases, e.g. "2362SC002985-EF").
+_DASHES = str.maketrans({"‐": "-", "‑": "-", "‒": "-", "–": "-", "—": "-", "−": "-"})
+_EF_SUFFIX_RE = re.compile(r"(?<=\d)[\s\-_./]*EF$")
+_NON_ALPHANUMERIC_RE = re.compile(r"[^A-Z0-9]")
+
+# Formats, matched against the docket number with punctuation removed.
+# District Court, BMC, and Superior Court: "1448CV001026", "1473CV00213".
+_TRIAL_COURT_RE = re.compile(r"(\d{2})(\d{2})([A-Z]{2})(\d{1,6})")
+# Housing Court: "15H84CV000436".
+_HOUSING_COURT_RE = re.compile(r"(\d{2})(H\d{2})([A-Z]{2})(\d{1,6})")
+# Probate and Family Court: "ES15A0064AD".
+_PROBATE_COURT_RE = re.compile(r"([A-Z]{2})(\d{2})([A-Z])(\d{1,4})([A-Z]{2})")
+# Older Probate and Family Court numbers still in Tyler: "ES94D2029DV1",
+# "ES86D0383D1", and the yearless "ES43951".
+_LEGACY_PROBATE_COURT_RE = re.compile(r"([A-Z]{2})(\d{2})([A-Z])(\d{4})([A-Z]{1,2})(\d)")
+_YEARLESS_PROBATE_COURT_RE = re.compile(r"([A-Z]{2})(\d{4,6})")
 # Juvenile Court: "26YO0010NE" (year, case type, sequence, session code). No
 # official format is published; this is the shape of every number on the
 # Juvenile Court's public daily lists.
-_JUVENILE_COURT_RE = re.compile(r"^\d{2}[A-Z]{2}\d{4}([A-Z]{2})$", re.I)
-_PROBATE_CASE_GROUP_RE = re.compile(r"^[A-Z]{2}\d{2}([A-Z])\d", re.I)
+_JUVENILE_COURT_RE = re.compile(r"(\d{2})([A-Z]{2})(\d{1,4})([A-Z]{2})")
+# Land Court: "07 TL 001026".
+_LAND_COURT_RE = re.compile(
+    r"(\d{2})(%s)(\d{1,6})"
+    % "|".join(sorted(LAND_COURT_CASE_TYPE_CODES, key=len, reverse=True))
+)
+# Appeals Court: "2020-P-0874" (panel) or "2020-J-0123" (single justice).
+_APPEALS_COURT_RE = re.compile(r"(\d{4}|\d{2})([PJ])(\d{1,4})")
+# Supreme Judicial Court: "SJC-05546" (full court), "SJ-2021-0189" (single
+# justice), "BD-2020-0123" (bar docket).
+_SJC_FULL_COURT_RE = re.compile(r"SJC(\d{1,5})")
+_SJC_COUNTY_RE = re.compile(r"(SJ|BD)(\d{4})(\d{4})")
 
-_FIND_COURT_CODE_RE = re.compile(
-    r"(?<=^\d{2})(\d{2}|H\d{2})(?!-)|^[A-Z]{2}(?=\d{2})", re.I
-)
-_FIND_CASE_TYPE_CODE_RE = re.compile(r"(?<!^)[A-Z]{2,4}(?!-)", re.I)
-_ANY_NUMBERS_RE = re.compile(r"\d")
-_FIND_YEAR_RE = re.compile(
-    r"^\d{2}(?=\d{2}[A-Z]|H|\s|[A-Z]{2}\d{4}[A-Z]{2}$)|(?<=^[A-Z]{2})\d{2}|\d{4}(?=-)|\d{2}(?=-)", re.I
-)
+# Matched against the punctuated docket number, where the separators matter.
+# Land Court Subsequent: "06 SBQ 27811 11 - 001" (year, plan number, month,
+# sequence number).
+_LAND_COURT_SUBSEQUENT_RE = re.compile(r"(\d{2})\s*SBQ\s*(\d{1,5})\s+(\d{1,2})\s*-?\s*(\d{1,3})")
+_SJC_COUNTY_SPACED_RE = re.compile(r"(SJ|BD)\s*-?\s*(\d{4}|\d{2})\s*-\s*(\d{1,4})")
+
+# Docket numbers that don't fit any format, for the year and sequence number.
+_FIND_YEAR_RE = re.compile(r"^\d{4}(?=-)|^\d{2}(?=\d{2}[A-Z]|H|\s|-)|(?<=^[A-Z]{2})\d{2}", re.I)
 _FIND_SEQUENCE_NUMBER_RE = re.compile(r"\d{2,}(?=$|[A-Z]+$)", re.I)
+
+
+@lru_cache(maxsize=1)
+def _crosswalk() -> Mapping[str, object]:
+    return load_data("court_code_crosswalk.json")
+
+
+@lru_cache(maxsize=1)
+def _superior_court_codes() -> frozenset[str]:
+    return frozenset(_crosswalk()["departments"]["Superior Court"]["codes"].values())
+
+
+def _probate_site_codes() -> dict[str, str]:
+    """Map current Probate docket site prefixes (``ES``) to legacy codes (``P77``)."""
+    legacy_to_current = _crosswalk()["departments"]["Probate and Family Court"][
+        "legacy_to_current"
+    ]
+    return {current: legacy for legacy, current in legacy_to_current.items()}
+
+
+def _juvenile_session_exceptions() -> dict[str, str]:
+    """Juvenile docket session codes that aren't their Tyler code's suffix."""
+    sessions = _crosswalk()["departments"]["Juvenile Court"]["docket_session_codes"]
+    return dict(sessions["differs_from_tyler_code"])
+
+
+def _pad(number: str, width: int) -> str:
+    """Zero-pad a sequence number to its format's width, dropping extra zeros."""
+    return number.lstrip("0").zfill(width)
+
+
+def _full_year(year: str, today: date | None = None) -> str:
+    """Expand a two-digit year: no later than this year, so ``99`` is 1999."""
+    if len(year) == 4:
+        return year
+    current_year = (today or date.today()).year
+    century = current_year // 100 * 100
+    full = century + int(year)
+    return str(full if full <= current_year else full - 100)
+
+
+@dataclass(frozen=True)
+class ParsedDocketNumber:
+    """A docket number split into its parts, with its canonical spelling.
+
+    ``format`` is one of "trial" (District Court, BMC, or Superior Court),
+    "housing", "probate", "legacy_probate", "juvenile", "land",
+    "land_subsequent", "appeals", or "sjc". ``court_code`` is the court, site,
+    or session code (``77``, ``H84``, ``ES``, ``NE``), the Appeals Court's
+    ``P``/``J``, or the SJC's ``SJC``/``SJ``/``BD``. ``year`` is as written:
+    two digits, or four for the Appeals Court and SJC.
+
+    ``normalized`` is the spelling the courts and Tyler use, e.g.
+    ``2356SP012345`` for a handwritten ``23-56SP-12345``.
+    """
+
+    format: str
+    normalized: str
+    year: str | None
+    court_code: str | None
+    case_type_code: str | None
+    sequence: str | None
+    case_group_code: str | None = None
+    efiled: bool = False
+
+
+def parse_docket_number(docket_number: str) -> ParsedDocketNumber | None:
+    """Split a Massachusetts docket number into its parts, or ``None``.
+
+    Tolerates the variations people write: any case, and spaces, dashes,
+    slashes, or dots between the parts, and missing leading zeros in the
+    sequence number. So ``23-56sp-12345`` parses to ``2356SP012345``.
+    """
+    text = docket_number.translate(_DASHES).strip().upper()
+    efiled = bool(_EF_SUFFIX_RE.search(text))
+    if efiled:
+        text = _EF_SUFFIX_RE.sub("", text)
+    ef = "-EF" if efiled else ""
+    compact = _NON_ALPHANUMERIC_RE.sub("", text)
+
+    if match := _LAND_COURT_SUBSEQUENT_RE.fullmatch(text):
+        year, plan, month, sequence = match.groups()
+        return ParsedDocketNumber(
+            "land_subsequent",
+            f"{year} SBQ {_pad(plan, 5)} {month.zfill(2)} - {_pad(sequence, 3)}",
+            year,
+            None,
+            "SBQ",
+            _pad(sequence, 3),
+        )
+    if match := _HOUSING_COURT_RE.fullmatch(compact):
+        year, court_code, case_type, sequence = match.groups()
+        sequence = _pad(sequence, 6)
+        return ParsedDocketNumber(
+            "housing",
+            f"{year}{court_code}{case_type}{sequence}{ef}",
+            year,
+            court_code,
+            case_type,
+            sequence,
+            efiled=efiled,
+        )
+    if match := _TRIAL_COURT_RE.fullmatch(compact):
+        year, court_code, case_type, sequence = match.groups()
+        # The Superior Court's sequence numbers have five digits, not six.
+        sequence = _pad(sequence, 5 if court_code in _superior_court_codes() else 6)
+        return ParsedDocketNumber(
+            "trial",
+            f"{year}{court_code}{case_type}{sequence}{ef}",
+            year,
+            court_code,
+            case_type,
+            sequence,
+            efiled=efiled,
+        )
+    if match := _LAND_COURT_RE.fullmatch(compact):
+        year, case_type, sequence = match.groups()
+        sequence = _pad(sequence, 6)
+        return ParsedDocketNumber(
+            "land", f"{year} {case_type} {sequence}", year, None, case_type, sequence
+        )
+    if match := _APPEALS_COURT_RE.fullmatch(compact):
+        year, court_code, sequence = match.groups()
+        year = _full_year(year)
+        sequence = _pad(sequence, 4)
+        return ParsedDocketNumber(
+            "appeals", f"{year}-{court_code}-{sequence}", year, court_code, None, sequence
+        )
+    if match := _SJC_FULL_COURT_RE.fullmatch(compact):
+        sequence = _pad(match.group(1), 5)
+        return ParsedDocketNumber("sjc", f"SJC-{sequence}", None, "SJC", None, sequence)
+    if match := _SJC_COUNTY_SPACED_RE.fullmatch(text) or _SJC_COUNTY_RE.fullmatch(compact):
+        court_code, year, sequence = match.groups()
+        year = _full_year(year)
+        sequence = _pad(sequence, 4)
+        return ParsedDocketNumber(
+            "sjc", f"{court_code}-{year}-{sequence}", year, court_code, None, sequence
+        )
+    site_codes = _probate_site_codes()
+    if match := _PROBATE_COURT_RE.fullmatch(compact):
+        site, year, case_group, sequence, case_type = match.groups()
+        if site in site_codes:
+            sequence = _pad(sequence, 4)
+            return ParsedDocketNumber(
+                "probate",
+                f"{site}{year}{case_group}{sequence}{case_type}",
+                year,
+                site,
+                case_type,
+                sequence,
+                case_group_code=case_group,
+            )
+    if match := _LEGACY_PROBATE_COURT_RE.fullmatch(compact):
+        site, year, case_group, sequence, case_type, _ = match.groups()
+        if site in site_codes:
+            return ParsedDocketNumber(
+                "legacy_probate", compact, year, site, case_type, sequence, case_group
+            )
+    if match := _YEARLESS_PROBATE_COURT_RE.fullmatch(compact):
+        site, sequence = match.groups()
+        if site in site_codes:
+            return ParsedDocketNumber("legacy_probate", compact, None, site, None, sequence)
+    if match := _JUVENILE_COURT_RE.fullmatch(compact):
+        year, case_type, sequence, session_code = match.groups()
+        sequence = _pad(sequence, 4)
+        return ParsedDocketNumber(
+            "juvenile",
+            f"{year}{case_type}{sequence}{session_code}",
+            year,
+            session_code,
+            case_type,
+            sequence,
+        )
+    return None
+
+
+def normalize_docket_number(docket_number: str) -> str | None:
+    """The canonical spelling of a docket number, or ``None`` if it isn't one.
+
+    ``normalize_docket_number("23-56sp-12345") == "2356SP012345"``.
+    """
+    parsed = parse_docket_number(docket_number)
+    return parsed.normalized if parsed else None
+
+
+def docket_number_variants(docket_number: str) -> tuple[str, ...]:
+    """Spellings of a docket number to try in a Tyler case search, best first.
+
+    Tyler only finds a case by its exact stored spelling, which people often
+    don't write: the canonical form comes first, then the same number with or
+    without the "-EF" suffix e-filed trial court cases carry, then the input
+    as written (upper-cased) in case it's a format this module doesn't know.
+    """
+    written = re.sub(r"\s+", " ", docket_number.translate(_DASHES).strip().upper())
+    parsed = parse_docket_number(docket_number)
+    variants = []
+    if parsed:
+        variants.append(parsed.normalized)
+        if parsed.format in ("trial", "housing"):
+            if parsed.efiled:
+                variants.append(parsed.normalized.removesuffix("-EF"))
+            else:
+                variants.append(parsed.normalized + "-EF")
+    if written:
+        variants.append(written)
+    return tuple(dict.fromkeys(variants))
 
 
 @dataclass(frozen=True)
@@ -233,22 +462,6 @@ class DocketCourtIdentification:
         return tuple(court for court in self.tyler_courts if court.subsequent)
 
 
-def _probate_site_codes() -> dict[str, str]:
-    """Map current Probate docket site prefixes (``ES``) to legacy codes (``P77``)."""
-    crosswalk = load_data("court_code_crosswalk.json")
-    legacy_to_current = crosswalk["departments"]["Probate and Family Court"][
-        "legacy_to_current"
-    ]
-    return {current: legacy for legacy, current in legacy_to_current.items()}
-
-
-def _juvenile_session_exceptions() -> dict[str, str]:
-    """Juvenile docket session codes that aren't their Tyler code's suffix."""
-    crosswalk = load_data("court_code_crosswalk.json")
-    sessions = crosswalk["departments"]["Juvenile Court"]["docket_session_codes"]
-    return dict(sessions["differs_from_tyler_code"])
-
-
 def _tyler_key(code: str) -> str:
     """Compare Tyler codes across environments: staging writes ``0705:LA``, prod ``705:LA``."""
     prefix, colon, suffix = code.partition(":")
@@ -287,6 +500,10 @@ class DocketNumberParser:
         juvenile_session_exceptions: Mapping[str, str] | None = None,
     ) -> None:
         self.catalog = catalog if catalog is not None else CourtCatalog.from_package_data()
+        by_department: dict[str, list[CourtRecord]] = {}
+        for record in self.catalog.records:
+            by_department.setdefault(norm(record.department), []).append(record)
+        self._by_department = {key: tuple(value) for key, value in by_department.items()}
         self.historical = tuple(
             historical if historical is not None else _historical_records()
         )
@@ -309,11 +526,12 @@ class DocketNumberParser:
             )
             for code, court in tyler_courts[tyler_environment].items()
         }
-        # Tyler's names for every environment, to place a Juvenile session.
+        # Tyler's names, to place a Juvenile session: this environment's
+        # first, then any other's for courts this one doesn't list.
         self._tyler_names = {
             _tyler_key(code): str(court["name"])
-            for environment in tyler_courts.values()
-            for code, court in environment.items()
+            for environment in sorted(tyler_courts, key=lambda env: env == tyler_environment)
+            for code, court in tyler_courts[environment].items()
         }
         self.juvenile_session_exceptions = dict(
             juvenile_session_exceptions
@@ -358,22 +576,19 @@ class DocketNumberParser:
         return named or matching
 
     def _department_records(self, department: str) -> tuple[CourtRecord, ...]:
-        return tuple(
-            record
-            for record in self.catalog.records
-            if norm(record.department) == norm(department)
-        )
+        return self._by_department.get(norm(department), ())
 
     def identify_court(self, docket_number: str) -> DocketCourtIdentification:
         """The department and court locations a docket number belongs to.
 
-        Raises ``KeyError`` when the docket number doesn't identify a court.
+        Tolerates the variations :func:`parse_docket_number` does. Raises
+        ``KeyError`` when the docket number doesn't identify a court.
         """
-        docket_number = docket_number.strip()
-        search = _FIND_COURT_CODE_RE.search(docket_number)
-        if search:
-            court_code = search.group().upper()
-            search_court_code = self.probate_site_codes.get(court_code, court_code)
+        parsed = parse_docket_number(docket_number)
+        if parsed is None:
+            raise KeyError(f"{docket_number!r} isn't a recognized docket number format")
+        if parsed.format in ("trial", "housing", "probate", "legacy_probate"):
+            search_court_code = self.probate_site_codes.get(parsed.court_code, parsed.court_code)
             matching = self.catalog.resolve_court_code(search_court_code) or tuple(
                 record
                 for record in self.historical
@@ -381,47 +596,33 @@ class DocketNumberParser:
             )
             if not matching:
                 raise KeyError(
-                    f"{court_code} (i.e. {search_court_code}) (from {docket_number}) isn't a valid court code"
+                    f"{parsed.court_code} (i.e. {search_court_code}) (from {docket_number}) isn't a valid court code"
                 )
-            return self._identification(matching[0].department, court_code, matching)
-
-        juvenile = _JUVENILE_COURT_RE.search(docket_number)
-        if juvenile:
-            session_code = juvenile.group(1).upper()
+            return self._identification(matching[0].department, parsed.court_code, matching)
+        if parsed.format == "juvenile":
             return self._identification(
-                "Juvenile Court", session_code, self._juvenile_locations(session_code)
+                "Juvenile Court", parsed.court_code, self._juvenile_locations(parsed.court_code)
             )
-        # Land Court docket numbers have no court code, just year + case type.
-        if _LAND_COURT_RE.search(docket_number):
+        if parsed.format in ("land", "land_subsequent"):
+            # Land Court docket numbers have no court code, just year + case type.
             return self._identification(
                 "Land Court", None, self._department_records("Land Court")
             )
-        if not _ANY_NUMBERS_RE.search(docket_number):
-            raise KeyError(
-                f"{docket_number} doesn't have any number digits in it, it's not likely a docket number"
-            )
-        sjc = _SJC_RE.search(docket_number)
-        if sjc:
-            tyler_code = SJC_TYLER_CODES.get(sjc.group(1).upper())
+        if parsed.format == "sjc":
             return self._identification(
                 "Supreme Judicial Court",
                 None,
                 self._department_records("Supreme Judicial Court"),
-                tyler_codes=(tyler_code,) if tyler_code else None,
+                tyler_codes=(SJC_TYLER_CODES[parsed.court_code],),
             )
-        appeals = _APPEALS_COURT_RE.search(docket_number)
-        if appeals:
-            court_code = appeals.group(1).upper()
-            matching = tuple(
-                record
-                for record in self._department_records("Appeals Court")
-                if record.matches_court_code(court_code)
-            )
-            if matching:
-                return self._identification("Appeals Court", court_code, matching)
-        raise KeyError(
-            f"{docket_number} doesn't have a court code, and isn't an appellate case, might be a variant"
+        matching = tuple(
+            record
+            for record in self._department_records("Appeals Court")
+            if record.matches_court_code(parsed.court_code)
         )
+        if not matching:
+            raise KeyError(f"{docket_number!r} has no matching Appeals Court record")
+        return self._identification("Appeals Court", parsed.court_code, matching)
 
     def _identification(
         self,
@@ -462,17 +663,19 @@ class DocketNumberParser:
 
     def court_from_docket_number(self, docket_number: str) -> DocketCourt | None:
         """Only the information that is the same across every matching court session."""
+        identification = self.identify_court(docket_number)
         matching = self.courts_from_docket_number(docket_number)
 
         def shared(values: Iterable[str | None]) -> str | None:
             distinct = set(values)
             return distinct.pop() if len(distinct) == 1 else None
 
+        tyler_courts = identification.tyler_courts
         court = DocketCourt(
             name=shared(record.name for record in matching),
-            department=shared(record.department for record in matching),
+            department=identification.department,
             court_code=shared(record.court_code for record in matching),
-            tyler_code=shared(record.tyler_code for record in matching),
+            tyler_code=tyler_courts[0].code if len(tyler_courts) == 1 else None,
             description=shared(record.raw.get("description") for record in matching),
         )
         if court.name is None and court.court_code is None and court.description is None:
@@ -482,44 +685,42 @@ class DocketNumberParser:
     def case_type_from_docket_number(self, docket_number: str) -> str | None:
         """The case type (e.g. "Civil"), "Appellate" for appellate dockets, or ``None``.
 
-        Raises ``KeyError`` when the docket number has a case-type code that
-        doesn't exist in the matching court's department.
+        ``None`` too for the Juvenile Court, which publishes no case-type codes,
+        and for older Probate and Family Court numbers whose codes are no longer
+        listed. Raises ``KeyError`` when a current-format docket number has a
+        case-type code that doesn't exist in its department.
         """
-        court = self.court_from_docket_number(docket_number)
-        if not court:
-            return None
-        if norm(court.department) in APPELLATE_DEPARTMENTS:
+        identification = self.identify_court(docket_number)
+        if norm(identification.department) in APPELLATE_DEPARTMENTS:
             # Without the lower court's docket number we can't tell what kind
             # of case is on appeal. "AD" (Appeal) is a trial court code.
             return "Appellate"
-        search = _FIND_CASE_TYPE_CODE_RE.search(docket_number)
-        if not search:
+        parsed = parse_docket_number(docket_number)
+        codes = CASE_TYPE_CODES_BY_DEPARTMENT.get(identification.department)
+        if not parsed or not parsed.case_type_code or codes is None:
             return None
-        case_type_code = search.group().upper()
-        codes = CASE_TYPE_CODES_BY_DEPARTMENT.get(court.department or "", {})
-        if case_type_code not in codes:
-            raise KeyError(
-                f"{case_type_code} (from {docket_number}) isn't a valid case type code for {court.department}"
-            )
-        return codes[case_type_code]
+        if parsed.case_type_code in codes:
+            return codes[parsed.case_type_code]
+        if parsed.format == "legacy_probate":
+            return None
+        raise KeyError(
+            f"{parsed.case_type_code} (from {docket_number}) isn't a valid case type code for {identification.department}"
+        )
 
     def case_group_from_docket_number(self, docket_number: str) -> str | None:
         """The Probate and Family Court case group (the "A" in ``ES15A0064AD``).
 
         ``None`` for every other department, whose docket numbers have none.
         """
-        court = self.court_from_docket_number(docket_number)
-        if not court or norm(court.department) != norm("Probate and Family Court"):
+        self.identify_court(docket_number)
+        parsed = parse_docket_number(docket_number)
+        if not parsed or not parsed.case_group_code:
             return None
-        search = _PROBATE_CASE_GROUP_RE.search(docket_number)
-        if not search:
-            return None
-        case_group_code = search.group(1).upper()
-        if case_group_code not in PROBATE_FAMILY_COURT_CASE_GROUP_CODES:
+        if parsed.case_group_code not in PROBATE_FAMILY_COURT_CASE_GROUP_CODES:
             raise KeyError(
-                f"{case_group_code} (from {docket_number}) isn't a valid Probate and Family Court case group"
+                f"{parsed.case_group_code} (from {docket_number}) isn't a valid Probate and Family Court case group"
             )
-        return PROBATE_FAMILY_COURT_CASE_GROUP_CODES[case_group_code]
+        return PROBATE_FAMILY_COURT_CASE_GROUP_CODES[parsed.case_group_code]
 
 
 @lru_cache(maxsize=1)
@@ -537,22 +738,27 @@ def get_year_from_docket_number(
 ) -> str | None:
     """The four-digit filing year, or ``None`` if the docket number has none.
 
-    Every docket number except Supreme Judicial Court panel numbers includes
-    the year. Raises ``ValueError`` for a year after ``today``: no such case
-    can have been filed yet.
+    Every docket number except Supreme Judicial Court full court numbers
+    includes the year. A two-digit year is the latest one not after ``today``
+    (``99`` is 1999). Raises ``ValueError`` for a four-digit year after
+    ``today``: no such case can have been filed yet.
     """
-    search = _FIND_YEAR_RE.search(docket_number)
-    if not search:
+    parsed = parse_docket_number(docket_number)
+    if parsed:
+        year = parsed.year
+    else:
+        search = _FIND_YEAR_RE.search(docket_number.strip())
+        year = search.group() if search else None
+    if not year:
         return None
-    case_year = search.group()
-    current_year = str((today or date.today()).year)
-    if case_year[-2:] > current_year[-2:]:
-        raise ValueError(f"docket number has a year in the future: {case_year}")
-    if len(case_year) == 4:
-        return case_year
-    return current_year[:2] + case_year
+    if len(year) == 4 and int(year) > (today or date.today()).year:
+        raise ValueError(f"docket number has a year in the future: {year}")
+    return _full_year(year, today)
 
 
 def get_sequence_number_from_docket_number(docket_number: str) -> str | None:
+    parsed = parse_docket_number(docket_number)
+    if parsed:
+        return parsed.sequence
     search = _FIND_SEQUENCE_NUMBER_RE.search(docket_number)
     return search.group() if search else None
