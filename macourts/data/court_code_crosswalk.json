@@ -152,7 +152,17 @@
       "record_field": "court_code",
       "meaning": "Trial Court Juvenile location code. The consolidated 2021 registry contains historical/alternate codes as well as current physical-site identities.",
       "important": "Springfield appears under both J23 and J69 in the published registry. MACourts keeps one physical Springfield record, uses J69 as primary, and preserves J23 as an alias rather than creating two court locations.",
-      "tyler_code_notes": "Tyler uses county-session codes (e.g. 1086:BO for Boston, 885:DE for Dedham). In Prod, 3-digit county prefixes lack leading zeroes (e.g. 705:LA), whereas in Dev/Test they are zero-padded to 4 digits (e.g. 0705:LA). Dudley 915:DU lacks leading zeroes in both environments."
+      "tyler_code_notes": "Tyler uses county-session codes (e.g. 1086:BO for Boston, 885:DE for Dedham). In Prod, 3-digit county prefixes lack leading zeroes (e.g. 705:LA), whereas in Dev/Test they are zero-padded to 4 digits (e.g. 0705:LA). Dudley 915:DU lacks leading zeroes in both environments.",
+      "docket_session_codes": {
+        "meaning": "Two-letter session code at the end of a Juvenile Court docket number (e.g. NE in 26YO0010NE). No format page is published; it usually equals the suffix of the session's Tyler code (1015:NE is New Bedford).",
+        "differs_from_tyler_code": {
+          "CH": "Chelsea Juvenile Court",
+          "DO": "Dorchester Juvenile Court"
+        },
+        "differs_from_tyler_code_note": "Chelsea and Dorchester file through Boston (1086:BO) in Tyler but keep their own docket session codes.",
+        "source": "https://www.mass.gov/doc/juvenile-court-department-public-daily-list-report-suffolk-division/download",
+        "verified_on": "2026-10-09"
+      }
     }
   }
 }
