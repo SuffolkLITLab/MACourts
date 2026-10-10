@@ -40,15 +40,20 @@ class CourtCatalog:
         self.records = tuple(records)
         index: dict[tuple[str, str], list[CourtRecord]] = defaultdict(list)
         location_index: dict[tuple[str, str], list[CourtRecord]] = defaultdict(list)
+        code_index: dict[str, list[CourtRecord]] = defaultdict(list)
         for record in self.records:
             index[(norm(record.department), norm(record.name))].append(record)
             location_index[
                 (norm(record.department), norm(record.location_name))
             ].append(record)
+            codes = {norm(code) for code in (record.court_code, *record.court_code_aliases) if code}
+            for code in codes:
+                code_index[code].append(record)
         self._index = {key: tuple(value) for key, value in index.items()}
         self._location_index = {
             key: tuple(value) for key, value in location_index.items()
         }
+        self._code_index = {key: tuple(value) for key, value in code_index.items()}
 
     def resolve(self, name: str, department: str) -> tuple[CourtRecord, ...]:
         return self._index.get((norm(department), norm(name)), ())
@@ -96,11 +101,7 @@ class CourtCatalog:
 
     def resolve_court_code(self, court_code: str) -> tuple[CourtRecord, ...]:
         """Resolve a current or historical/alternate Trial Court docket code."""
-        return tuple(
-            record
-            for record in self.records
-            if record.matches_court_code(court_code)
-        )
+        return self._code_index.get(norm(court_code), ())
 
     @classmethod
     def from_legacy_directory(cls, directory: str | Path) -> "CourtCatalog":

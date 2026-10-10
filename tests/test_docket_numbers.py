@@ -25,6 +25,7 @@ def parser():
     [
         ("1577CV00982", "Essex County Superior Court"),
         ("1577cv00982", "Essex County Superior Court"),
+        ("1577-CV-00982", "Essex County Superior Court"),
         # Winchendon (70) was consolidated into Gardner, but old dockets keep the code.
         ("1670CV000072", "Winchendon District Court"),
         ("1401CV001026", "Central Division, Boston Municipal Court"),
@@ -38,10 +39,6 @@ def parser():
 )
 def test_court_name(parser, docket_number, expected_name):
     assert parser.court_from_docket_number(docket_number).name == expected_name
-
-
-# The regex doesn't yet handle hyphenated "variations" of the trial court
-# format (e.g. 1577-CV-00982), even the unambiguous ones.
 
 
 @pytest.mark.parametrize(
