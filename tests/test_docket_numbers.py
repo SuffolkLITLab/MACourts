@@ -170,8 +170,8 @@ def test_case_group(parser, docket_number, expected_case_group):
         ("07 VP 001026", "Land Court"),
         ("15 SBQ 00025 09 - 001", "Land Court"),
         ("2020-J-0123", "Massachusetts Appeals Court (Single Justice)"),
-        ("SJ-2020-0123", "Supreme Judicial Court"),
-        ("BD-2020-0123", "Supreme Judicial Court"),
+        ("SJ-2020-0123", "Supreme Judicial Court (Single Justice)"),
+        ("BD-2020-0123", "Supreme Judicial Court (Bar Docket)"),
     ],
 )
 def test_mass_gov_examples(parser, docket_number, expected_name):
@@ -207,7 +207,15 @@ def test_mass_gov_examples(parser, docket_number, expected_name):
             "Massachusetts Appeals Court (Panel)",
             1,
         ),
-        ("SJC-13103", "Supreme Judicial Court", None, "Supreme Judicial Court", 1),
+        ("SJC-13103", "Supreme Judicial Court", "SJC", "Supreme Judicial Court", 1),
+        (
+            "SJ-2021-0189",
+            "Supreme Judicial Court",
+            "SJ",
+            "Supreme Judicial Court (Single Justice)",
+            1,
+        ),
+        ("BD-2020-0123", "Supreme Judicial Court", "BD", "Supreme Judicial Court (Bar Docket)", 1),
     ],
 )
 def test_identify_court(parser, docket_number, department, court_code, name, location_count):
@@ -345,13 +353,13 @@ def test_every_catalog_tyler_code_is_in_prod(parser):
 
 def test_prod_efiling_status(parser):
     # Every current court the catalog routes filings to accepts e-filing in
-    # prod, except the SJC's "Commonwealth" node, which docket numbers avoid.
+    # prod. (The SJC's "Commonwealth" node, "sjc", doesn't.)
     not_fileable = {
         record.tyler_code
         for record in parser.catalog.records
         if record.tyler_code and not parser.tyler_court(record.tyler_code).accepts_efiling
     }
-    assert not_fileable == {"sjc"}
+    assert not not_fileable
     for docket_number in ["SJC-13103", "SJ-2020-0123", "BD-2020-0123"]:
         (court,) = parser.identify_court(docket_number).tyler_courts
         assert court.initial and court.subsequent

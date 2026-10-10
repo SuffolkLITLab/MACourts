@@ -26,7 +26,11 @@ class StatewideMatcher:
     courts = (
         ("Land Court", "Land Court"),
         ("Appeals Court", "Massachusetts Appeals Court (Single Justice)"),
+        # The SJC's full court, single justice, and bar dockets are separate
+        # courts, each statewide.
         ("Supreme Judicial Court", "Supreme Judicial Court"),
+        ("Supreme Judicial Court", "Supreme Judicial Court (Single Justice)"),
+        ("Supreme Judicial Court", "Supreme Judicial Court (Bar Docket)"),
     )
 
     def match(

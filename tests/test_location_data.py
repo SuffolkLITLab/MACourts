@@ -12,7 +12,8 @@ EXPECTED_CURRENT_COUNTS = {
     "probate_and_family_courts.json": 19,
     "land_court.json": 1,
     "appeals_court.json": 2,
-    "supreme_judicial_court.json": 1,
+    # Full court, single justice, and bar docket.
+    "supreme_judicial_court.json": 3,
 }
 
 

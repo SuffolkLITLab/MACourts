@@ -101,6 +101,8 @@ Land Court - Land Court
 Probate and Family Court - Hampden Probate and Family Court
 Superior Court - Hampden County Superior Court
 Supreme Judicial Court - Supreme Judicial Court
+Supreme Judicial Court - Supreme Judicial Court (Bar Docket)
+Supreme Judicial Court - Supreme Judicial Court (Single Justice)
 ```
 
 The jurisdiction rules behind this are data, not code; see

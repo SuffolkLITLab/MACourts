@@ -130,15 +130,6 @@ CASE_TYPE_CODES_BY_DEPARTMENT = {
     "Probate and Family Court": PROBATE_FAMILY_COURT_CASE_TYPE_CODES,
 }
 
-# Supreme Judicial Court docket prefixes and their Tyler court codes. The
-# catalog's "sjc" ("Supreme Judicial Court - Commonwealth") has e-filing
-# turned off in production.
-SJC_TYLER_CODES = {
-    "SJC": "sjc:commfc",  # "Supreme Judicial Court - Full Court"
-    "SJ": "sjc:singlej",  # "Supreme Judicial Court - Suffolk - Single Justice"
-    "BD": "sjc:suffolk",  # "Supreme Judicial Court - Suffolk - Bar Docket"
-}
-
 # Every format below was checked against mass.gov's case number format pages
 # and against docket numbers in the Tyler EFSP. Tyler's docket search matches
 # only the exact stored spelling: upper case, zero-padded, and with any "-EF"
@@ -439,8 +430,8 @@ class DocketCourtIdentification:
     ``department`` is always set: one of the seven Trial Court departments,
     "Appeals Court", or "Supreme Judicial Court". ``court_code`` is the code as
     written in the docket number (``77``, ``H84``, ``ES``, the Juvenile session
-    code ``NE``, or the Appeals Court's ``P``/``J``), or ``None`` when the format
-    has none (Land Court, Supreme Judicial Court). ``name`` is the court name
+    code ``NE``, the Appeals Court's ``P``/``J``, or the SJC's ``SJC``/``SJ``/
+    ``BD``), or ``None`` for the Land Court, whose numbers have none. ``name`` is the court name
     shared by every location, or ``None`` when they differ (``H84`` covers
     Eastern Housing Court and its Chelsea and Middlesex sessions).
 
@@ -612,33 +603,27 @@ class DocketNumberParser:
             return self._identification(
                 "Land Court", None, self._department_records("Land Court")
             )
-        if parsed.format == "sjc":
-            return self._identification(
-                "Supreme Judicial Court",
-                None,
-                self._department_records("Supreme Judicial Court"),
-                tyler_codes=(SJC_TYLER_CODES[parsed.court_code],),
-            )
+        # The Appeals Court (P, J) and the SJC (SJC, SJ, BD) have a record
+        # for each docket.
+        department = "Appeals Court" if parsed.format == "appeals" else "Supreme Judicial Court"
         matching = tuple(
             record
-            for record in self._department_records("Appeals Court")
+            for record in self._department_records(department)
             if record.matches_court_code(parsed.court_code)
         )
         if not matching:
-            raise KeyError(f"{docket_number!r} has no matching Appeals Court record")
-        return self._identification("Appeals Court", parsed.court_code, matching)
+            raise KeyError(f"{docket_number!r} has no matching {department} record")
+        return self._identification(department, parsed.court_code, matching)
 
     def _identification(
         self,
         department: str,
         court_code: str | None,
         locations: tuple[CourtRecord, ...],
-        tyler_codes: Iterable[str] | None = None,
     ) -> DocketCourtIdentification:
-        if tyler_codes is None:
-            tyler_codes = (
-                code for record in locations if (code := self._filing_tyler_code(record))
-            )
+        tyler_codes = (
+            code for record in locations if (code := self._filing_tyler_code(record))
+        )
         return DocketCourtIdentification(
             department=department,
             court_code=court_code,
