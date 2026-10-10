@@ -6,6 +6,10 @@ from dataclasses import dataclass, field
 from typing import Any, Mapping
 
 
+# Unicode dashes people type (or paste) in place of "-".
+DASH_CHARS = "‐‑‒–—―−"
+
+
 def norm(value: object | None) -> str:
     """Casefold a value for comparison, treating ``None`` as empty."""
     return "" if value is None else str(value).strip().casefold()

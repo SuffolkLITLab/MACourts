@@ -1,8 +1,8 @@
 [
   {
     "fax": "",
-    "court_code": "SJ",
-    "tyler_code": "sjc",
+    "court_code": "SJC",
+    "tyler_code": "sjc:commfc",
     "name": "Supreme Judicial Court",
     "phone": "(617) 557-1000",
     "has_po_box": false,
@@ -20,6 +20,58 @@
       "unit": "Suite 2500"
     },
     "description": "The Massachusetts Supreme Judicial Court is the Commonwealth's highest appellate court. The seven Justices hear appeals on a broad range of criminal and civil cases.",
+    "url": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",
+    "building_name": "John Adams Courthouse",
+    "address_source": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",
+    "address_verified": "2026-09-03"
+  },
+  {
+    "fax": "",
+    "court_code": "SJ",
+    "tyler_code": "sjc:singlej",
+    "name": "Supreme Judicial Court (Single Justice)",
+    "phone": "(617) 557-1000",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.35893,
+      "longitude": -71.06134
+    },
+    "address": {
+      "city": "Boston",
+      "zip": "02108",
+      "orig_address": "John Adams Courthouse, 1 Pemberton Square, Suite 2500, Boston, MA 02108",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "1 Pemberton Square",
+      "unit": "Suite 2500"
+    },
+    "description": "The Supreme Judicial Court for Suffolk County, where a single Justice of the Supreme Judicial Court hears matters on the single justice (SJ) docket.",
+    "url": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",
+    "building_name": "John Adams Courthouse",
+    "address_source": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",
+    "address_verified": "2026-09-03"
+  },
+  {
+    "fax": "",
+    "court_code": "BD",
+    "tyler_code": "sjc:suffolk",
+    "name": "Supreme Judicial Court (Bar Docket)",
+    "phone": "(617) 557-1000",
+    "has_po_box": false,
+    "location": {
+      "latitude": 42.35893,
+      "longitude": -71.06134
+    },
+    "address": {
+      "city": "Boston",
+      "zip": "02108",
+      "orig_address": "John Adams Courthouse, 1 Pemberton Square, Suite 2500, Boston, MA 02108",
+      "county": "Suffolk County",
+      "state": "MA",
+      "address": "1 Pemberton Square",
+      "unit": "Suite 2500"
+    },
+    "description": "The Supreme Judicial Court for Suffolk County's bar docket (BD), for attorney discipline and other bar matters heard by a single Justice.",
     "url": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",
     "building_name": "John Adams Courthouse",
     "address_source": "https://www.mass.gov/orgs/massachusetts-supreme-judicial-court",

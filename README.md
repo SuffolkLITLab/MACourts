@@ -52,6 +52,16 @@ The package includes:
   and, inside the BMC address index, a misspelled street name — both refuse
   to guess when a typo is genuinely ambiguous between two different real
   places; see [Typo rescue](docs/address_usage.md#typo-rescue-for-city-and-street-names);
+- docket-number parsing (`DocketNumberParser`) that identifies the court, case
+  type, year, and sequence number from a docket number like `1577CV00982`;
+  `identify_court_from_docket_number()` returns the department, every
+  matching court location, and the Tyler EFSP court codes and names to file
+  with (from a snapshot refreshed by `scripts/fetch_tyler_courts.py`), and
+  `existing_case_courts`, the Tyler courts an existing case could be filed
+  into (usually exactly one);
+  `normalize_docket_number()` and `docket_number_variants()` turn handwritten
+  numbers like `23-56sp-12345` into the exact spellings Tyler's case search
+  needs (`2356SP012345`, or `2356SP012345-EF` for e-filed cases);
 - a duck-typed adapter for docassemble `Address` objects without importing docassemble.
 
 Every match carries the reasons it was returned, plus any catalog records for
@@ -68,6 +78,7 @@ the court.
 | `macourts.boston_address` | Boston street-address parsing and the compiled `bmc_addresses.sqlite` lookup |
 | `macourts.municipalities` | the 351 municipalities, their counties, and the community alias index |
 | `macourts.zips` | ZIP-code expansion |
+| `macourts.dockets` | docket-number parsing: court, case type, year, and sequence number |
 | `macourts.finder` | `CourtFinder`, statewide courts, and `build_default_finder()` |
 
 Everything is re-exported from the `macourts` package, which is the API surface

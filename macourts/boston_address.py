@@ -30,11 +30,10 @@ from pathlib import Path
 from typing import Any
 
 from .catalog import package_data
-from .models import damerau_levenshtein_distance, fuzzy_match_threshold
+from .models import DASH_CHARS, damerau_levenshtein_distance, fuzzy_match_threshold
 
 DB_FILENAME = "bmc_addresses.sqlite"
 
-_DASH_CHARS = "‐‑‒–—―−"
 _APOSTROPHE_CHARS = "‘’ʼ`´"
 
 _UNIT_KEYWORD_RE = re.compile(
@@ -104,7 +103,7 @@ def normalize_street_text(value: str) -> str:
     text = unicodedata.normalize("NFKC", value).upper()
     for ch in _APOSTROPHE_CHARS:
         text = text.replace(ch, "'")
-    for ch in _DASH_CHARS:
+    for ch in DASH_CHARS:
         text = text.replace(ch, "-")
     text = text.replace(".", "")
     return _WHITESPACE_RE.sub(" ", text).strip()

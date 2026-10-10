@@ -1066,10 +1066,12 @@
         "state": "MA"
       },
       "expected": [
-        "Supreme Judicial Court"
+        "Supreme Judicial Court",
+        "Supreme Judicial Court (Single Justice)",
+        "Supreme Judicial Court (Bar Docket)"
       ],
       "status": "contract",
-      "rationale": "SJC is statewide."
+      "rationale": "SJC is statewide; its full court, single justice, and bar dockets are separate courts."
     },
     {
       "id": "sjc-out-of-state",
